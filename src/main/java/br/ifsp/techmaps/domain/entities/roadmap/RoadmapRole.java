@@ -1,4 +1,4 @@
-package br.ifsp.techmaps.domain.roadmap;
+package br.ifsp.techmaps.domain.entities.roadmap;
 
 public enum RoadmapRole {
     BACKEND("backend"),

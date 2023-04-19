@@ -1,35 +1,35 @@
-package br.ifsp.techmaps.domain.roadmap;
+package br.ifsp.techmaps.domain.entities.roadmap;
 
 import java.util.UUID;
 
 public class Roadmap {
-    private UUID id;
+    private UUID roadmapId;
     private String title;
     private RoadmapRole roadmapRole;
-    private RoadmapSkill roadmapSkill;
+    private RoadmapLanguage roadmapLanguage;
     private RoadmapStatus roadmapStatus;
 
-    public Roadmap(String title, RoadmapRole roadmapRole, RoadmapSkill roadmapSkill, RoadmapStatus roadmapStatus) {
+    public Roadmap(String title, RoadmapRole roadmapRole, RoadmapLanguage roadmapLanguage, RoadmapStatus roadmapStatus) {
         this.title = title;
         this.roadmapRole = roadmapRole;
-        this.roadmapSkill = roadmapSkill;
+        this.roadmapLanguage = roadmapLanguage;
         this.roadmapStatus = roadmapStatus;
     }
 
-    public Roadmap(UUID id, String title, RoadmapRole roadmapRole, RoadmapSkill roadmapSkill, RoadmapStatus roadmapStatus) {
-        this.id = id;
+    public Roadmap(UUID id, String title, RoadmapRole roadmapRole, RoadmapLanguage roadmapLanguage, RoadmapStatus roadmapStatus) {
+        this.roadmapId = id;
         this.title = title;
         this.roadmapRole = roadmapRole;
-        this.roadmapSkill = roadmapSkill;
+        this.roadmapLanguage = roadmapLanguage;
         this.roadmapStatus = roadmapStatus;
     }
 
     public UUID getId() {
-        return id;
+        return roadmapId;
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.roadmapId = id;
     }
 
     public String getTitle() {
@@ -48,12 +48,12 @@ public class Roadmap {
         this.roadmapRole = roadmapRole;
     }
 
-    public RoadmapSkill getRoadmapSkill() {
-        return roadmapSkill;
+    public RoadmapLanguage getRoadmapLanguage() {
+        return roadmapLanguage;
     }
 
-    public void setRoadmapSkill(RoadmapSkill roadmapSkill) {
-        this.roadmapSkill = roadmapSkill;
+    public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
+        this.roadmapLanguage = roadmapLanguage;
     }
 
     public RoadmapStatus getRoadmapStatus() {

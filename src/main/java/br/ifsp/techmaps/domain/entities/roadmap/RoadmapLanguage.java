@@ -1,15 +1,13 @@
-package br.ifsp.techmaps.domain.roadmap;
+package br.ifsp.techmaps.domain.entities.roadmap;
 
-public enum RoadmapSkill {
+public enum RoadmapLanguage {
     JAVA("java"),
     PYTHON("python"),
-    JAVASCRIPT("javascript"),
-    REACT("react"),
-    NODE("node.js");
+    JAVASCRIPT("javascript");
 
     private String skill;
 
-    RoadmapSkill(String skill) {
+    RoadmapLanguage(String skill) {
         this.skill = skill;
     }
 
