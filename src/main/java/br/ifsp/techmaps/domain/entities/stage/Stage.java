@@ -17,6 +17,12 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
+    public Stage(Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus) {
+        this.roadmap = roadmap;
+        this.stageEnum = stageEnum;
+        this.stageStatus = stageStatus;
+    }
+
     public UUID getStageId() {
         return stageId;
     }
@@ -48,4 +54,7 @@ public class Stage {
     public void setStageStatus(StageStatus stageStatus) {
         this.stageStatus = stageStatus;
     }
+
+
+
 }

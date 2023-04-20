@@ -1,5 +1,11 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
+import br.ifsp.techmaps.domain.entities.stage.Stage;
+import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.interfaces.roles.BackEnd;
+import br.ifsp.techmaps.domain.interfaces.roles.FrontEnd;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -92,5 +98,28 @@ public class Roadmap {
             this.undoneDuration = LocalDateTime.now().minusSeconds(startTime.getSecond());
         }
     }
+    //create method that sets a stage with a software from StageEnum section
+    public void stageSoftwares() {
+        Stage stageIJ = new Stage(this, StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE);
+        Stage stageVS = new Stage(this, StageEnum.LEARN_VSCODE, StageStatus.UNDONE);
+        Stage stageAD = new Stage(this, StageEnum.LEARN_ANDROID, StageStatus.UNDONE);
+    }
+
+    public void stagePracticesAndParadigms() {
+        Stage stageOOP = new Stage(this, StageEnum.LEARN_OOP, StageStatus.UNDONE);
+        Stage stageTDD = new Stage(this, StageEnum.LEARN_TDD, StageStatus.UNDONE);
+        Stage stageAGILE = new Stage(this, StageEnum.LEARN_AGILE, StageStatus.UNDONE);
+        Stage stageSOLID = new Stage(this, StageEnum.LEARN_SOLID, StageStatus.UNDONE);
+        Stage stageDEVOPS = new Stage(this, StageEnum.LEARN_DEVOPS, StageStatus.UNDONE);
+        Stage stageCLEAN_CODE = new Stage(this, StageEnum.LEARN_CLEAN_CODE, StageStatus.UNDONE);
+        Stage stageCLEAN_ARCHITECTURE = new Stage(this, StageEnum.LEARN_CLEAN_ARCHITECTURE, StageStatus.UNDONE);
+    }
+
+    public void frameworks() {
+        Stage stageSPRING = new Stage(this, StageEnum.LEARN_SPRING, StageStatus.UNDONE);
+        Stage stageREACT = new Stage(this, StageEnum.LEARN_REACT, StageStatus.UNDONE);
+        Stage stageANGULAR = new Stage(this, StageEnum.LEARN_ANGULAR, StageStatus.UNDONE);
+    }
+
 
 }

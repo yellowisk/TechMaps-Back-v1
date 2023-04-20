@@ -1,4 +1,4 @@
-package br.ifsp.techmaps.domain;
+package br.ifsp.techmaps.domain.entities.user;
 
 import java.util.UUID;
 

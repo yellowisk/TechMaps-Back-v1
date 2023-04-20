@@ -9,10 +9,26 @@ public enum StageEnum {
         LEARN_JS("Learn JavaScript"),
     //Concepts
         LEARN_INTERNET("Learn Internet"),
-        LEARN_WEBSERVICES("Learn WebServices"),
+        LEARN_WEBSERVERS("Learn WebServers"),
         LEARN_CLOUD("Learn Cloud Systems"),
-    //PRACTICES
-    //AGILE METHODS
+    //VERSION CONTROL
+        LEARN_GIT("Learn Git"),
+        LEARN_GITHUB("Learn GitHub"),
+        LEARN_GITLAB("Learn GitLab"),
+    //APIs
+        LEARN_API("Learn API"),
+        LEARN_REST("Learn REST"),
+        LEARN_SOAP("Learn SOAP"),
+
+    //PRACTICES AND DESIGNS
+        LEARN_AGILE("Learn Agile Methods"),
+        LEARN_DEVOPS("Learn DevOps"),
+        LEARN_OOP("Learn OOP"),
+        LEARN_SOLID("Learn SOLID"),
+        LEARN_CLEAN_CODE("Learn Clean Code"),
+        LEARN_TDD("Learn TDD"),
+        LEARN_CLEAN_ARCHITECTURE("Learn Clean Architecture"),
+
     //SOFTWARES
         LEARN_VSCODE("Learn Visual studio Code"),
         LEARN_INTELLIJ("Learn IntelliJ"),
@@ -20,9 +36,13 @@ public enum StageEnum {
     //Frameworks
         LEARN_ANGULAR("Learn Angular"),
         LEARN_REACT("Learn React"),
+        LEARN_SPRING("Learn Spring"),
+
     //Databases
         LEARN_MYSQL("Learn MySQL"),
-        LEARN_POSTGRES("Learn PostgresSQL");
+        LEARN_POSTGRES("Learn PostgresSQL"),
+        LEARN_DOCKER("Learn Docker"),
+        LEARN_FIREBASE("Learn Firebase");
 
     private String status;
 
