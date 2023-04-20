@@ -8,6 +8,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String github;
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -20,6 +21,14 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User(UUID id, String name, String email, String password, String github) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.github = github;
     }
 
     public UUID getId() {
