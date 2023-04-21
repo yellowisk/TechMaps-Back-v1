@@ -15,14 +15,20 @@ import java.util.UUID;
 
 public class main {
     public static void main(String[] args) {
+
         BackEnd roadmapOne = new Roadmap(UUID.randomUUID(),"title", RoadmapRole.BACKEND, RoadmapLanguage.JAVA, RoadmapStatus.UNDONE, LocalDateTime.now());
-        BackEnd backendRoadmapOne = (BackEnd) roadmapOne;
-        System.out.println(roadmapOne);
-        FrontEnd roadmapTwo = new Roadmap("title", RoadmapRole.FRONTEND, RoadmapLanguage.JAVASCRIPT, RoadmapStatus.UNDONE, LocalDateTime.now());
-        Stage stage = new Stage(roadmapOne, StageEnum.LEARN_CSS, StageStatus.UNDONE);
-        System.out.println(stage);
-        Stage stage2 = new Stage(roadmapOne, StageEnum.LEARN_HTML, StageStatus.UNDONE);
-        System.out.println(stage2);
+        System.out.println(roadmapOne.getClass());
+        roadmapOne.internet(StageEnum.LEARN_INTERNET);
+
+        FrontEnd roadmapTwo = new Roadmap(UUID.randomUUID(), "Front-end", RoadmapRole.FRONTEND, RoadmapLanguage.JAVASCRIPT, RoadmapStatus.DONE, LocalDateTime.now());
+        System.out.println(roadmapTwo.getClass());
+
+
+        Roadmap roadmapThree = new Roadmap(UUID.randomUUID(),"title", RoadmapRole.BACKEND, RoadmapLanguage.JAVA, RoadmapStatus.UNDONE, LocalDateTime.now());
+        System.out.println(roadmapThree.getClass());
+        System.out.println(((Roadmap) roadmapOne).getRoadmapLanguage());
+
+
     }
 
 }

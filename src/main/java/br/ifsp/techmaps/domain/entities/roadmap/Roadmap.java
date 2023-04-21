@@ -5,11 +5,12 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.interfaces.roles.BackEnd;
 import br.ifsp.techmaps.domain.interfaces.roles.FrontEnd;
+import br.ifsp.techmaps.domain.interfaces.roles.FullStack;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Roadmap {
+public class Roadmap implements BackEnd, FrontEnd, FullStack {
     private UUID id;
     private String title;
     private RoadmapRole roadmapRole;
@@ -99,13 +100,13 @@ public class Roadmap {
         }
     }
     //create method that sets a stage with a software from StageEnum section
-    public void stageSoftwares() {
+    public final void stageSoftwares() {
         Stage stageIJ = new Stage(this, StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE);
         Stage stageVS = new Stage(this, StageEnum.LEARN_VSCODE, StageStatus.UNDONE);
         Stage stageAD = new Stage(this, StageEnum.LEARN_ANDROID, StageStatus.UNDONE);
     }
 
-    public void stagePracticesAndParadigms() {
+    public final void stagePracticesAndParadigms() {
         Stage stageOOP = new Stage(this, StageEnum.LEARN_OOP, StageStatus.UNDONE);
         Stage stageTDD = new Stage(this, StageEnum.LEARN_TDD, StageStatus.UNDONE);
         Stage stageAGILE = new Stage(this, StageEnum.LEARN_AGILE, StageStatus.UNDONE);
@@ -115,11 +116,60 @@ public class Roadmap {
         Stage stageCLEAN_ARCHITECTURE = new Stage(this, StageEnum.LEARN_CLEAN_ARCHITECTURE, StageStatus.UNDONE);
     }
 
-    public void frameworks() {
+    public final void frameworks() {
         Stage stageSPRING = new Stage(this, StageEnum.LEARN_SPRING, StageStatus.UNDONE);
         Stage stageREACT = new Stage(this, StageEnum.LEARN_REACT, StageStatus.UNDONE);
         Stage stageANGULAR = new Stage(this, StageEnum.LEARN_ANGULAR, StageStatus.UNDONE);
     }
 
 
+    @Override
+    public void internet(StageEnum stageEnum) {
+        Stage stage = new Stage(this, stageEnum, StageStatus.UNDONE);
+    }
+
+    @Override
+    public void html(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void css(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void versionControl(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void relationalDatabases(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void noSQLDatabases(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void apis(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void webservers(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void cloud(StageEnum stageEnum) {
+
+    }
+
+    @Override
+    public void docker(StageEnum stageEnum) {
+
+    }
 }

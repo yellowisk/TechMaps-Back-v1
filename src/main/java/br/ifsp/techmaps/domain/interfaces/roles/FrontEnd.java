@@ -8,4 +8,5 @@ public interface FrontEnd {
     public void html(StageEnum stageEnum);
     public void css(StageEnum stageEnum);
     public void versionControl(StageEnum stageEnum);
+
 }
