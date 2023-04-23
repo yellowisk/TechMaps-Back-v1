@@ -55,6 +55,13 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Stage{" +
+                "stageId=" + stageId +
+                ", roadmap=" + roadmap +
+                ", stageEnum=" + stageEnum +
+                ", stageStatus=" + stageStatus +
+                '}';
+    }
 }

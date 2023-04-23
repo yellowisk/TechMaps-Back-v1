@@ -7,37 +7,27 @@ import br.ifsp.techmaps.domain.interfaces.roles.BackEnd;
 import br.ifsp.techmaps.domain.interfaces.roles.FrontEnd;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class Roadmap {
     private UUID id;
     private String title;
-    private RoadmapRole roadmapRole;
-    private RoadmapLanguage roadmapLanguage;
     private RoadmapStatus roadmapStatus;
     private LocalDateTime startTime;
     private LocalDateTime undoneDuration;
 
-    public Roadmap(String title, RoadmapRole roadmapRole, RoadmapLanguage roadmapLanguage, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
-        this.title = title;
-        this.roadmapRole = roadmapRole;
-        this.roadmapLanguage = roadmapLanguage;
-        this.roadmapStatus = roadmapStatus;
-        this.startTime = startTime;
-    }
-
-    public Roadmap(String title, RoadmapRole roadmapRole, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
-        this.title = title;
-        this.roadmapRole = roadmapRole;
-        this.roadmapStatus = roadmapStatus;
-        this.startTime = startTime;
-    }
-
-    public Roadmap(UUID id, String title, RoadmapRole roadmapRole, RoadmapLanguage roadmapLanguage, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
+    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime, LocalDateTime undoneDuration) {
         this.id = id;
         this.title = title;
-        this.roadmapRole = roadmapRole;
-        this.roadmapLanguage = roadmapLanguage;
+        this.roadmapStatus = roadmapStatus;
+        this.startTime = startTime;
+        this.undoneDuration = undoneDuration;
+    }
+
+    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
+        this.id = id;
+        this.title = title;
         this.roadmapStatus = roadmapStatus;
         this.startTime = startTime;
     }
@@ -58,22 +48,6 @@ public class Roadmap {
         this.title = title;
     }
 
-    public RoadmapRole getRoadmapRole() {
-        return roadmapRole;
-    }
-
-    public void setRoadmapRole(RoadmapRole roadmapRole) {
-        this.roadmapRole = roadmapRole;
-    }
-
-    public RoadmapLanguage getRoadmapLanguage() {
-        return roadmapLanguage;
-    }
-
-    public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
-        this.roadmapLanguage = roadmapLanguage;
-    }
-
     public RoadmapStatus getRoadmapStatus() {
         return roadmapStatus;
     }
@@ -85,41 +59,27 @@ public class Roadmap {
     public LocalDateTime getStartTime() {
         return startTime;
     }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    public LocalDateTime getUnconcludedDuration() {
+
+    public LocalDateTime getUndoneDuration() {
         return undoneDuration;
     }
-    public void setUnconcludedDuration(RoadmapStatus roadmapStatus) {
-        if (roadmapStatus.equals(RoadmapStatus.UNDONE)) {
-            this.undoneDuration = LocalDateTime.now();
-        } else if (roadmapStatus.equals(RoadmapStatus.DONE)) {
-            this.undoneDuration = LocalDateTime.now().minusSeconds(startTime.getSecond());
-        }
-    }
-    //create method that sets a stage with a software from StageEnum section
-    public void stageSoftwares() {
-        Stage stageIJ = new Stage(this, StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE);
-        Stage stageVS = new Stage(this, StageEnum.LEARN_VSCODE, StageStatus.UNDONE);
-        Stage stageAD = new Stage(this, StageEnum.LEARN_ANDROID, StageStatus.UNDONE);
+
+    public void setUndoneDuration(LocalDateTime undoneDuration) {
+        this.undoneDuration = undoneDuration;
     }
 
-    public void stagePracticesAndParadigms() {
-        Stage stageOOP = new Stage(this, StageEnum.LEARN_OOP, StageStatus.UNDONE);
-        Stage stageTDD = new Stage(this, StageEnum.LEARN_TDD, StageStatus.UNDONE);
-        Stage stageAGILE = new Stage(this, StageEnum.LEARN_AGILE, StageStatus.UNDONE);
-        Stage stageSOLID = new Stage(this, StageEnum.LEARN_SOLID, StageStatus.UNDONE);
-        Stage stageDEVOPS = new Stage(this, StageEnum.LEARN_DEVOPS, StageStatus.UNDONE);
-        Stage stageCLEAN_CODE = new Stage(this, StageEnum.LEARN_CLEAN_CODE, StageStatus.UNDONE);
-        Stage stageCLEAN_ARCHITECTURE = new Stage(this, StageEnum.LEARN_CLEAN_ARCHITECTURE, StageStatus.UNDONE);
+    @Override
+    public String toString() {
+        return "Roadmap{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", roadmapStatus=" + roadmapStatus +
+                ", startTime=" + startTime +
+                ", undoneDuration=" + undoneDuration +
+                '}';
     }
-
-    public void frameworks() {
-        Stage stageSPRING = new Stage(this, StageEnum.LEARN_SPRING, StageStatus.UNDONE);
-        Stage stageREACT = new Stage(this, StageEnum.LEARN_REACT, StageStatus.UNDONE);
-        Stage stageANGULAR = new Stage(this, StageEnum.LEARN_ANGULAR, StageStatus.UNDONE);
-    }
-
-
 }

@@ -97,4 +97,17 @@ public class Task {
     public void setCommitTag(TaskGit commitTag) {
         this.commitTag = commitTag;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", stage=" + stage +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", hour=" + hour +
+                ", commitTag=" + commitTag +
+                '}';
+    }
 }
