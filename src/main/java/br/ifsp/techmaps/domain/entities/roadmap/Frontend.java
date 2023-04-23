@@ -1,6 +1,9 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.entities.stage.StageType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,38 +15,52 @@ public class Frontend extends Roadmap {
 
     public Frontend(UUID id, String title, RoadmapStatus roadmapStatus,
                     LocalDateTime startTime, LocalDateTime undoneDuration,
-                    RoadmapLanguage roadmapLanguage, List<Stage> stages)
+                    RoadmapLanguage roadmapLanguage)
     {
         super(id, title, roadmapStatus, startTime, undoneDuration);
         this.roadmapLanguage = roadmapLanguage;
-        this.stages = stages;
     }
 
     public Frontend(UUID id, String title, RoadmapStatus roadmapStatus,
-                    LocalDateTime startTime, RoadmapLanguage roadmapLanguage,
-                    List<Stage> stages)
+                    LocalDateTime startTime, RoadmapLanguage roadmapLanguage)
     {
         super(id, title, roadmapStatus, startTime);
-        this.roadmapLanguage = roadmapLanguage;
-        this.stages = stages;
+                this.roadmapLanguage = roadmapLanguage;
+
     }
 
-    public RoadmapLanguage getRoadmapLanguage() {
-        return roadmapLanguage;
+    public Frontend(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
+        super(id, title, roadmapStatus, startTime);
     }
 
-    public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
-        this.roadmapLanguage = roadmapLanguage;
+    public static Frontend createFrontend(String title, RoadmapStatus roadmapStatus,
+                                          LocalDateTime startTime, RoadmapLanguage roadmapLanguage)
+    {
+        if (roadmapLanguage == null || roadmapLanguage.equals(RoadmapLanguage.JAVASCRIPT)) {
+         return new Frontend(UUID.randomUUID(), title, roadmapStatus, startTime, roadmapLanguage);
+        } else {
+            System.out.println("Language not allowed");
+            return new Frontend(UUID.randomUUID(), title, roadmapStatus, startTime);
+        }
     }
 
-    public List<Stage> getStages() {
-        return stages;
+    @Override
+    public void createStage(StageEnum stageEnum, StageStatus stageStatus, LocalDateTime startTime) {
+        StageType stageType = new StageType();
+
+            if (stageType.getFrontList().contains(stageEnum) || stageType.getGeneralList().contains(stageEnum)) {
+                super.createStage(stageEnum, stageStatus, startTime);
+                System.out.println("Stage allowed");
+            } else {
+                System.out.println("Stage not allowed");
+            }
     }
 
-    public void setStages(List<Stage> stages) {
-        this.stages = stages;
+    @Override
+    public String toString() {
+        return "Frontend{" +
+                "roadmapLanguage=" + roadmapLanguage +
+                ", stages=" + stages +
+                '}';
     }
-
-
-
 }

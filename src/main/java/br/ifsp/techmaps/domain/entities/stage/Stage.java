@@ -1,7 +1,9 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.task.Task;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Stage {
@@ -9,6 +11,15 @@ public class Stage {
     private Roadmap roadmap;
     private StageEnum stageEnum;
     private StageStatus stageStatus;
+    private List<Task> tasks;
+
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus, List<Task> tasks) {
+        this.stageId = stageId;
+        this.roadmap = roadmap;
+        this.stageEnum = stageEnum;
+        this.stageStatus = stageStatus;
+        this.tasks = tasks;
+    }
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus) {
         this.stageId = stageId;
@@ -55,6 +66,14 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public String toString() {
         return "Stage{" +
@@ -62,6 +81,7 @@ public class Stage {
                 ", roadmap=" + roadmap +
                 ", stageEnum=" + stageEnum +
                 ", stageStatus=" + stageStatus +
+                ", tasks=" + tasks +
                 '}';
     }
 }

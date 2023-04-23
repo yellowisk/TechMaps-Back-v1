@@ -3,10 +3,9 @@ package br.ifsp.techmaps.domain.entities.roadmap;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
-import br.ifsp.techmaps.domain.interfaces.roles.BackEnd;
-import br.ifsp.techmaps.domain.interfaces.roles.FrontEnd;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,8 +15,14 @@ public class Roadmap {
     private RoadmapStatus roadmapStatus;
     private LocalDateTime startTime;
     private LocalDateTime undoneDuration;
+    private List<Stage> stages;
 
-    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime, LocalDateTime undoneDuration) {
+    public Roadmap() {
+    }
+
+    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus,
+                   LocalDateTime startTime, LocalDateTime undoneDuration)
+    {
         this.id = id;
         this.title = title;
         this.roadmapStatus = roadmapStatus;
@@ -25,7 +30,8 @@ public class Roadmap {
         this.undoneDuration = undoneDuration;
     }
 
-    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime) {
+    public Roadmap(UUID id, String title, RoadmapStatus roadmapStatus, LocalDateTime startTime)
+    {
         this.id = id;
         this.title = title;
         this.roadmapStatus = roadmapStatus;
@@ -72,6 +78,25 @@ public class Roadmap {
         this.undoneDuration = undoneDuration;
     }
 
+    public List<Stage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<Stage> stages) {
+        this.stages = stages;
+    }
+
+    public void createStage(StageEnum stageEnum, StageStatus stageStatus, LocalDateTime startTime) {
+        Stage stage = new Stage(UUID.randomUUID(), this, stageEnum, StageStatus.UNDONE);
+
+        if (stages == null) {
+            stages = new ArrayList<>();
+        } else {
+            stages.add(stage);
+        }
+
+    }
+
     @Override
     public String toString() {
         return "Roadmap{" +
@@ -80,6 +105,7 @@ public class Roadmap {
                 ", roadmapStatus=" + roadmapStatus +
                 ", startTime=" + startTime +
                 ", undoneDuration=" + undoneDuration +
+                ", stages=" + stages +
                 '}';
     }
 }

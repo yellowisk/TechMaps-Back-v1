@@ -1,5 +1,8 @@
 package br.ifsp.techmaps.domain.entities.user;
 
+import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+
+import java.util.List;
 import java.util.UUID;
 
 public class User {
@@ -8,6 +11,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private List<Roadmap> roadmaps;
     private String github;
 
     public User(String name, String email, String password) {

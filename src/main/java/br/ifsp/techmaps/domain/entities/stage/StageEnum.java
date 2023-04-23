@@ -1,60 +1,76 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum StageEnum {
     //Langs
-        LEARN_PYTHON("Learn python"),
-        LEARN_JAVA("Learn Java"),
-        LEARN_HTML("Learn HTML"),
-        LEARN_CSS("Learn CSS"),
-        LEARN_JS("Learn JavaScript"),
+        LEARN_PYTHON("Learn python", "Backend"),
+        LEARN_JAVA("Learn Java", "Backend"),
+        LEARN_KOTLIN("Learn Kotlin", "Android"),
+        LEARN_HTML("Learn HTML", "Frontend"),
+        LEARN_CSS("Learn CSS", "Frontend"),
+        LEARN_JS("Learn JavaScript", "Frontend"),
     //Concepts
-        LEARN_INTERNET("Learn Internet"),
-        LEARN_WEBSERVERS("Learn WebServers"),
-        LEARN_CLOUD("Learn Cloud Systems"),
+        LEARN_INTERNET("Learn Internet", "General"),
+        LEARN_DIAGRAMS("Learn Diagrams", "General"),
+        LEARN_WEBSERVERS("Learn WebServers", "Backend"),
+        LEARN_CLOUD("Learn Cloud Systems", "Backend"),
     //VERSION CONTROL
-        LEARN_GIT("Learn Git"),
-        LEARN_GITHUB("Learn GitHub"),
-        LEARN_GITLAB("Learn GitLab"),
+        LEARN_GIT("Learn Git", "General"),
+        LEARN_GITHUB("Learn GitHub", "General"),
     //APIs
-        LEARN_API("Learn API"),
-        LEARN_REST("Learn REST"),
-        LEARN_SOAP("Learn SOAP"),
+        LEARN_API("Learn API", "General"),
+        LEARN_REST("Learn REST", "General"),
+        LEARN_SOAP("Learn SOAP", "General"),
 
     //PRACTICES AND DESIGNS
-        LEARN_AGILE("Learn Agile Methods"),
-        LEARN_DEVOPS("Learn DevOps"),
-        LEARN_OOP("Learn OOP"),
-        LEARN_SOLID("Learn SOLID"),
-        LEARN_CLEAN_CODE("Learn Clean Code"),
-        LEARN_TDD("Learn TDD"),
-        LEARN_CLEAN_ARCHITECTURE("Learn Clean Architecture"),
+        LEARN_AGILE("Learn Agile Methods", "General"),
+        LEARN_DEVOPS("Learn DevOps", "General"),
+        LEARN_OOP("Learn OOP", "General"),
+        LEARN_SOLID("Learn SOLID", "General"),
+        LEARN_CLEAN_CODE("Learn Clean Code", "General"),
+        LEARN_TDD("Learn TDD", "General"),
+        LEARN_CLEAN_ARCHITECTURE("Learn Clean Architecture", "General"),
 
     //SOFTWARES
-        LEARN_VSCODE("Learn Visual studio Code"),
-        LEARN_INTELLIJ("Learn IntelliJ"),
-        LEARN_ANDROID("Learn Android Studio"),
+        LEARN_VSCODE("Learn Visual studio Code", "General"),
+        LEARN_INTELLIJ("Learn IntelliJ", "General"),
+        LEARN_ANDROID("Learn Android Studio", "Android"),
     //Frameworks
-        LEARN_ANGULAR("Learn Angular"),
-        LEARN_REACT("Learn React"),
-        LEARN_SPRING("Learn Spring"),
+        LEARN_ANGULAR("Learn Angular", "Frontend"),
+        LEARN_REACT("Learn React", "Frontend"),
+        LEARN_SPRING("Learn Spring", "Frontend"),
 
     //Databases
-        LEARN_MYSQL("Learn MySQL"),
-        LEARN_POSTGRES("Learn PostgresSQL"),
-        LEARN_DOCKER("Learn Docker"),
-        LEARN_FIREBASE("Learn Firebase");
+        LEARN_MYSQL("Learn MySQL", "Backend"),
+        LEARN_POSTGRES("Learn PostgresSQL", "Backend"),
+        LEARN_DOCKER("Learn Docker", "Backend"),
+        LEARN_FIREBASE("Learn Firebase", "Backend");
 
-    private String status;
+    private String topic;
+    private String condition;
 
-    StageEnum(String status) {
-        this.status = status;
+
+
+    StageEnum(String status, String condition) {
+        this.topic = status;
+        this.condition = condition;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTopic(String status) {
+        this.topic = status;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }
