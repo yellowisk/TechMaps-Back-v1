@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class Frontend extends Roadmap {
     private RoadmapLanguage roadmapLanguage;
-    private List<Stage> stages;
+
 
     public Frontend(UUID id, String title, RoadmapStatus roadmapStatus,
                     LocalDateTime startTime, LocalDateTime undoneDuration,
@@ -60,7 +60,6 @@ public class Frontend extends Roadmap {
     public String toString() {
         return "Frontend{" +
                 "roadmapLanguage=" + roadmapLanguage +
-                ", stages=" + stages +
                 '}';
     }
 }

@@ -75,7 +75,6 @@ public class Backend extends Roadmap{
     public String toString() {
         return "Backend{" +
                 "roadmapLanguage=" + roadmapLanguage +
-                ", stages=" + stages +
                 '}';
     }
 }
