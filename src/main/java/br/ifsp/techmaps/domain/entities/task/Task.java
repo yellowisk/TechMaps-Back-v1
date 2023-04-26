@@ -1,18 +1,25 @@
 package br.ifsp.techmaps.domain.entities.task;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
+@Table(name = "task")
 public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID taskId;
+    @ManyToOne
     private Stage stage;
     private String title;
     private String description;
     private Date date;
     private Time hour;
+    @OneToOne
     private TaskGit commitTag;
 
     public Task(UUID taskId, Stage stage, String title, Date date, Time hour) {
@@ -40,6 +47,10 @@ public class Task {
         this.date = date;
         this.hour = hour;
         this.commitTag = commitTag;
+    }
+
+    public Task() {
+
     }
 
     public UUID getTaskId() {

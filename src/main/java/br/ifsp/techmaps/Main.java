@@ -1,6 +1,5 @@
 package br.ifsp.techmaps;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Frontend;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
@@ -8,21 +7,44 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
-        Frontend roadmap1 = new Frontend(UUID.randomUUID(), "Frontend", RoadmapStatus.UNDONE, LocalDateTime.now(), RoadmapLanguage.JAVASCRIPT);
-        roadmap1.createStage(StageEnum.LEARN_VSCODE, StageStatus.UNDONE, LocalDateTime.now());
-        roadmap1.createStage(StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE, LocalDateTime.now());
-        roadmap1.createStage(StageEnum.LEARN_JAVA, StageStatus.UNDONE, LocalDateTime.now());
-        roadmap1.createStage(StageEnum.LEARN_CSS, StageStatus.UNDONE, LocalDateTime.now());
-        Roadmap roadmap2 = Frontend.createFrontend("Frontend", RoadmapStatus.UNDONE, LocalDateTime.now(), RoadmapLanguage.JAVA);
+        System.out.println("*-*-* Standard Frontend roadmap *-*-* \n");
+        Roadmap roadmap1 = Roadmap.createFrontend("Frontend", RoadmapStatus.UNDONE, RoadmapLanguage.JAVASCRIPT, LocalDateTime.now());
+            roadmap1.createStage(StageEnum.LEARN_VSCODE, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap1.createStage(StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap1.createStage(StageEnum.LEARN_JAVA, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap1.createStage(StageEnum.LEARN_CSS, StageStatus.UNDONE, LocalDateTime.now());
+        System.out.println(roadmap1);
+        System.out.println(roadmap1.getStages() + "\n\n\n");
+
+        System.out.println("*-*-* Frontend roadmap with incorrect language *-*-* \n");
+        Roadmap roadmap2 = Roadmap.createFrontend("Frontend", RoadmapStatus.UNDONE, RoadmapLanguage.JAVA, LocalDateTime.now());
+        roadmap2.createStage(StageEnum.LEARN_VSCODE, StageStatus.UNDONE, LocalDateTime.now());
         roadmap2.createStage(StageEnum.LEARN_JAVA, StageStatus.UNDONE, LocalDateTime.now());
         roadmap2.createStage(StageEnum.LEARN_CSS, StageStatus.UNDONE, LocalDateTime.now());
-        System.out.println(roadmap1.getStages());
-        System.out.println(roadmap1);
         System.out.println(roadmap2);
+        System.out.println(roadmap2.getStages() + "\n\n\n");
+
+        System.out.println("*-*-* Standard Backend roadmap *-*-* \n");
+        Roadmap roadmap3 = Roadmap.createBackEnd("Backend", RoadmapStatus.UNDONE, RoadmapLanguage.PYTHON, LocalDateTime.now());
+            roadmap3.createStage(StageEnum.LEARN_VSCODE, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap3.createStage(StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap3.createStage(StageEnum.LEARN_JAVA, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap3.createStage(StageEnum.LEARN_JS, StageStatus.UNDONE, LocalDateTime.now());
+            roadmap3.createStage(StageEnum.LEARN_SPRING, StageStatus.UNDONE, LocalDateTime.now());
+        System.out.println(roadmap3);
+        System.out.println(roadmap3.getStages() + "\n\n\n");
+
+        System.out.println("*-*-* Backend roadmap with incorrect language *-*-* \n");
+        Roadmap roadmap4 = Roadmap.createBackEnd("Backend", RoadmapStatus.UNDONE, RoadmapLanguage.JAVASCRIPT, LocalDateTime.now());
+        roadmap4.createStage(StageEnum.LEARN_INTELLIJ, StageStatus.UNDONE, LocalDateTime.now());
+        roadmap4.createStage(StageEnum.LEARN_JAVA, StageStatus.UNDONE, LocalDateTime.now());
+        roadmap4.createStage(StageEnum.LEARN_JS, StageStatus.UNDONE, LocalDateTime.now());
+        roadmap4.createStage(StageEnum.LEARN_SPRING, StageStatus.UNDONE, LocalDateTime.now());
+        System.out.println(roadmap4);
+        System.out.println(roadmap4.getStages() + "\n\n\n");
     }
 
 }

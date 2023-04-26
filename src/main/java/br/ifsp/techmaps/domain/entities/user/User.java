@@ -1,16 +1,21 @@
 package br.ifsp.techmaps.domain.entities.user;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "users")
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String name;
     private String email;
     private String password;
+    @OneToMany
     private List<Roadmap> roadmaps;
     private String github;
 
@@ -33,6 +38,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.github = github;
+    }
+
+    public User() {
+
     }
 
     public UUID getId() {

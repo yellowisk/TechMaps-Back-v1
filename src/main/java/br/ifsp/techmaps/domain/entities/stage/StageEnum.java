@@ -40,7 +40,7 @@ public enum StageEnum {
     //Frameworks
         LEARN_ANGULAR("Learn Angular", "Frontend"),
         LEARN_REACT("Learn React", "Frontend"),
-        LEARN_SPRING("Learn Spring", "Frontend"),
+        LEARN_SPRING("Learn Spring", "Backend"),
 
     //Databases
         LEARN_MYSQL("Learn MySQL", "Backend"),
