@@ -4,6 +4,7 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.stage.StageType;
+import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 
@@ -20,6 +21,7 @@ public class Roadmap {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID id;
+    private User user;
     private String title;
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
@@ -33,11 +35,12 @@ public class Roadmap {
     public Roadmap() {
     }
 
-    public Roadmap(UUID id, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
+    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
                    RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
                    LocalDateTime undoneDuration)
     {
         this.id = id;
+        this.user = user;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
@@ -46,10 +49,11 @@ public class Roadmap {
         this.undoneDuration = undoneDuration;
     }
 
-    public Roadmap(UUID id, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
+    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
                    RoadmapLanguage roadmapLanguage, LocalDateTime startTime)
     {
         this.id = id;
+        this.user = user;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
@@ -57,9 +61,10 @@ public class Roadmap {
         this.startTime = startTime;
     }
 
-    public Roadmap(UUID id, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus, LocalDateTime startTime)
+    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus, LocalDateTime startTime)
     {
         this.id = id;
+        this.user = user;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
@@ -72,6 +77,10 @@ public class Roadmap {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+    public User getUser() { return user; }
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -162,29 +171,50 @@ public class Roadmap {
         }
     }
 
-    public static Roadmap createFrontend(String title,
+    public static Roadmap createFrontend(String title, User user,
                                           RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
                                           LocalDateTime startTime)
     {
             CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
+
             if (roadmapLanguage == null || collectRoadmapType.getFrontList().contains(roadmapLanguage)) {
-                return new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
+                Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
+                if (user.getRoadmaps() == null) {
+                    user.setRoadmaps(new ArrayList<>());
+                    user.getRoadmaps().add(roadmap);
+                } else {
+                    user.getRoadmaps().add(roadmap);
+                }
+                return roadmap;
             } else {
                 System.out.println("Language " + roadmapLanguage + " not allowed");
-                return new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, startTime);
+                Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, startTime);
+                user.getRoadmaps().add(roadmap);
+                return roadmap;
             }
     }
 
-    public static Roadmap createBackEnd(String title,
+    public static Roadmap createBackEnd(String title, User user,
                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
                                         LocalDateTime startTime)
-    {       CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
-            if (roadmapLanguage == null || collectRoadmapType.getBackList().contains(roadmapLanguage)) {
-                return new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, roadmapLanguage, startTime);
+    {
+        CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
+
+        if (roadmapLanguage == null || collectRoadmapType.getBackList().contains(roadmapLanguage)) {
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.BACKEND, roadmapStatus, roadmapLanguage, startTime);
+            if (user.getRoadmaps() == null) {
+                user.setRoadmaps(new ArrayList<>());
+                user.getRoadmaps().add(roadmap);
             } else {
-                System.out.println("Language " + roadmapLanguage + " not allowed");
-                return new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, startTime);
+                user.getRoadmaps().add(roadmap);
             }
+            return roadmap;
+        } else {
+            System.out.println("Language " + roadmapLanguage + " not allowed");
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.BACKEND, roadmapStatus, startTime);
+            user.getRoadmaps().add(roadmap);
+            return roadmap;
+        }
     }
 
     @Override

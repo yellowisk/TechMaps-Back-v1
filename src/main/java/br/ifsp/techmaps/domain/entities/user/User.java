@@ -19,25 +19,28 @@ public class User {
     private List<Roadmap> roadmaps;
     private String github;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, Roadmap roadmap) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roadmaps = null;
     }
 
-    public User(UUID id, String name, String email, String password) {
+    public User(UUID id, String name, String email, String password, Roadmap roadmap) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roadmaps = null;
     }
 
-    public User(UUID id, String name, String email, String password, String github) {
+    public User(UUID id, String name, String email, String password, Roadmap roadmap, String github) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.github = github;
+        this.roadmaps = null;
     }
 
     public User() {
@@ -70,6 +73,26 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<Roadmap> getRoadmaps() {
+        return roadmaps;
+    }
+
+    public void setRoadmaps(List<Roadmap> roadmaps) {
+        this.roadmaps = roadmaps;
+    }
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
     }
 
     @Override
