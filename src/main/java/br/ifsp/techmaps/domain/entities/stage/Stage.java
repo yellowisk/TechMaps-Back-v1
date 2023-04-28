@@ -2,8 +2,11 @@ package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -89,10 +92,24 @@ public class Stage {
             throw new RuntimeException("Concluded stages don't stores new tasks.");
         } else {
             this.tasks.add(task);
+
         }
     }
 
-
+    public static Task createTask(Stage stage, String title, String link, Date date, Time hour) {
+        User user = new User();
+        Task task = new Task(UUID.randomUUID(), stage, title, link, date, hour);
+        if (task.getStage().getStageStatus() == StageStatus.DONE) {
+            throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
+        } else {
+            if (user.getGithub() == null) {
+                task.setCommitTag(null);
+            } else {
+                task.createCommitTag(task);
+            }
+            return task;
+        }
+    }
 
     @Override
     public String toString() {

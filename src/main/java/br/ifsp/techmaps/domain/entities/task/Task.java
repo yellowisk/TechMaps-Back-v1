@@ -1,6 +1,8 @@
 package br.ifsp.techmaps.domain.entities.task;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 import java.sql.Time;
@@ -16,11 +18,12 @@ public class Task {
     @ManyToOne
     private Stage stage;
     private String title;
-    private String description;
+
+    private String link;
     private Date date;
     private Time hour;
-    @OneToOne
-    private TaskGit commitTag;
+
+    private String commitTag;
 
     public Task(UUID taskId, Stage stage, String title, Date date, Time hour) {
         this.taskId = taskId;
@@ -30,28 +33,26 @@ public class Task {
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String description, Date date, Time hour) {
+    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.description = description;
+        this.link = link;
         this.date = date;
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String description, Date date, Time hour, TaskGit commitTag) {
+    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour, String commitTag) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.description = description;
+        this.link = link;
         this.date = date;
         this.hour = hour;
         this.commitTag = commitTag;
     }
 
-    public Task() {
-
-    }
+    public Task() {}
 
     public UUID getTaskId() {
         return taskId;
@@ -77,13 +78,9 @@ public class Task {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getLink() {return link;}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setLink(String link) {this.link = link;}
 
     public Date getDate() {
         return date;
@@ -101,13 +98,14 @@ public class Task {
         this.hour = hour;
     }
 
-    public TaskGit getCommitTag() {
-        return commitTag;
+    public String getCommitTag() {return commitTag;}
+
+    public void setCommitTag(String commitTag) {this.commitTag = commitTag;}
+
+    public void createCommitTag(Task task) {
+        task.setCommitTag("["+task.getTitle()+"| finalCommit]");
     }
 
-    public void setCommitTag(TaskGit commitTag) {
-        this.commitTag = commitTag;
-    }
 
     @Override
     public String toString() {
@@ -115,7 +113,7 @@ public class Task {
                 "taskId=" + taskId +
                 ", stage=" + stage +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                ", link='" + link + '\'' +
                 ", date=" + date +
                 ", hour=" + hour +
                 ", commitTag=" + commitTag +
