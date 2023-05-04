@@ -1,11 +1,14 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -108,6 +111,17 @@ public class Stage {
             }
             return task;
         }
+    }
+
+    public int findStageCommits(List<Task> tasks) {
+        ArrayList<TaskCommit> stageCommits = new ArrayList<TaskCommit>();
+        for (Task task : tasks) {
+            if (task.getTaskCommit().getState() == CommitState.STAGED) {
+                stageCommits.add(task.getTaskCommit());
+            }
+        }
+        int numCommits = stageCommits.size();
+        return numCommits;
     }
 
     @Override

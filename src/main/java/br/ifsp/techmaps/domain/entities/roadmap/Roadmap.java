@@ -5,6 +5,7 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.stage.StageType;
+import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
@@ -234,6 +235,15 @@ public class Roadmap {
     public Duration calculateDuration(Roadmap roadmap) {
         Duration duration = Duration.between(this.startTime, this.undoneDuration);
         return duration;
+    }
+
+    public int findRoadmapCommits() {
+        int roadmapCommits = 0;
+        for (Stage stages : stages) {
+            int stageCommit = stages.findStageCommits(stages.getTasks());
+            roadmapCommits = roadmapCommits + stageCommit;
+        }
+        return roadmapCommits;
     }
 
     @Override

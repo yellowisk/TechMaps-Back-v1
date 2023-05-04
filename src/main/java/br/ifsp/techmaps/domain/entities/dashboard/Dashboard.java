@@ -3,6 +3,7 @@ package br.ifsp.techmaps.domain.entities.dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
+import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "roadmap")
+@Table(name = "dashboard")
 public class Dashboard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,8 +84,10 @@ public class Dashboard {
 
     public void roadmapDisplayer() {
         for (Roadmap concludedRoadmap : concludedRoadmaps) {
+            concludedRoadmap.getTitle();
+            concludedRoadmap.getUndoneDuration();
+            concludedRoadmap.findRoadmapCommits();
         }
     }
-
 
 }
