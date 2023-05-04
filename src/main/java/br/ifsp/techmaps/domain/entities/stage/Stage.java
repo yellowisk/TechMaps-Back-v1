@@ -89,10 +89,9 @@ public class Stage {
 
     public void addTask(Task task) {
         if (this.stageStatus == StageStatus.DONE) {
-            throw new RuntimeException("Concluded stages don't stores new tasks.");
+            throw new RuntimeException("Concluded stages don't store new tasks.");
         } else {
             this.tasks.add(task);
-
         }
     }
 
@@ -103,9 +102,9 @@ public class Stage {
             throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
         } else {
             if (user.getGithub() == null) {
-                task.setCommitTag(null);
+                task.getTaskCommit().setCommitTag("");
             } else {
-                task.createCommitTag(task);
+                task.getTaskCommit().setCommitTag(task);
             }
             return task;
         }

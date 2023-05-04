@@ -23,7 +23,7 @@ public class Task {
     private Date date;
     private Time hour;
 
-    private String commitTag;
+    private TaskCommit taskCommit;
 
     public Task(UUID taskId, Stage stage, String title, Date date, Time hour) {
         this.taskId = taskId;
@@ -42,14 +42,14 @@ public class Task {
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour, String commitTag) {
+    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour, TaskCommit taskCommit) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
         this.link = link;
         this.date = date;
         this.hour = hour;
-        this.commitTag = commitTag;
+        this.taskCommit = taskCommit;
     }
 
     public Task() {}
@@ -98,14 +98,13 @@ public class Task {
         this.hour = hour;
     }
 
-    public String getCommitTag() {return commitTag;}
-
-    public void setCommitTag(String commitTag) {this.commitTag = commitTag;}
-
-    public void createCommitTag(Task task) {
-        task.setCommitTag("["+task.getTitle()+"| finalCommit]");
+    public TaskCommit getTaskCommit() {
+        return taskCommit;
     }
 
+    public void setTaskCommit(TaskCommit taskCommit) {
+        this.taskCommit = taskCommit;
+    }
 
     @Override
     public String toString() {
@@ -116,7 +115,7 @@ public class Task {
                 ", link='" + link + '\'' +
                 ", date=" + date +
                 ", hour=" + hour +
-                ", commitTag=" + commitTag +
+                ", taskCommit=" + taskCommit +
                 '}';
     }
 }
