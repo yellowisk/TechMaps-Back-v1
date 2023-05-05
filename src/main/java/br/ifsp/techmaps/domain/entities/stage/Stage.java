@@ -24,6 +24,7 @@ public class Stage {
     private StageStatus stageStatus;
     @OneToMany
     private List<Task> tasks;
+    private Integer stageCommit;
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus, List<Task> tasks) {
         this.stageId = stageId;
@@ -90,13 +91,7 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    public void addTask(Task task) {
-        if (this.stageStatus == StageStatus.DONE) {
-            throw new RuntimeException("Concluded stages don't store new tasks.");
-        } else {
-            this.tasks.add(task);
-        }
-    }
+    //TODO: BRING TO USE CASE
 
     public static Task createTask(Stage stage, String title, String link, Date date, Time hour) {
         User user = new User();

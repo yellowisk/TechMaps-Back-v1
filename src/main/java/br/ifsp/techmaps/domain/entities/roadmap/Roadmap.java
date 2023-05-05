@@ -24,6 +24,7 @@ public class Roadmap {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID id;
+    @ManyToOne
     private User user;
     private String title;
     private RoadmapType type;
@@ -34,6 +35,7 @@ public class Roadmap {
 
     @OneToMany
     private List<Stage> stages;
+    private Integer roadmapCommits;
 
     public Roadmap() {
     }
@@ -143,6 +145,7 @@ public class Roadmap {
         this.stages = stages;
     }
 
+    //TODO: BRING TO USE CASE
     public void createStage(StageEnum stageEnum, StageStatus stageStatus, LocalDateTime startTime) {
         Stage stage = new Stage(UUID.randomUUID(), this, stageEnum, StageStatus.UNDONE);
         StageType stageType = new StageType();
@@ -174,6 +177,8 @@ public class Roadmap {
         }
     }
 
+    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
+    //TODO: BRING TO USE CASE
     public static Roadmap createFrontend(String title, User user,
                                          RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
                                          LocalDateTime startTime)
@@ -197,6 +202,8 @@ public class Roadmap {
         }
     }
 
+    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
+    //TODO: BRING TO USE CASE
     public static Roadmap createBackEnd(String title, User user,
                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
                                         LocalDateTime startTime)
@@ -220,6 +227,7 @@ public class Roadmap {
         }
     }
 
+    //TODO: BRING TO USE CASE
     public void concludeRoadmap() {
         Dashboard dashboard = new Dashboard();
         if (this.roadmapStatus == RoadmapStatus.UNDONE) {
@@ -232,11 +240,13 @@ public class Roadmap {
         }
     }
 
+    //Stays here (for now)
     public Duration calculateDuration(Roadmap roadmap) {
         Duration duration = Duration.between(this.startTime, this.undoneDuration);
         return duration;
     }
 
+    //Stays here (for now)
     public int findRoadmapCommits() {
         int roadmapCommits = 0;
         for (Stage stages : stages) {

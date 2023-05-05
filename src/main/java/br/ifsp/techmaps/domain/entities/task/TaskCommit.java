@@ -1,9 +1,18 @@
 package br.ifsp.techmaps.domain.entities.task;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
+@Entity
+@Table(name = "task_commit")
 public class TaskCommit {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID commitId;
+    @OneToOne
+    private Task task;
+
     private String commitTag;
     private CommitState state;
 
@@ -40,12 +49,10 @@ public class TaskCommit {
         this.state = state;
     }
 
+    //TODO: BRING TO USE CASE
     public void setCommitTag(Task task) {
         TaskCommit taskCommit = new TaskCommit();
         taskCommit.setCommitTag("["+task.getTitle()+"| finalCommit]");
     }
 
-    public void stageCommit(TaskCommit taskCommit) {
-        taskCommit.setState(CommitState.STAGED);
-    }
 }
