@@ -21,6 +21,7 @@ public class Roadmap {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID id;
+    @ManyToOne
     private User user;
     private String title;
     private RoadmapType type;
