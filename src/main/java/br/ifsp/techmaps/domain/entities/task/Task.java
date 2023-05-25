@@ -25,7 +25,9 @@ public class Task {
     @OneToOne
     private TaskCommit taskCommit;
 
-    public Task(UUID taskId, Stage stage, String title, Date date, Time hour) {
+    public Task(UUID taskId, Stage stage,
+                String title, Date date,
+                Time hour) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
@@ -33,7 +35,9 @@ public class Task {
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour) {
+    public Task(UUID taskId, Stage stage,
+                String title, String link,
+                Date date, Time hour) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
@@ -42,7 +46,10 @@ public class Task {
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String link, Date date, Time hour, TaskCommit taskCommit) {
+    public Task(UUID taskId, Stage stage,
+                String title, String link,
+                Date date, Time hour,
+                TaskCommit taskCommit) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;

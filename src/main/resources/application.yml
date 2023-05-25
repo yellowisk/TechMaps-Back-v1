@@ -1,6 +1,32 @@
-server:
-  port: 8080
-
 spring:
-  main:
-    web-application-type: none
+  application:
+    name: techmaps-application
+  datasource:
+    url: jdbc:postgresql://localhost:5432/techmaps
+    username: techmaps-app
+    password: techmaps-app
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialetc: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+
+  queries:
+    sql:
+      task-dao:
+        insert: >
+            task: INSERT INTO techmaps_platform.task (id, name, description, status, created_at, updated_at, user_id) VALUES (:id, :name, :description, :status, :createdAt, :updatedAt, :userId)
+        update: >
+            task: UPDATE techmaps_platform.taskk SET name = :name, description = :description, status = :status, updated_at = :updatedAt WHERE id = :id
+        delete: >
+            task: DELETE FROM techmaps_platform.task WHERE id = :id
+        exists:
+            task-by-id: SELECT EXISTS(SELECT 1 FROM techmaps_platform.task WHERE id = :id)
+        select:
+          task-by-id: SELECT * FROM task WHERE id = :id
+          task-by-user-id: SELECT * FROM task WHERE user_id = :userId
+          task-by-user-id-and-status: SELECT * FROM task WHERE user_id = :userId AND status = :status
+          task-all: SELECT * FROM techmaps_platform.task
