@@ -28,16 +28,6 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
-    public Task createNewTask(CreateTaskRequest createTaskRequest) {
-        return null;
-    }
-
-    @Override
-    public Task createNewTask(CreateTaskRequest createTaskRequest) {
-        return null;
-    }
-
-    @Override
     public Task findTaskById(UUID taskId) {
         return null;
     }
@@ -47,13 +37,7 @@ public class taskCRUDImpl implements TaskCRUD {
         return null;
     }
 
-    @Override
-    public Task updateTask(UUID stageId, CreateTaskRequest createTaskRequest) {
-        return null;
-    }
-
-    @Override
-    public Task updateTask(UUID stageId, CreateTaskRequest createTaskRequest) {
-        return null;
+    public TaskDAO getTaskDAO() {
+        return taskDAO;
     }
 }
