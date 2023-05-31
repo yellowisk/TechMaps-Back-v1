@@ -2,7 +2,6 @@ package br.ifsp.techmaps.web.model.task.request;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import javax.validation.Valid;
 
 import org.jetbrains.annotations.NotNull;
 
