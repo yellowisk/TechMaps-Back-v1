@@ -47,8 +47,14 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-    public Stage() {
+    public Stage(UUID stageId) {
+        this.stageId = stageId;
+    }
 
+    public Stage() {}
+
+    public static Stage createStageWithOnlyId(UUID stageId) {
+        return new Stage(stageId);
     }
 
     public UUID getStageId() {

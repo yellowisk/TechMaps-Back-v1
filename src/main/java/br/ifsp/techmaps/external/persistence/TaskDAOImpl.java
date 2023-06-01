@@ -1,13 +1,16 @@
 package br.ifsp.techmaps.external.persistence;
 
+import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLDataException;
@@ -37,17 +40,37 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public Task saveNewTask(Task task) {
-        return null;
+        UUID taskId = UUID.randomUUID();
+        jdbcTemplate.update(insertTaskQuery, taskId, task.getStage(), task.getTitle(), task.getTitle(), task.getDate(), task.getHour());
+            return Task.createWithOnlyId(taskId);
     }
 
     @Override
-    public List<Task> findAllTasks() {
-        return null;
+    public List<Task> findAllTasks(UUID stageId) {
+        List<Task> tasks = jdbcTemplate.query(selectAllTasksQuery, (rs, rowNum) -> {
+            Task task = new Task();
+            task.setTaskId(UUID.fromString(rs.getString("id")));
+            Stage.createStageWithOnlyId((UUID) rs.getObject("stage_id"));
+            task.setTitle(rs.getString("title"));
+            task.setDate(rs.getDate("date"));
+            task.setHour(rs.getTime("hour"));
+            return task;
+        }, stageId);
+
+        return tasks;
     }
 
     @Override
     public Optional<Task> findTaskById(UUID taskId) {
-        return Optional.empty();
+        try {
+            Task task = jdbcTemplate.query(selectTaskByIdQuery, (rs, rowNum) -> {
+                UUID id = (UUID) rs.getObject("id");
+
+            }, taskId);
+            return Optional.of(task);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

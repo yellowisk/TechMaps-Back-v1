@@ -8,7 +8,7 @@ import java.util.*;
 public interface TaskDAO {
 
     Task saveNewTask(Task task);
-    List<Task> findAllTasks();
+    List<Task> findAllTasks(UUID stageId);
     Optional<Task> findTaskById(UUID taskId);
     Optional<Task> findTasksByRoadmapId(UUID roadmapId);
     Task updateTask(Task task);
