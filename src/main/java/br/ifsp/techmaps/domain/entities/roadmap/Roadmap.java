@@ -1,13 +1,16 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
+import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.stage.StageType;
+import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class Roadmap {
 
     @OneToMany
     private List<Stage> stages;
+    private Integer roadmapCommits;
 
     public Roadmap() {
     }
@@ -141,6 +145,7 @@ public class Roadmap {
         this.stages = stages;
     }
 
+    //TODO: BRING TO USE CASE
     public void createStage(StageEnum stageEnum, StageStatus stageStatus, LocalDateTime startTime) {
         Stage stage = new Stage(UUID.randomUUID(), this, stageEnum, StageStatus.UNDONE);
         StageType stageType = new StageType();
@@ -172,29 +177,33 @@ public class Roadmap {
         }
     }
 
+    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
+    //TODO: BRING TO USE CASE
     public static Roadmap createFrontend(String title, User user,
-                                          RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                                          LocalDateTime startTime)
+                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
+                                         LocalDateTime startTime)
     {
-            CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
+        CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
 
-            if (roadmapLanguage == null || collectRoadmapType.getFrontList().contains(roadmapLanguage)) {
-                Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
-                if (user.getRoadmaps() == null) {
-                    user.setRoadmaps(new ArrayList<>());
-                    user.getRoadmaps().add(roadmap);
-                } else {
-                    user.getRoadmaps().add(roadmap);
-                }
-                return roadmap;
-            } else {
-                System.out.println("Language " + roadmapLanguage + " not allowed");
-                Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, startTime);
+        if (roadmapLanguage == null || collectRoadmapType.getFrontList().contains(roadmapLanguage)) {
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
+            if (user.getRoadmaps() == null) {
+                user.setRoadmaps(new ArrayList<>());
                 user.getRoadmaps().add(roadmap);
-                return roadmap;
+            } else {
+                user.getRoadmaps().add(roadmap);
             }
+            return roadmap;
+        } else {
+            System.out.println("Language " + roadmapLanguage + " not allowed");
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, startTime);
+            user.getRoadmaps().add(roadmap);
+            return roadmap;
+        }
     }
 
+    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
+    //TODO: BRING TO USE CASE
     public static Roadmap createBackEnd(String title, User user,
                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
                                         LocalDateTime startTime)
@@ -216,6 +225,35 @@ public class Roadmap {
             user.getRoadmaps().add(roadmap);
             return roadmap;
         }
+    }
+
+    //TODO: BRING TO USE CASE
+    public void concludeRoadmap() {
+        Dashboard dashboard = new Dashboard();
+        if (this.roadmapStatus == RoadmapStatus.UNDONE) {
+            this.roadmapStatus = RoadmapStatus.DONE;
+            this.undoneDuration = LocalDateTime.now();
+            dashboard.getConcludedRoadmaps().add(this);
+            calculateDuration(this);
+        } else {
+            System.out.println("Roadmap already concluded");
+        }
+    }
+
+    //Stays here (for now)
+    public Duration calculateDuration(Roadmap roadmap) {
+        Duration duration = Duration.between(this.startTime, this.undoneDuration);
+        return duration;
+    }
+
+    //Stays here (for now)
+    public int findRoadmapCommits() {
+        int roadmapCommits = 0;
+        for (Stage stages : stages) {
+            int stageCommit = stages.findStageCommits(stages.getTasks());
+            roadmapCommits = roadmapCommits + stageCommit;
+        }
+        return roadmapCommits;
     }
 
     @Override

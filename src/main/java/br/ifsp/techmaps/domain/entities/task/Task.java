@@ -16,13 +16,40 @@ public class Task {
     @ManyToOne
     private Stage stage;
     private String title;
-    private String description;
+
+    private String link;
     private Date date;
     private Time hour;
-    @OneToOne
-    private TaskGit commitTag;
 
-    public Task(UUID taskId, Stage stage, String title, Date date, Time hour) {
+    private TaskCommit taskCommit;
+
+    public Task(UUID taskId, Stage stage,
+                String title, String link,
+                Date date, Time hour) {
+        this.taskId = taskId;
+        this.stage = stage;
+        this.title = title;
+        this.link = link;
+        this.date = date;
+        this.hour = hour;
+    }
+
+    public Task(UUID taskId, Stage stage,
+                String title, String link,
+                Date date, Time hour,
+                TaskCommit taskCommit) {
+        this.taskId = taskId;
+        this.stage = stage;
+        this.title = title;
+        this.link = link;
+        this.date = date;
+        this.hour = hour;
+        this.taskCommit = taskCommit;
+    }
+
+    public Task(UUID taskId, Stage stage,
+                String title, Date date,
+                Time hour) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
@@ -30,28 +57,15 @@ public class Task {
         this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String description, Date date, Time hour) {
+    private Task(UUID taskId) {
         this.taskId = taskId;
-        this.stage = stage;
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.hour = hour;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String description, Date date, Time hour, TaskGit commitTag) {
-        this.taskId = taskId;
-        this.stage = stage;
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.hour = hour;
-        this.commitTag = commitTag;
+    public static Task createWithOnlyId(UUID taskId) {
+        return new Task(taskId);
     }
 
-    public Task() {
-
-    }
+    public Task() {}
 
     public UUID getTaskId() {
         return taskId;
@@ -77,13 +91,9 @@ public class Task {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getLink() {return link;}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setLink(String link) {this.link = link;}
 
     public Date getDate() {
         return date;
@@ -101,12 +111,12 @@ public class Task {
         this.hour = hour;
     }
 
-    public TaskGit getCommitTag() {
-        return commitTag;
+    public TaskCommit getTaskCommit() {
+        return taskCommit;
     }
 
-    public void setCommitTag(TaskGit commitTag) {
-        this.commitTag = commitTag;
+    public void setTaskCommit(TaskCommit taskCommit) {
+        this.taskCommit = taskCommit;
     }
 
     @Override
@@ -115,10 +125,10 @@ public class Task {
                 "taskId=" + taskId +
                 ", stage=" + stage +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                ", link='" + link + '\'' +
                 ", date=" + date +
                 ", hour=" + hour +
-                ", commitTag=" + commitTag +
+                ", taskCommit=" + taskCommit +
                 '}';
     }
 }

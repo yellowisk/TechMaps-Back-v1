@@ -1,9 +1,15 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.task.TaskCommit;
+import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -18,6 +24,7 @@ public class Stage {
     private StageStatus stageStatus;
     @OneToMany
     private List<Task> tasks;
+    private Integer stageCommit;
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus, List<Task> tasks) {
         this.stageId = stageId;
@@ -40,8 +47,14 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-    public Stage() {
+    public Stage(UUID stageId) {
+        this.stageId = stageId;
+    }
 
+    public Stage() {}
+
+    public static Stage createStageWithOnlyId(UUID stageId) {
+        return new Stage(stageId);
     }
 
     public UUID getStageId() {
@@ -84,15 +97,33 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    public void addTask(Task task) {
-        if (this.stageStatus == StageStatus.DONE) {
-            throw new RuntimeException("Concluded stages don't stores new tasks.");
+    //TODO: BRING TO USE CASE
+
+    public static Task createTask(Stage stage, String title, String link, Date date, Time hour) {
+        User user = new User();
+        Task task = new Task(UUID.randomUUID(), stage, title, link, date, hour);
+        if (task.getStage().getStageStatus() == StageStatus.DONE) {
+            throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
         } else {
-            this.tasks.add(task);
+            if (user.getGithub() == null) {
+                task.getTaskCommit().setCommitTag("");
+            } else {
+                task.getTaskCommit().setCommitTag(task);
+            }
+            return task;
         }
     }
 
-
+    public int findStageCommits(List<Task> tasks) {
+        ArrayList<TaskCommit> stageCommits = new ArrayList<TaskCommit>();
+        for (Task task : tasks) {
+            if (task.getTaskCommit().getState() == CommitState.STAGED) {
+                stageCommits.add(task.getTaskCommit());
+            }
+        }
+        int numCommits = stageCommits.size();
+        return numCommits;
+    }
 
     @Override
     public String toString() {
