@@ -1,4 +1,12 @@
 package br.ifsp.techmaps.external.persistence;
 
-public class StageDAOImpl {
+import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
+
+import java.util.UUID;
+
+public class StageDAOImpl implements StageDAO {
+    @Override
+    public Boolean StageExists(UUID stageId) {
+        return null;
+    }
 }

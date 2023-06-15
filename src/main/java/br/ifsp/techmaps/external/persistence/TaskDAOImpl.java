@@ -63,9 +63,9 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Optional<Task> findTaskById(UUID taskId) {
         try {
-            Task task = jdbcTemplate.query(selectTaskByIdQuery, (rs, rowNum) -> {
+            Task task = jdbcTemplate.queryForObject(selectTaskByIdQuery, (rs, rowNum) -> {
                 UUID id = (UUID) rs.getObject("id");
-
+                return Task.createWithOnlyId(id);
             }, taskId);
             return Optional.of(task);
         } catch (EmptyResultDataAccessException e) {

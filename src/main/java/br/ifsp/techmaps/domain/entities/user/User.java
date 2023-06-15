@@ -12,40 +12,63 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String name;
+    private String username;
     private String email;
     private String password;
-    @OneToMany
-    private List<Roadmap> roadmaps;
     private String github;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
 
-    public User(String name, String email, String password, Roadmap roadmap) {
-        this.name = name;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.roadmaps = null;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
-    public User(UUID id, String name, String email, String password, Roadmap roadmap) {
+    public User(UUID id, String username, String email, String password) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.roadmaps = null;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
-    public User(UUID id, String name, String email, String password, Roadmap roadmap, String github) {
+    public User(UUID id, String username, String email, String password, String github) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.github = github;
-        this.roadmaps = null;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
-    public User() {
-
+    public User(UUID id, String username, String email, String password, String github,
+                boolean isAccountNonExpired, boolean isAccountNonLocked,
+                boolean isCredentialsNonExpired, boolean isEnabled) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.github = github;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
     }
+
+    public User() {}
 
     public UUID getId() {
         return id;
@@ -55,12 +78,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -79,14 +102,6 @@ public class User {
         return password;
     }
 
-    public List<Roadmap> getRoadmaps() {
-        return roadmaps;
-    }
-
-    public void setRoadmaps(List<Roadmap> roadmaps) {
-        this.roadmaps = roadmaps;
-    }
-
     public String getGithub() {
         return github;
     }
@@ -95,11 +110,43 @@ public class User {
         this.github = github;
     }
 
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", github='" + github + '\'' +

@@ -20,30 +20,30 @@ public class Stage {
     private UUID stageId;
     @ManyToOne
     private Roadmap roadmap;
-    private StageEnum stageEnum;
+    private StageEnum theme;
     private StageStatus stageStatus;
     @OneToMany
     private List<Task> tasks;
     private Integer stageCommit;
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus, List<Task> tasks) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, List<Task> tasks) {
         this.stageId = stageId;
         this.roadmap = roadmap;
-        this.stageEnum = stageEnum;
+        this.theme = theme;
         this.stageStatus = stageStatus;
         this.tasks = tasks;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
         this.stageId = stageId;
         this.roadmap = roadmap;
-        this.stageEnum = stageEnum;
+        this.theme = theme;
         this.stageStatus = stageStatus;
     }
 
-    public Stage(Roadmap roadmap, StageEnum stageEnum, StageStatus stageStatus) {
+    public Stage(Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
         this.roadmap = roadmap;
-        this.stageEnum = stageEnum;
+        this.theme = theme;
         this.stageStatus = stageStatus;
     }
 
@@ -52,50 +52,6 @@ public class Stage {
     }
 
     public Stage() {}
-
-    public static Stage createStageWithOnlyId(UUID stageId) {
-        return new Stage(stageId);
-    }
-
-    public UUID getStageId() {
-        return stageId;
-    }
-
-    public void setStageId(UUID stageId) {
-        this.stageId = stageId;
-    }
-
-    public Roadmap getRoadmap() {
-        return roadmap;
-    }
-
-    public void setRoadmap(Roadmap roadmap) {
-        this.roadmap = roadmap;
-    }
-
-    public StageEnum getStageEnum() {
-        return stageEnum;
-    }
-
-    public void setStageEnum(StageEnum stageEnum) {
-        this.stageEnum = stageEnum;
-    }
-
-    public StageStatus getStageStatus() {
-        return stageStatus;
-    }
-
-    public void setStageStatus(StageStatus stageStatus) {
-        this.stageStatus = stageStatus;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
 
     //TODO: BRING TO USE CASE
 
@@ -125,6 +81,50 @@ public class Stage {
         return numCommits;
     }
 
+    public static Stage createStageWithOnlyId(UUID stageId) {
+        return new Stage(stageId);
+    }
+
+    public UUID getStageId() {
+        return stageId;
+    }
+
+    public void setStageId(UUID stageId) {
+        this.stageId = stageId;
+    }
+
+    public Roadmap getRoadmap() {
+        return roadmap;
+    }
+
+    public void setRoadmap(Roadmap roadmap) {
+        this.roadmap = roadmap;
+    }
+
+    public StageEnum getTheme() {
+        return theme;
+    }
+
+    public void setTheme(StageEnum theme) {
+        this.theme = theme;
+    }
+
+    public StageStatus getStageStatus() {
+        return stageStatus;
+    }
+
+    public void setStageStatus(StageStatus stageStatus) {
+        this.stageStatus = stageStatus;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public String toString() {
         return "Stage{" +
@@ -133,7 +133,7 @@ public class Stage {
                 + roadmap.getType() + "-"
                 + roadmap.getRoadmapLanguage() + "-"
                 + roadmap.getRoadmapStatus() +
-                "}, stageEnum=" + stageEnum +
+                "}, theme=" + theme +
                 ", stageStatus=" + stageStatus +
                 ", tasks=" + tasks +
                 '}';

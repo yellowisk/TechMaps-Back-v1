@@ -20,7 +20,7 @@ public class Task {
     private String link;
     private Date date;
     private Time hour;
-
+    @OneToOne
     private TaskCommit taskCommit;
 
     public Task(UUID taskId, Stage stage,

@@ -20,6 +20,7 @@ public class Dashboard {
     private List<Roadmap> concludedRoadmaps;
     @OneToMany
     private List<Task> concludedTasks;
+    @OneToMany
     private List<TaskCommit> totalCommits;
 
     private String totalTime;

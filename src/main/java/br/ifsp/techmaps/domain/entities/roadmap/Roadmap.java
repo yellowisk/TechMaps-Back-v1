@@ -23,9 +23,7 @@ public class Roadmap {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private UUID id;
-    @ManyToOne
-    private User user;
+    private UUID roadmapId;
     private String title;
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
@@ -40,12 +38,11 @@ public class Roadmap {
     public Roadmap() {
     }
 
-    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
+    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
                    RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
                    LocalDateTime undoneDuration)
     {
-        this.id = id;
-        this.user = user;
+        this.roadmapId = roadmapId;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
@@ -54,11 +51,10 @@ public class Roadmap {
         this.undoneDuration = undoneDuration;
     }
 
-    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
+    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
                    RoadmapLanguage roadmapLanguage, LocalDateTime startTime)
     {
-        this.id = id;
-        this.user = user;
+        this.roadmapId = roadmapId;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
@@ -66,26 +62,21 @@ public class Roadmap {
         this.startTime = startTime;
     }
 
-    public Roadmap(UUID id, User user, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus, LocalDateTime startTime)
+    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus, LocalDateTime startTime)
     {
-        this.id = id;
-        this.user = user;
+        this.roadmapId = roadmapId;
         this.title = title;
         this.type = roadmapType;
         this.roadmapStatus = roadmapStatus;
         this.startTime = startTime;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getRoadmapId() {
+        return roadmapId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-    public User getUser() { return user; }
-    public void setUser(User user) {
-        this.user = user;
+    public void setRoadmapId(UUID id) {
+        this.roadmapId = roadmapId;
     }
 
     public String getTitle() {
@@ -146,33 +137,33 @@ public class Roadmap {
     }
 
     //TODO: BRING TO USE CASE
-    public void createStage(StageEnum stageEnum, StageStatus stageStatus, LocalDateTime startTime) {
-        Stage stage = new Stage(UUID.randomUUID(), this, stageEnum, StageStatus.UNDONE);
+    public void createStage(StageEnum theme, StageStatus stageStatus, LocalDateTime startTime) {
+        Stage stage = new Stage(UUID.randomUUID(), this, theme, StageStatus.UNDONE);
         StageType stageType = new StageType();
 
         if (this.type == RoadmapType.FRONTEND)
-            if (stageType.getFrontList().contains(stageEnum) || stageType.getGeneralList().contains(stageEnum)) {
+            if (stageType.getFrontList().contains(theme) || stageType.getGeneralList().contains(theme)) {
                 if (stages == null) {
                     stages = new ArrayList<>();
                     stages.add(stage);
                 } else {
                     stages.add(stage);
                 }
-                System.out.println("Stage " + stageEnum + " allowed");
+                System.out.println("Stage " + theme + " allowed");
             } else {
-                System.out.println("Stage " + stageEnum +  " not allowed");
+                System.out.println("Stage " + theme +  " not allowed");
             }
         else if (this.type == RoadmapType.BACKEND) {
-            if (stageType.getBackList().contains(stageEnum) || stageType.getGeneralList().contains(stageEnum)) {
+            if (stageType.getBackList().contains(theme) || stageType.getGeneralList().contains(theme)) {
                 if (stages == null) {
                     stages = new ArrayList<>();
                     stages.add(stage);
                 } else {
                     stages.add(stage);
                 }
-                System.out.println("Stage " + stageEnum + " allowed");
+                System.out.println("Stage " + theme + " allowed");
             } else {
-                System.out.println("Stage " + stageEnum +  " not allowed");
+                System.out.println("Stage " + theme +  " not allowed");
             }
         }
     }
@@ -186,18 +177,18 @@ public class Roadmap {
         CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
 
         if (roadmapLanguage == null || collectRoadmapType.getFrontList().contains(roadmapLanguage)) {
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
-            if (user.getRoadmaps() == null) {
-                user.setRoadmaps(new ArrayList<>());
-                user.getRoadmaps().add(roadmap);
-            } else {
-                user.getRoadmaps().add(roadmap);
-            }
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
+//            if (user.getRoadmaps() == null) {
+//                user.setRoadmaps(new ArrayList<>());
+//                user.getRoadmaps().add(roadmap);
+//            } else {
+//                user.getRoadmaps().add(roadmap);
+//            }
             return roadmap;
         } else {
             System.out.println("Language " + roadmapLanguage + " not allowed");
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.FRONTEND, roadmapStatus, startTime);
-            user.getRoadmaps().add(roadmap);
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, startTime);
+//            user.getRoadmaps().add(roadmap);
             return roadmap;
         }
     }
@@ -211,18 +202,18 @@ public class Roadmap {
         CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
 
         if (roadmapLanguage == null || collectRoadmapType.getBackList().contains(roadmapLanguage)) {
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.BACKEND, roadmapStatus, roadmapLanguage, startTime);
-            if (user.getRoadmaps() == null) {
-                user.setRoadmaps(new ArrayList<>());
-                user.getRoadmaps().add(roadmap);
-            } else {
-                user.getRoadmaps().add(roadmap);
-            }
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, roadmapLanguage, startTime);
+//            if (user.getRoadmaps() == null) {
+//                user.setRoadmaps(new ArrayList<>());
+//                user.getRoadmaps().add(roadmap);
+//            } else {
+//                user.getRoadmaps().add(roadmap);
+//            }
             return roadmap;
         } else {
             System.out.println("Language " + roadmapLanguage + " not allowed");
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), user, title, RoadmapType.BACKEND, roadmapStatus, startTime);
-            user.getRoadmaps().add(roadmap);
+            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, startTime);
+//            user.getRoadmaps().add(roadmap);
             return roadmap;
         }
     }
@@ -259,7 +250,7 @@ public class Roadmap {
     @Override
     public String toString() {
         return "Roadmap{" +
-                "id=" + id +
+                "id=" + roadmapId +
                 ", title='" + title + '\'' +
                 ", type=" + type +
                 ", roadmapStatus=" + roadmapStatus +
