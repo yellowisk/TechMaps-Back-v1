@@ -4,6 +4,7 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,43 +19,39 @@ public class Task {
     private String title;
 
     private String link;
-    private Date date;
-    private Time hour;
+    private Timestamp date_creted;
+    private Timestamp date_finished;
     @OneToOne
     private TaskCommit taskCommit;
 
-    public Task(UUID taskId, Stage stage,
-                String title, String link,
-                Date date, Time hour) {
+
+    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_creted, Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
         this.link = link;
-        this.date = date;
-        this.hour = hour;
+        this.date_creted = date_creted;
+        this.date_finished = date_finished;
     }
 
-    public Task(UUID taskId, Stage stage,
-                String title, String link,
-                Date date, Time hour,
-                TaskCommit taskCommit) {
+    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_creted, Timestamp date_finished, TaskCommit taskCommit) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
         this.link = link;
-        this.date = date;
-        this.hour = hour;
+        this.date_creted = date_creted;
+        this.date_finished = date_finished;
         this.taskCommit = taskCommit;
     }
 
     public Task(UUID taskId, Stage stage,
-                String title, Date date,
-                Time hour) {
+                String title, Timestamp date_creted,
+                Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.date = date;
-        this.hour = hour;
+        this.date_creted = date_creted;
+        this.date_finished = date_finished;
     }
 
     private Task(UUID taskId) {
@@ -95,20 +92,20 @@ public class Task {
 
     public void setLink(String link) {this.link = link;}
 
-    public Date getDate() {
-        return date;
+    public Timestamp getDate_creted() {
+        return date_creted;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate_creted(Timestamp date_creted) {
+        this.date_creted = date_creted;
     }
 
-    public Time getHour() {
-        return hour;
+    public Timestamp getDate_finished() {
+        return date_finished;
     }
 
-    public void setHour(Time hour) {
-        this.hour = hour;
+    public void setDate_finished(Timestamp date_finished) {
+        this.date_finished = date_finished;
     }
 
     public TaskCommit getTaskCommit() {
@@ -119,16 +116,4 @@ public class Task {
         this.taskCommit = taskCommit;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "taskId=" + taskId +
-                ", stage=" + stage +
-                ", title='" + title + '\'' +
-                ", link='" + link + '\'' +
-                ", date=" + date +
-                ", hour=" + hour +
-                ", taskCommit=" + taskCommit +
-                '}';
-    }
 }
