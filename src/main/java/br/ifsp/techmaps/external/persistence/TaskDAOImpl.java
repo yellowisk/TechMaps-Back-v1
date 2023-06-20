@@ -21,17 +21,17 @@ public class TaskDAOImpl implements TaskDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
+    @Value("${queries.sql.task-dao.select.task-all}")
+    private String selectAllTasksQuery;
+
     @Value("${queries.sql.task-dao.select.task-by-id}")
     private String selectTaskByIdQuery;
 
     @Value("${queries.sql.task-dao.insert.task}")
     private String insertTaskQuery;
 
-    @Value("${queries.sql.task-dao.select.tasks-all}")
-    private String selectAllTasksQuery;
-
-    @Value("${queries.sql.task-dao.select.tasks-by-roadmap-id}")
-    private String selectTasksByRoadmapIdQuery;
+    @Value("${queries.sql.task-dao.select.task-by-stage-id}")
+    private String selectTasksByStageIdQuery;
 
     public TaskDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -52,15 +52,21 @@ public class Stage {
         this.stageId = stageId;
     }
 
+    public static Stage createStageWithOnlyId(UUID stageId) {
+        return new Stage(stageId);
+    }
+
     public Stage() {}
 
     //TODO: BRING TO USE CASE
 
-    public static Task createTask(Stage stage, String title, String repository_link,
-                                  Timestamp date_created, Timestamp date_finished) {
+    public static Task createTask(Stage stage, String title, String description,
+                                  String repository_link, Timestamp date_created,
+                                  Timestamp date_finished) {
         User user = new User();
         Task task = new Task(UUID.randomUUID(), stage, title,
-                repository_link, date_created, date_finished);
+                description, repository_link, date_created,
+                date_finished);
         if (task.getStage().getStageStatus() == StageStatus.DONE) {
             throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
         } else {
@@ -82,10 +88,6 @@ public class Stage {
         }
         int numCommits = stageCommits.size();
         return numCommits;
-    }
-
-    public static Stage createStageWithOnlyId(UUID stageId) {
-        return new Stage(stageId);
     }
 
     public UUID getStageId() {
@@ -128,17 +130,11 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    @Override
-    public String toString() {
-        return "Stage{" +
-                "stageId=" + stageId +
-                ", roadmap={" + roadmap.getTitle() + "-"
-                + roadmap.getType() + "-"
-                + roadmap.getRoadmapLanguage() + "-"
-                + roadmap.getRoadmapStatus() +
-                "}, theme=" + theme +
-                ", stageStatus=" + stageStatus +
-                ", tasks=" + tasks +
-                '}';
+    public Integer getStageCommit() {
+        return stageCommit;
+    }
+
+    public void setStageCommit(Integer stageCommit) {
+        this.stageCommit = stageCommit;
     }
 }

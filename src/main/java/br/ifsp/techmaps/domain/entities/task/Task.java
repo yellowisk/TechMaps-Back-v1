@@ -17,7 +17,7 @@ public class Task {
     @ManyToOne
     private Stage stage;
     private String title;
-
+    private String description;
     private String repository_link;
     private Timestamp date_created;
     private Timestamp date_finished;
@@ -25,19 +25,25 @@ public class Task {
     private TaskCommit taskCommit;
 
 
-    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_created, Timestamp date_finished) {
+    public Task(UUID taskId, Stage stage, String title,
+                String description, String repository_link,
+                Timestamp date_created, Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
+        this.description = description;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_created, Timestamp date_finished, TaskCommit taskCommit) {
+    public Task(UUID taskId, Stage stage, String title, String description,
+                String repository_link, Timestamp date_created,
+                Timestamp date_finished, TaskCommit taskCommit) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
+        this.description = description;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
@@ -45,11 +51,13 @@ public class Task {
     }
 
     public Task(UUID taskId, Stage stage,
-                String title, Timestamp date_created,
+                String title, String description,
+                Timestamp date_created,
                 Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
+        this.description = description;
         this.date_created = date_created;
         this.date_finished = date_finished;
     }
@@ -88,9 +96,13 @@ public class Task {
         this.title = title;
     }
 
+    public String getDescription() {return description;}
+
+    public void setDescription(String description) {this.description = description;}
+
     public String getRepository_Link() {return repository_link;}
 
-    public void setRepository_Link(String link) {this.repository_link = repository_link;}
+    public void setRepository_Link(String repository_link) {this.repository_link = repository_link;}
 
     public Timestamp getDate_created() {
         return date_created;
