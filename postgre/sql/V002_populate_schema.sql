@@ -55,29 +55,37 @@ insert into techmaps_platform.stage(id, roadmap_id, theme, status,
 
 --! Task Queries --!
 
-insert into techmaps_platform.task(id, stage_id, title, link, date_created,
-    date_finished, dashboard_id) values ('13acdae6-fef5-4d1c-8ab4-23b4cf169350'::uuid,
+insert into techmaps_platform.task(id, stage_id, title, description,
+    repository_link, date_created, date_finished, dashboard_id)
+    values ('13acdae6-fef5-4d1c-8ab4-23b4cf169350'::uuid,
     '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'Learn OOP',
+    'Object-Oriented Programming is a programming paradigm based on the concept of objects',
     'https://www.udemy.com/course/java-curso-completo/',
     '2023-06-09 07:45:00', '2023-06-13 08:00:00',
     '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, link, date_created,
-    date_finished, dashboard_id) values ('b061df33-90c7-4b8e-b976-7909528f0dc0'::uuid,
+insert into techmaps_platform.task(id, stage_id, title, description,
+    repository_link, date_created, date_finished, dashboard_id)
+    values ('b061df33-90c7-4b8e-b976-7909528f0dc0'::uuid,
     '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'Learn lambda',
+    'a short block of code which takes in parameters and returns a value',
     'https://www.udemy.com/course/java-curso-completo/',
     '2023-06-09 07:45:00', null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, link, date_created,
-    date_finished, dashboard_id) values ('beefb09f-1c66-4d82-9e97-dfe5cad7d580'::uuid,
+insert into techmaps_platform.task(id, stage_id, title, description,
+    repository_link, date_created, date_finished, dashboard_id)
+    values ('beefb09f-1c66-4d82-9e97-dfe5cad7d580'::uuid,
     '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'Learn animations',
+    'animations are done by programming gradual changes in an elements style',
     'https://www.udemy.com/course/javascript-curso-completo/',
     '2023-04-09 07:45:00', '2023-04-13 08:00:00',
     '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, link, date_created,
-    date_finished, dashboard_id) values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid,
+insert into techmaps_platform.task(id, stage_id, title, description,
+    repository_link, date_created, date_finished, dashboard_id)
+    values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid,
     '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'Learn hooks',
+    'disassociate the components that can be reused from the functional components',
     'https://www.udemy.com/course/javascript-curso-completo/',
     '2023-04-12 07:45:00', null, '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
