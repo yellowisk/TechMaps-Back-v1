@@ -41,7 +41,8 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Task saveNewTask(Task task) {
         UUID taskId = UUID.randomUUID();
-        jdbcTemplate.update(insertTaskQuery, taskId, task.getStage(), task.getTitle(), task.getTitle(), task.getDate(), task.getHour());
+        jdbcTemplate.update(insertTaskQuery, taskId, task.getStage(), task.getTitle(),
+                task.getTitle(), task.getDate_created(), task.getDate_finished());
             return Task.createWithOnlyId(taskId);
     }
 
@@ -52,8 +53,8 @@ public class TaskDAOImpl implements TaskDAO {
             task.setTaskId(UUID.fromString(rs.getString("id")));
             Stage.createStageWithOnlyId((UUID) rs.getObject("stage_id"));
             task.setTitle(rs.getString("title"));
-            task.setDate(rs.getDate("date"));
-            task.setHour(rs.getTime("hour"));
+            task.setDate_created(rs.getTimestamp("date_created"));
+            task.setDate_finished(rs.getTimestamp("hour"));
             return task;
         }, stageId);
 

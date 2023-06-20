@@ -8,6 +8,7 @@ import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +56,11 @@ public class Stage {
 
     //TODO: BRING TO USE CASE
 
-    public static Task createTask(Stage stage, String title, String link, Date date, Time hour) {
+    public static Task createTask(Stage stage, String title, String repository_link,
+                                  Timestamp date_created, Timestamp date_finished) {
         User user = new User();
-        Task task = new Task(UUID.randomUUID(), stage, title, link, date, hour);
+        Task task = new Task(UUID.randomUUID(), stage, title,
+                repository_link, date_created, date_finished);
         if (task.getStage().getStageStatus() == StageStatus.DONE) {
             throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
         } else {

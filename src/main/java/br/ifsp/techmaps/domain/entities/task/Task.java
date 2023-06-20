@@ -18,39 +18,39 @@ public class Task {
     private Stage stage;
     private String title;
 
-    private String link;
-    private Timestamp date_creted;
+    private String repository_link;
+    private Timestamp date_created;
     private Timestamp date_finished;
     @OneToOne
     private TaskCommit taskCommit;
 
 
-    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_creted, Timestamp date_finished) {
+    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_created, Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.link = link;
-        this.date_creted = date_creted;
+        this.repository_link = repository_link;
+        this.date_created = date_created;
         this.date_finished = date_finished;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_creted, Timestamp date_finished, TaskCommit taskCommit) {
+    public Task(UUID taskId, Stage stage, String title, String link, Timestamp date_created, Timestamp date_finished, TaskCommit taskCommit) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.link = link;
-        this.date_creted = date_creted;
+        this.repository_link = repository_link;
+        this.date_created = date_created;
         this.date_finished = date_finished;
         this.taskCommit = taskCommit;
     }
 
     public Task(UUID taskId, Stage stage,
-                String title, Timestamp date_creted,
+                String title, Timestamp date_created,
                 Timestamp date_finished) {
         this.taskId = taskId;
         this.stage = stage;
         this.title = title;
-        this.date_creted = date_creted;
+        this.date_created = date_created;
         this.date_finished = date_finished;
     }
 
@@ -88,16 +88,16 @@ public class Task {
         this.title = title;
     }
 
-    public String getLink() {return link;}
+    public String getRepository_Link() {return repository_link;}
 
-    public void setLink(String link) {this.link = link;}
+    public void setRepository_Link(String link) {this.repository_link = repository_link;}
 
-    public Timestamp getDate_creted() {
-        return date_creted;
+    public Timestamp getDate_created() {
+        return date_created;
     }
 
-    public void setDate_creted(Timestamp date_creted) {
-        this.date_creted = date_creted;
+    public void setDate_created(Timestamp date_created) {
+        this.date_created = date_created;
     }
 
     public Timestamp getDate_finished() {
