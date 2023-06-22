@@ -1,4 +1,7 @@
 package br.ifsp.techmaps.usecases.dashboard;
 
-public class DashboardCRUDImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class DashboardCRUDImpl implements DashboardCRUD {
 }

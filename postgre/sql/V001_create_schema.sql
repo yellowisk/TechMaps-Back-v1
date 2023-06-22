@@ -21,7 +21,7 @@ ALTER TABLE techmaps_platform.user
 
 CREATE TABLE techmaps_platform.dashboard(
     id uuid NOT NULL,
-    total_time varchar NOT NULL
+    total_time int NOT NULL
 );
 
 ALTER TABLE techmaps_platform.dashboard OWNER TO "techmaps";
@@ -38,8 +38,8 @@ CREATE TYPE techmaps_platform.roadmap_type AS ENUM (
 ALTER TYPE techmaps_platform.roadmap_type OWNER TO "techmaps";
 
 CREATE TYPE techmaps_platform.roadmap_status AS ENUM (
-    'DONE',
-    'UNCONCLUDED'
+    'COMPLETE',
+    'UNCOMPLETE'
 );
 
 ALTER TYPE techmaps_platform.roadmap_status OWNER TO "techmaps";
@@ -59,7 +59,7 @@ CREATE TABLE techmaps_platform.roadmap(
     status techmaps_platform.roadmap_status,
     lang techmaps_platform.roadmap_lang,
     start_time timestamp NOT NULL,
-    undone_duration timestamp NOT NULL,
+    finish_time timestamp,
     commit_counter integer,
     dashboard_id uuid NOT NULL
 );
@@ -138,7 +138,8 @@ CREATE TABLE techmaps_platform.task(
     id uuid NOT NULL,
     stage_id uuid NOT NULL,
     title varchar NOT NULL,
-    link varchar NOT NULL,
+    description varchar NOT NULL,
+    repository_link varchar NOT NULL,
     date_created timestamp,
     date_finished timestamp,
     dashboard_id uuid NOT NULL

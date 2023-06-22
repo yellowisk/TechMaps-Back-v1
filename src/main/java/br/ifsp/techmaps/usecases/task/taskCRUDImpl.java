@@ -34,10 +34,10 @@ public class taskCRUDImpl implements TaskCRUD {
 
     @Override
     public Task findTaskByStageIdAndTaskId(UUID stageId, UUID taskId) {
-        Boolean stageExists = stageDAO.StageExists(stageId);
-        if(!stageExists) {
-            throw new NullPointerException("Stage with id " + stageId + " does not exist");
-        }
+//        Boolean stageExists = stageDAO.StageExists(stageId);
+//        if(!stageExists) {
+//            throw new NullPointerException("Stage with id " + stageId + " does not exist");
+//        }
 
         Optional<Task> opt = taskDAO.findTaskById(taskId);
 

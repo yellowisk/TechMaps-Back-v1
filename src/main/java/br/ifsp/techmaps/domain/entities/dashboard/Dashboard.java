@@ -23,9 +23,9 @@ public class Dashboard {
     @OneToMany
     private List<TaskCommit> totalCommits;
 
-    private String totalTime;
+    private int totalTime;
 
-    public Dashboard(UUID dashboardId, List<Roadmap> concludedRoadmaps, List<Task> concludedTasks, List<TaskCommit> totalCommits, String totalTime) {
+    public Dashboard(UUID dashboardId, List<Roadmap> concludedRoadmaps, List<Task> concludedTasks, List<TaskCommit> totalCommits, int totalTime) {
         this.dashboardId = dashboardId;
         this.concludedRoadmaps = concludedRoadmaps;
         this.concludedTasks = concludedTasks;
@@ -34,6 +34,30 @@ public class Dashboard {
     }
 
     public Dashboard() {
+    }
+
+    public Dashboard(UUID dashboardId, int totalTime) {
+        this.dashboardId = dashboardId;
+        this.totalTime = totalTime;
+    }
+
+    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, int totalTime) {
+        return new Dashboard(dashboardId, totalTime);
+    }
+
+    public int calculateTotalTime(){
+        for (Roadmap concludedRoadmap : concludedRoadmaps) {
+            totalTime += concludedRoadmap.calculateDuration(concludedRoadmap).toHours();
+        }
+        return totalTime;
+    }
+
+    public void roadmapDisplayer() {
+        for (Roadmap concludedRoadmap : concludedRoadmaps) {
+            concludedRoadmap.getTitle();
+            concludedRoadmap.getFinishTime();
+            concludedRoadmap.findRoadmapCommits();
+        }
     }
 
     public UUID getDashboardId() {
@@ -68,27 +92,12 @@ public class Dashboard {
         this.totalCommits = totalCommits;
     }
 
-    public String getTotalTime() {
+    public int getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(String totalTime) {
+    public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
-    }
-
-    public String calculateTotalTime(){
-        for (Roadmap concludedRoadmap : concludedRoadmaps) {
-            totalTime += concludedRoadmap.calculateDuration(concludedRoadmap).toHours();
-        }
-        return totalTime.toString();
-    }
-
-    public void roadmapDisplayer() {
-        for (Roadmap concludedRoadmap : concludedRoadmaps) {
-            concludedRoadmap.getTitle();
-            concludedRoadmap.getUndoneDuration();
-            concludedRoadmap.findRoadmapCommits();
-        }
     }
 
 }

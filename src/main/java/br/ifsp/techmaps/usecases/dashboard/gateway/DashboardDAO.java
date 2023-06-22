@@ -14,12 +14,4 @@ public interface DashboardDAO {
 
     Optional<Dashboard> findDashboardById(UUID dashboardId);
 
-    Dashboard updatePipeline(Dashboard dashboard);
-
-    Dashboard deleteRoadmap(List<Roadmap> roadmaps, UUID stepId);
-
-    Dashboard deleteRoadmap(List<Task> tasks, UUID stepId);
-
-    Boolean pipelineExists(UUID pipelineId);
-
 }

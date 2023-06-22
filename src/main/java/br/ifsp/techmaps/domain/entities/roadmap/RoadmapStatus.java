@@ -1,8 +1,8 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
 public enum RoadmapStatus {
-    DONE("concluded"),
-    UNDONE("unconcluded");
+    COMPLETE("concluded"),
+    UNCOMPLETE("unconcluded");
 
     private String status;
 

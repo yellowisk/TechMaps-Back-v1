@@ -18,19 +18,34 @@ spring:
 
 queries:
   sql:
+    dashboard-dao:
+      insert:
+        dashboard: >
+      select:
+        dashboard-by-id: >
+          SELECT * FROM techmaps_platform.dashboard WHERE id = ?
+    roadmap-dao:
+      insert:
+        roadmap: >
+          INSERT INTO techmaps_platform.roadmap (id, title, type, status, lang, start_time, finish_time, commit_counter, dashboard_id) VALUES (?, ?, ?::techmaps_platform.roadmap_type, ?::techmaps_platform.roadmap_status, ?::techmaps_platform.roadmap_lang, ?, ?, ?, ?)
+      select:
+        roadmap-by-id: >
+          SELECT * FROM techmaps_platform.roadmap WHERE id = ?
+        roadmap-all: >
+          SELECT * FROM techmaps_platform.roadmap
+      update:
+        roadmap: >
+      exists:
+        roadmap-by-id: >
+          SELECT EXISTS(SELECT 1 FROM techmaps_platform.roadmap WHERE id = ?)
+    stage-dao:
+      insert:
+        stage: >
+          INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, status, commit_counter) VALUES (?, ?, ?, ?, ?)
     task-dao:
       insert:
           task: >
             INSERT INTO techmaps_platform.task (id, name, description, status, created_at, updated_at, user_id) VALUES (:id, :name, :description, :status, :createdAt, :updatedAt, :userId)
-      update:
-          task: >
-
-      delete:
-          task: >
-
-      exists:
-          task-by-id: >
-
       select:
         task-by-id: >
           SELECT * FROM techmaps_platform.task WHERE id = ?
@@ -38,3 +53,9 @@ queries:
           SELECT * FROM techmaps_platform.task WHERE user_id = :userId
         task-all: >
           SELECT * FROM techmaps_platform.task
+      update:
+          task: >
+      delete:
+          task: >
+      exists:
+          task-by-id: >
