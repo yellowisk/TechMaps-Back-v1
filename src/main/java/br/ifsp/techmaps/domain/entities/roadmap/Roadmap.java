@@ -134,6 +134,14 @@ public class Roadmap {
                 undoneDuration, roadmapCommits, dashboardId);
     }
 
+    public static Roadmap createWithoutStage(UUID id, String title, RoadmapType type, RoadmapStatus roadmapStatus,
+                                          RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
+                                          LocalDateTime finishTime, Integer roadmapCommits,
+                                          UUID dashboardId) {
+        return new Roadmap(id, title, type, roadmapStatus, roadmapLanguage, startTime,
+                finishTime, roadmapCommits, dashboardId);
+    }
+
     //TODO: BRING TO USE CASE
     public void createStage(StageEnum theme, StageStatus stageStatus, LocalDateTime startTime) {
         Stage stage = new Stage(UUID.randomUUID(), this, theme, StageStatus.UNDONE);

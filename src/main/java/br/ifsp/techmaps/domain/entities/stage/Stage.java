@@ -48,12 +48,27 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+        this.stageId = stageId;
+        this.roadmap = roadmap;
+        this.theme = theme;
+        this.stageStatus = stageStatus;
+        this.stageCommit = stageCommit;
+    }
+
     public Stage(UUID stageId) {
         this.stageId = stageId;
     }
 
     public static Stage createStageWithOnlyId(UUID stageId) {
         return new Stage(stageId);
+    }
+    public static Stage createStageWithTheme(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
+        return new Stage(id, roadmap, theme, StageStatus.UNDONE);
+    }
+
+    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+        return new Stage(id, roadmap, theme, stageStatus, stageCommit);
     }
 
     public Stage() {}
