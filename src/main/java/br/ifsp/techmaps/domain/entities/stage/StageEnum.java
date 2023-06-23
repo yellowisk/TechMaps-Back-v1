@@ -51,10 +51,6 @@ public enum StageEnum {
     private String topic;
     private String condition;
 
-    private int position;
-
-
-
     StageEnum(String status, String condition) {
         this.topic = status;
         this.condition = condition;

@@ -6,15 +6,13 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.entities.stage.StageType;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class StageCRUDImpl implements StageCRUD {
@@ -40,7 +38,11 @@ public class StageCRUDImpl implements StageCRUD {
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
                 request.getTheme(), StageStatus.UNDONE, 0);
 
-        return stageDAO.saveStage(stage);
+        if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())) {
+            return stageDAO.saveStage(stage);
+        } else {
+            throw new IllegalArgumentException("Theme not compatible with roadmap language");
+        }
     }
 
     @Override
@@ -49,24 +51,61 @@ public class StageCRUDImpl implements StageCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVA)) {
-            List<Stage> stages = new ArrayList<>(10);
+            List<Stage> stages = new ArrayList<>(9);
             Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JAVA, StageStatus.UNDONE, 0);
-
+            stages.add(stage);
             stageDAO.saveStage(stage);
 
-            for (int i = 0; i < 9; i++) {
+            List<StageEnum> backendThemes = new ArrayList<>();
+
+            for (StageEnum learn : StageEnum.values()) {
+                if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_JAVA) {
+                    backendThemes.add(learn);
+                }
+            }
+
+            for (int i = 0; i < 8; i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0);
 
-                for (StageEnum skill : StageEnum.values()) {
-                    if (skill.getCondition().equals("Backend")) {
-                        stageBack.setTheme(skill);
-                    }
+                if (i < backendThemes.size()) {
+                    StageEnum theme = backendThemes.get(i);
+                    stageBack.setTheme(theme);
                 }
-                stages.add(stage);
+
+                stages.add(stageBack);
                 stageDAO.saveStage(stageBack);
             }
             roadmap.setStages(stages);
         }
+
+        if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVASCRIPT)) {
+            List<Stage> stages = new ArrayList<>();
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JS, StageStatus.UNDONE, 0);
+            stages.add(stage);
+            stageDAO.saveStage(stage);
+
+            List<StageEnum> frontendThemes = new ArrayList<>();
+
+            for (StageEnum learn : StageEnum.values()) {
+                if (learn.getCondition().equals("Frontend") && learn != StageEnum.LEARN_JS) {
+                    frontendThemes.add(learn);
+                }
+            }
+
+            for (int i = 0; i < 8; i++) {
+                Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0);
+
+                if (i < frontendThemes.size()) {
+                    StageEnum theme = frontendThemes.get(i);
+                    stageFront.setTheme(theme);
+                }
+
+                stages.add(stageFront);
+                stageDAO.saveStage(stageFront);
+            }
+            roadmap.setStages(stages);
+        }
+
         return roadmap.getStages();
     }
 
