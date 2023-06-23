@@ -117,6 +117,27 @@ public class Roadmap {
         this.roadmapId = roadmapId;
     }
 
+    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
+                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
+                   Integer roadmapCommits, UUID dashboardId) {
+        this.roadmapId = roadmapId;
+        this.title = title;
+        this.type = type;
+        this.roadmapStatus = roadmapStatus;
+        this.roadmapLanguage = roadmapLanguage;
+        this.startTime = startTime;
+        this.roadmapCommits = roadmapCommits;
+        this.dashboardId = dashboardId;
+    }
+
+    public static Roadmap createWithoutStageAndFinishTime(UUID roadmapId, String title, RoadmapType type,
+                                                          RoadmapStatus status, RoadmapLanguage language,
+                                                          LocalDateTime localDateTime, int commitCounter,
+                                                          UUID dashboardId) {
+        return new Roadmap(roadmapId, title, type, status, language, localDateTime, commitCounter, dashboardId);
+
+    }
+
     public Roadmap getNewInstanceWithId(UUID roadmapId) {
         return new Roadmap(roadmapId, title, type, roadmapStatus, roadmapLanguage, startTime,
                 finishTime, stages, roadmapCommits, dashboardId);

@@ -50,6 +50,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     @Override
     public Roadmap saveRoadmap(Roadmap roadmap) {
+
         UUID roadmapId = UUID.randomUUID();
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
@@ -57,18 +58,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
                 Timestamp.valueOf(roadmap.getStartTime()), roadmap.getFinishTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
-        if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVA)) {
-            List<Stage> stages = new ArrayList<>(10);
-            for (int i = 0; i < 10; i++) {
+//        Roadmap roady = findRoadmapById(roadmapId).get();
 
-                stages.add(
-                        jdbcTemplate.update(insertStageQuery, )
-                )
-                stages.add(i);
-            }
-        }
-
-        return roadmap.getNewInstanceWithOnlyId(roadmapId);
+        return roadmap.getNewInstanceWithOnlyId(roadmap.getRoadmapId());
     }
 
     @Override
@@ -84,42 +76,18 @@ public class RoadmapDAOImpl implements RoadmapDAO {
                 String description = rs.getString("title");
                 RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
                 RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
-                RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("language"));
+                RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
                 Timestamp startTime = rs.getTimestamp("start_time");
-                Timestamp finishTime = rs.getTimestamp("finish_time");
                 int commit_counter = rs.getInt("commit_counter");
                 UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-                return Roadmap.createWithoutStage(id, description, type, status, language, startTime.toLocalDateTime(),
-                        finishTime.toLocalDateTime(), commit_counter, dashboardId);
+                return Roadmap.createWithoutStageAndFinishTime(id, description, type, status, language,
+                        startTime.toLocalDateTime(), commit_counter, dashboardId);
             }, roadmapId);
 
             if (Objects.isNull(roadmap)) {
                 throw new IllegalStateException();
             }
-
-
-
-//            if(roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
-//                List<Stage> stages = jdbcTemplate.query("SELECT * FROM stage WHERE roadmap_id = ?",
-//                        (rs, rowNum) -> {
-//                            UUID id = (UUID) rs.getObject("id");
-//                            String description = rs.getString("description");
-//                            String type = rs.getString("type");
-//                            String status = rs.getString("status");
-//                            String language = rs.getString("language");
-//                            Timestamp startTime = rs.getTimestamp("start_time");
-//                            Timestamp finishTime = rs.getTimestamp("finish_time");
-//                            int commit_counter = rs.getInt("commit_counter");
-//                            UUID roadmapId1 = (UUID) rs.getObject("roadmap_id");
-//
-//                            return Stage.createWithoutId(id, description, type, status, language,
-//                                    startTime.toLocalDateTime(), finishTime.toLocalDateTime(), commit_counter,
-//                                    roadmapId1);
-//                        }, roadmapId);
-//
-//                roadmap.setStages(stages);
-//            }
 
             return Optional.of(roadmap);
         } catch (EmptyResultDataAccessException e) {

@@ -9,6 +9,7 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
+import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,12 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
     private final RoadmapDAO roadmapDAO;
     private final DashboardDAO dashboardDAO;
+    private final StageDAO stageDAO;
 
-    public RoadmapCRUDImpl(RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
+    public RoadmapCRUDImpl(RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO, StageDAO stageDAO) {
         this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
+        this.stageDAO = stageDAO;
     }
 
     @Override
@@ -37,20 +40,18 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
                 request.getRoadmapLanguage(), LocalDateTime.now(), null, 0,
                 dashboardId);
 
-        if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVA)) {
-            List<Stage> stages = new ArrayList<>(10);
-            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JS, StageStatus.UNDONE, 0);
-            for (int i = 0; i < 9; i++) {
-                Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0);
+        return roadmapDAO.saveRoadmap(roadmap);
+    }
 
-                for (StageEnum condition : StageEnum.values()) {
-                    stage.setTheme(condition);
-                }
-                stages.add(Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0));
+    @Override
+    public Roadmap findRoadmapById(UUID roadmapId) {
 
-            }
+        Optional<Roadmap> opt = roadmapDAO.findRoadmapById(roadmapId);
+
+        if (opt.isEmpty()) {
+            throw new RuntimeException("Roadmap not found");
         }
 
-        return roadmapDAO.saveRoadmap(roadmap);
+        return opt.get();
     }
 }

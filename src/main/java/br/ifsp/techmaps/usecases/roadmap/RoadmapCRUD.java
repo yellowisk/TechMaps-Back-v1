@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface RoadmapCRUD {
     Roadmap addNewRoadmap(UUID projectId, CreateRoadmapRequest request);
+
+    Roadmap findRoadmapById(UUID roadmapId);
 }
