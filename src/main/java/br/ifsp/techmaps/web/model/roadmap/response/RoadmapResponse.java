@@ -23,8 +23,31 @@ public class RoadmapResponse {
         this.id = id;
     }
 
+    public RoadmapResponse(UUID id, String title, RoadmapType type,
+                           RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
+                           LocalDateTime startTime, LocalDateTime undoneDuration,
+                           Integer roadmapCommits, UUID dashboardId) {
+        this.id = id;
+        this.title = title;
+        this.type = type;
+        this.roadmapStatus = roadmapStatus;
+        this.roadmapLanguage = roadmapLanguage;
+        this.startTime = startTime;
+        this.undoneDuration = undoneDuration;
+        this.roadmapCommits = roadmapCommits;
+        this.dashboardId = dashboardId;
+    }
+
     public static RoadmapResponse createJustId(UUID id) {
         return new RoadmapResponse(id);
+    }
+
+    public static RoadmapResponse create(UUID id, String title, RoadmapType type,
+                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
+                                         LocalDateTime startTime, LocalDateTime undoneDuration,
+                                         Integer roadmapCommits, UUID dashboardId) {
+        return new RoadmapResponse(id, title, type, roadmapStatus, roadmapLanguage,
+                startTime, undoneDuration, roadmapCommits, dashboardId);
     }
 
     public UUID getId() {

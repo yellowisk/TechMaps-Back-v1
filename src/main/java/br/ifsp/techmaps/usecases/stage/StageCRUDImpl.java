@@ -51,7 +51,7 @@ public class StageCRUDImpl implements StageCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVA)) {
-            List<Stage> stages = new ArrayList<>(9);
+            List<Stage> stages = new ArrayList<>(8);
             Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JAVA, StageStatus.UNDONE, 0);
             stages.add(stage);
             stageDAO.saveStage(stage);
@@ -59,19 +59,21 @@ public class StageCRUDImpl implements StageCRUD {
             List<StageEnum> backendThemes = new ArrayList<>();
 
             for (StageEnum learn : StageEnum.values()) {
-                if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_JAVA) {
+                if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_JAVA
+                && learn != StageEnum.LEARN_PYTHON) {
                     backendThemes.add(learn);
                 }
             }
 
-            for (int i = 0; i < 8; i++) {
-                Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0);
+            System.out.println("----->" + backendThemes);
 
+            for (int i = 0; i < 7; i++) {
+                Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
+                        StageStatus.UNDONE, 0);
                 if (i < backendThemes.size()) {
                     StageEnum theme = backendThemes.get(i);
                     stageBack.setTheme(theme);
                 }
-
                 stages.add(stageBack);
                 stageDAO.saveStage(stageBack);
             }
@@ -92,8 +94,11 @@ public class StageCRUDImpl implements StageCRUD {
                 }
             }
 
-            for (int i = 0; i < 8; i++) {
-                Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null, StageStatus.UNDONE, 0);
+            System.out.println("----->" + frontendThemes);
+
+            for (int i = 0; i < 4; i++) {
+                Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
+                        StageStatus.UNDONE, 0);
 
                 if (i < frontendThemes.size()) {
                     StageEnum theme = frontendThemes.get(i);
@@ -102,6 +107,86 @@ public class StageCRUDImpl implements StageCRUD {
 
                 stages.add(stageFront);
                 stageDAO.saveStage(stageFront);
+            }
+            roadmap.setStages(stages);
+        }
+
+        if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.PYTHON)) {
+            List<Stage> stages = new ArrayList<>(8);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_PYTHON, StageStatus.UNDONE, 0);
+            stages.add(stage);
+            stageDAO.saveStage(stage);
+
+            List<StageEnum> backendThemes = new ArrayList<>();
+
+            for (StageEnum learn : StageEnum.values()) {
+                if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_PYTHON
+                && learn != StageEnum.LEARN_JAVA) {
+                    backendThemes.add(learn);
+                }
+            }
+
+            System.out.println("----->" + backendThemes);
+
+            for (int i = 0; i < 7; i++) {
+                Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
+                        StageStatus.UNDONE, 0);
+                if (i < backendThemes.size()) {
+                    StageEnum theme = backendThemes.get(i);
+                    stageBack.setTheme(theme);
+                }
+                stages.add(stageBack);
+                stageDAO.saveStage(stageBack);
+            }
+            roadmap.setStages(stages);
+        }
+
+        if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.KOTLIN)) {
+            List<Stage> stages = new ArrayList<>(10);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_KOTLIN, StageStatus.UNDONE, 0);
+            stages.add(stage);
+            stageDAO.saveStage(stage);
+
+            List<StageEnum> backendThemes = new ArrayList<>();
+
+            for (StageEnum learn : StageEnum.values()) {
+                if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_PYTHON) {
+                    backendThemes.add(learn);
+                }
+            }
+
+            System.out.println("----->" + backendThemes);
+
+            for (int i = 0; i < 8; i++) {
+                Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
+                        StageStatus.UNDONE, 0);
+                if (i < backendThemes.size()) {
+                    StageEnum theme = backendThemes.get(i);
+                    stageBack.setTheme(theme);
+                }
+                stages.add(stageBack);
+                stageDAO.saveStage(stageBack);
+            }
+
+            List<StageEnum> androidThemes = new ArrayList<>();
+
+            for (StageEnum learn : StageEnum.values()) {
+                if (learn.getCondition().equals("Android") && learn != StageEnum.LEARN_KOTLIN) {
+                    androidThemes.add(learn);
+                }
+            }
+
+            System.out.println("----->" + androidThemes);
+
+            for (int i = 0; i < 1; i++) {
+                Stage stageAndroid = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
+                        StageStatus.UNDONE, 0);
+                if (i < androidThemes.size()) {
+                    StageEnum theme = androidThemes.get(i);
+                    stageAndroid.setTheme(theme);
+                }
+                stages.add(stageAndroid);
+                stageDAO.saveStage(stageAndroid);
             }
             roadmap.setStages(stages);
         }

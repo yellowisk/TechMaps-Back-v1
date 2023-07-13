@@ -3,7 +3,8 @@ package br.ifsp.techmaps.domain.entities.roadmap;
 public enum RoadmapLanguage {
     JAVA("java", "Backend"),
     PYTHON("python", "Backend"),
-    JAVASCRIPT("javascript", "Frontend");
+    JAVASCRIPT("javascript", "Frontend"),
+    KOTLIN("kotlin", "Android");
 
     private String skill;
     private String condition;

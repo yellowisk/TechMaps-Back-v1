@@ -20,6 +20,14 @@ public class RoadmapController {
         this.roadmapCRUD = roadmapCRUD;
     }
 
+    @GetMapping("/{roadmapId}")
+    public ResponseEntity<RoadmapResponse> getRoadmapById(
+            @PathVariable UUID roadmapId) {
+        Roadmap roadmap = roadmapCRUD.findRoadmapById(roadmapId);
+
+        return ResponseEntity.ok(RoadmapResponse.createJustId(roadmap.getRoadmapId()));
+    }
+
     @PostMapping
     public ResponseEntity<RoadmapResponse> addNewRoadmap(
             @PathVariable UUID dashboardId,

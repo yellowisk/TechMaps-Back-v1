@@ -47,7 +47,8 @@ ALTER TYPE techmaps_platform.roadmap_status OWNER TO "techmaps";
 CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
     'JAVA',
     'PYTHON',
-    'JAVASCRIPT'
+    'JAVASCRIPT',
+    'KOTLIN'
 );
 
 ALTER TYPE techmaps_platform.roadmap_lang OWNER TO "techmaps";
