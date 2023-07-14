@@ -1,15 +1,14 @@
 package br.ifsp.techmaps.usecases.stage;
 
-import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
-import br.ifsp.techmaps.domain.entities.stage.StageType;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
+import br.ifsp.techmaps.web.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,7 +37,10 @@ public class StageCRUDImpl implements StageCRUD {
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
                 request.getTheme(), StageStatus.UNDONE, 0);
 
-        if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())) {
+        System.out.println(stage.getRoadmap());
+
+        if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())
+                || request.getTheme().getCondition() == "General") {
             return stageDAO.saveStage(stage);
         } else {
             throw new IllegalArgumentException("Theme not compatible with roadmap language");
@@ -196,11 +198,26 @@ public class StageCRUDImpl implements StageCRUD {
 
     @Override
     public Stage getStageById(UUID stageId) {
-        return null;
+        Optional<Stage> opt = stageDAO.findStageById(stageId);
+
+        if (opt.isEmpty()) {
+            ResourceNotFoundException excpt =
+                    new ResourceNotFoundException("Stage not found");
+        }
+
+        return stageDAO.findStageById(stageId).get();
     }
 
     @Override
     public List<Stage> getStagesByRoadmapId(UUID roadmapId) {
-        return null;
+        Optional<Roadmap> opt = roadmapDAO.findRoadmapById(roadmapId);
+
+        if (opt.isEmpty()) {
+            ResourceNotFoundException excpt =
+                    new ResourceNotFoundException("Roadmap not found");
+        }
+
+        return stageDAO.findStagesByRoadmapId(roadmapId);
+//        return roadmapDAO.findRoadmapById(roadmapId).get().getStages();
     }
 }

@@ -6,6 +6,6 @@ import java.util.*;
 public interface StageDAO {
     Boolean StageExists(UUID stageId);
     Stage saveStage(Stage stage);
-    Stage getStageById(UUID stageId);
-    List<Stage> getStagesByRoadmapId(UUID roadmapId);
+    Optional<Stage> findStageById(UUID stageId);
+    List<Stage> findStagesByRoadmapId(UUID roadmapId);
 }

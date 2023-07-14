@@ -42,6 +42,11 @@ queries:
       insert:
         stage: >
           INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, status, commit_counter) VALUES (?, ?, ?::techmaps_platform.stage_theme, ?::techmaps_platform.stage_status, ?)
+      select:
+        stage-by-id: >
+          SELECT * FROM techmaps_platform.stage WHERE id = ?
+        stage-by-roadmap-id: >
+            SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ?
     task-dao:
       insert:
           task: >

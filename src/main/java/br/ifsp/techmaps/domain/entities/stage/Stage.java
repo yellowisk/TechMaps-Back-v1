@@ -63,6 +63,7 @@ public class Stage {
     public static Stage createStageWithOnlyId(UUID stageId) {
         return new Stage(stageId);
     }
+
     public static Stage createStageWithTheme(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
         return new Stage(id, roadmap, theme, StageStatus.UNDONE);
     }

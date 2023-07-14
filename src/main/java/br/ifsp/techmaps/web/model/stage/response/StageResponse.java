@@ -1,6 +1,6 @@
 package br.ifsp.techmaps.web.model.stage.response;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.Task;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class StageResponse {
     private UUID stageId;
-    private Roadmap roadmap;
+    private UUID roadmapId;
     private StageEnum theme;
     private StageStatus stageStatus;
     private List<Task> tasks;
@@ -20,8 +20,26 @@ public class StageResponse {
         this.stageId = stageId;
     }
 
+    public StageResponse(UUID stageId, UUID roadmapId, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+        this.stageId = stageId;
+        this.roadmapId = roadmapId;
+        this.theme = theme;
+        this.stageStatus = stageStatus;
+        this.stageCommit = stageCommit;
+    }
+
     public static StageResponse createJustId(UUID stageId) {
         return new StageResponse(stageId);
+    }
+
+    public static StageResponse createFromStage(Stage stage) {
+        return new StageResponse(
+                stage.getStageId(),
+                stage.getRoadmap().getRoadmapId(),
+                stage.getTheme(),
+                stage.getStageStatus(),
+                stage.getStageCommit()
+        );
     }
 
     public UUID getStageId() {
@@ -32,12 +50,12 @@ public class StageResponse {
         this.stageId = stageId;
     }
 
-    public Roadmap getRoadmap() {
-        return roadmap;
+    public UUID getRoadmapId() {
+        return roadmapId;
     }
 
-    public void setRoadmap(Roadmap roadmap) {
-        this.roadmap = roadmap;
+    public void setRoadmapId(UUID roadmapId) {
+        this.roadmapId = roadmapId;
     }
 
     public StageEnum getTheme() {

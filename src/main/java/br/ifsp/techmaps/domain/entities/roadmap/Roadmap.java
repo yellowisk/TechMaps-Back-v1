@@ -143,7 +143,7 @@ public class Roadmap {
                 finishTime, stages, roadmapCommits, dashboardId);
     }
 
-    public Roadmap getNewInstanceWithOnlyId(UUID roadmapId) {
+    public static Roadmap getNewInstanceWithOnlyId(UUID roadmapId) {
         return new Roadmap(roadmapId);
     }
 

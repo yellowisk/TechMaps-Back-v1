@@ -35,9 +35,6 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Value("${queries.sql.roadmap-dao.select.roadmap-by-id}")
     private String selectRoadmapByIdQuery;
 
-    @Value("${queries.sql.stage-dao.insert.stage}")
-    private String insertStageQuery;
-
     public RoadmapDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil) {
         this.jdbcTemplate = jdbcTemplate;
         this.jsonUtil = jsonUtil;
