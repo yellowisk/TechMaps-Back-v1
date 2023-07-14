@@ -1,25 +1,29 @@
 package br.ifsp.techmaps.usecases.task;
 
+import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
+import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import br.ifsp.techmaps.domain.entities.task.TaskBody;
+import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class taskCRUDImpl implements TaskCRUD {
 
     private final TaskDAO taskDAO;
     private final StageDAO stageDAO;
+    private final DashboardDAO dashboardDAO;
 
-    public taskCRUDImpl(TaskDAO taskDAO, StageDAO stageDAO) {
+    public taskCRUDImpl(TaskDAO taskDAO, StageDAO stageDAO, DashboardDAO dashboardDAO) {
         this.taskDAO = taskDAO;
         this.stageDAO = stageDAO;
+        this.dashboardDAO = dashboardDAO;
     }
 
     @Override
@@ -27,17 +31,38 @@ public class taskCRUDImpl implements TaskCRUD {
         return null;
     }
 
+
+
     @Override
-    public Task createNewTask(CreateTaskRequest createTaskRequest) {
-        return null;
+    public List<Task> createNewTasks(UUID stageId, CreateTaskRequest createTaskRequest) {
+        Stage stage = stageDAO.findStageById(stageId).get();
+        StageEnum topic = stage.getTheme();
+        Dashboard dashboard = dashboardDAO.findDashboardById(stage.getRoadmap().getDashboardId()).get();
+
+        List<Task> tasks = new ArrayList<>();
+
+        for (TaskBody taskBody : TaskBody.values()) {
+            if (taskBody.getTopic().equals(topic.getTopic())) {
+                Task task = createTaskRequest.convertToTask();
+                task.setTaskBody(taskBody);
+                task.setDashboard(dashboard);
+                task.setStage(stage);
+                tasks.add(task);
+            }
+        }
+
+        tasks.forEach(task -> taskDAO.saveNewTask(task));
+        stage.setTasks(tasks);
+
+        return tasks;
     }
 
     @Override
-    public Task findTaskByStageIdAndTaskId(UUID stageId, UUID taskId) {
-//        Boolean stageExists = stageDAO.StageExists(stageId);
-//        if(!stageExists) {
-//            throw new NullPointerException("Stage with id " + stageId + " does not exist");
-//        }
+    public Task getTaskByStageIdAndTaskId(UUID stageId, UUID taskId) {
+        Boolean stageExists = stageDAO.StageExists(stageId);
+        if(!stageExists) {
+            throw new NullPointerException("Stage with id " + stageId + " does not exist");
+        }
 
         Optional<Task> opt = taskDAO.findTaskById(taskId);
 
@@ -45,11 +70,13 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
+    public Task getTaskById(UUID TaskId) {
+        return null;
+    }
+
+    @Override
     public Task updateTask(UUID stageId, CreateTaskRequest createTaskRequest) {
         return null;
     }
 
-    public TaskDAO getTaskDAO() {
-        return taskDAO;
-    }
 }

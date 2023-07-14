@@ -2,19 +2,11 @@ package br.ifsp.techmaps.domain.entities.roadmap;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
-import br.ifsp.techmaps.domain.entities.stage.StageType;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.time.*;
+import java.util.*;
 
 @Entity
 @Table(name = "roadmap")
@@ -153,82 +145,6 @@ public class Roadmap {
                                           UUID dashboardId) {
         return new Roadmap(title, type, roadmapStatus, roadmapLanguage, startTime,
                 undoneDuration, roadmapCommits, dashboardId);
-    }
-
-    public static Roadmap createWithoutStage(UUID id, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                                          RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
-                                          LocalDateTime finishTime, Integer roadmapCommits,
-                                          UUID dashboardId) {
-        return new Roadmap(id, title, type, roadmapStatus, roadmapLanguage, startTime,
-                finishTime, roadmapCommits, dashboardId);
-    }
-
-    //TODO: BRING TO USE CASE
-    public void createStage(StageEnum theme, StageStatus stageStatus, LocalDateTime startTime) {
-        Stage stage = new Stage(UUID.randomUUID(), this, theme, StageStatus.UNDONE);
-        StageType stageType = new StageType();
-
-        if (this.type == RoadmapType.FRONTEND)
-            if (stageType.getFrontList().contains(theme) || stageType.getGeneralList().contains(theme)) {
-                if (stages == null) {
-                    stages = new ArrayList<>();
-                    stages.add(stage);
-                } else {
-                    stages.add(stage);
-                }
-                System.out.println("Stage " + theme + " allowed");
-            } else {
-                System.out.println("Stage " + theme +  " not allowed");
-            }
-        else if (this.type == RoadmapType.BACKEND) {
-            if (stageType.getBackList().contains(theme) || stageType.getGeneralList().contains(theme)) {
-                if (stages == null) {
-                    stages = new ArrayList<>();
-                    stages.add(stage);
-                } else {
-                    stages.add(stage);
-                }
-                System.out.println("Stage " + theme + " allowed");
-            } else {
-                System.out.println("Stage " + theme +  " not allowed");
-            }
-        }
-    }
-
-    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
-    //TODO: BRING TO USE CASE
-    public static Roadmap createFrontend(String title, User user,
-                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                                         LocalDateTime startTime)
-    {
-        CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
-
-        if (roadmapLanguage == null || collectRoadmapType.getFrontList().contains(roadmapLanguage)) {
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, roadmapLanguage, startTime);
-            return roadmap;
-        } else {
-            System.out.println("Language " + roadmapLanguage + " not allowed");
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.FRONTEND, roadmapStatus, startTime);
-            return roadmap;
-        }
-    }
-
-    //TODO: INTEGRATE createFrontend, createBackend and createAndroid
-    //TODO: BRING TO USE CASE
-    public static Roadmap createBackEnd(String title, User user,
-                                        RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                                        LocalDateTime startTime)
-    {
-        CollectRoadmapType collectRoadmapType = new CollectRoadmapType();
-
-        if (roadmapLanguage == null || collectRoadmapType.getBackList().contains(roadmapLanguage)) {
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, roadmapLanguage, startTime);
-            return roadmap;
-        } else {
-            System.out.println("Language " + roadmapLanguage + " not allowed");
-            Roadmap roadmap = new Roadmap(UUID.randomUUID(), title, RoadmapType.BACKEND, roadmapStatus, startTime);
-            return roadmap;
-        }
     }
 
     //TODO: BRING TO USE CASE

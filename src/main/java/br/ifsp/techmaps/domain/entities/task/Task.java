@@ -1,11 +1,11 @@
 package br.ifsp.techmaps.domain.entities.task;
 
+import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -15,68 +15,68 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID taskId;
     @ManyToOne
+    @JsonIgnore
     private Stage stage;
-    private String title;
-    private String description;
+    private TaskBody taskBody;
+
     private String repository_link;
     private Timestamp date_created;
     private Timestamp date_finished;
     @OneToOne
+    @JsonIgnore
+    private Dashboard dashboard;
+    @OneToOne
     private TaskCommit taskCommit;
 
 
-    public Task(UUID taskId, Stage stage, String title,
-                String description, String repository_link,
-                Timestamp date_created, Timestamp date_finished) {
+    public Task(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
         this.taskId = taskId;
         this.stage = stage;
-        this.title = title;
-        this.description = description;
+        this.taskBody = taskBody;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
+        this.dashboard = dashboard;
     }
 
-    public Task(UUID taskId, Stage stage, String title, String description,
-                String repository_link, Timestamp date_created,
-                Timestamp date_finished, TaskCommit taskCommit) {
+    public Task(UUID taskId, Stage stage, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
         this.taskId = taskId;
         this.stage = stage;
-        this.title = title;
-        this.description = description;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
-        this.taskCommit = taskCommit;
+        this.dashboard = dashboard;
     }
 
-    public Task(UUID taskId, Stage stage,
-                String title, String description,
-                Timestamp date_created,
-                Timestamp date_finished) {
+    public Task(UUID taskId, String repository_link, Timestamp date_created) {
         this.taskId = taskId;
-        this.stage = stage;
-        this.title = title;
-        this.description = description;
+        this.repository_link = repository_link;
         this.date_created = date_created;
-        this.date_finished = date_finished;
     }
 
     private Task(UUID taskId) {
         this.taskId = taskId;
     }
 
+    public Task() {}
+
     public static Task createWithOnlyId(UUID taskId) {
         return new Task(taskId);
     }
 
-    public Task() {}
+    public static Task createwithoutTaskCommit(UUID taskId, Stage stage, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+        return new Task(taskId, stage, repository_link, date_created, date_finished, dashboard);
+    }
 
-    public UUID getTaskId() {
+    public static Task createForStage(UUID taskId, String repository_link, Timestamp date_created) {
+        return new Task(taskId, repository_link, date_created);
+    }
+
+    public UUID getId() {
         return taskId;
     }
 
-    public void setTaskId(UUID taskId) {
+    public void setId(UUID taskId) {
         this.taskId = taskId;
     }
 
@@ -88,21 +88,21 @@ public class Task {
         this.stage = stage;
     }
 
-    public String getTitle() {
-        return title;
+    public TaskBody getTaskBody() {
+        return taskBody;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTaskBody(TaskBody taskBody) {
+        this.taskBody = taskBody;
     }
 
-    public String getDescription() {return description;}
+    public String getRepository() {
+        return repository_link;
+    }
 
-    public void setDescription(String description) {this.description = description;}
-
-    public String getRepository_Link() {return repository_link;}
-
-    public void setRepository_Link(String repository_link) {this.repository_link = repository_link;}
+    public void setRepository(String repository_link) {
+        this.repository_link = repository_link;
+    }
 
     public Timestamp getDate_created() {
         return date_created;
@@ -128,4 +128,11 @@ public class Task {
         this.taskCommit = taskCommit;
     }
 
+    public Dashboard getDashboard() {
+        return dashboard;
+    }
+
+    public void setDashboard(Dashboard dashboard) {
+        this.dashboard = dashboard;
+    }
 }

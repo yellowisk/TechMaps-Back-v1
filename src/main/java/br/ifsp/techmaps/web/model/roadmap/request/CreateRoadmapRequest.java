@@ -1,11 +1,9 @@
 package br.ifsp.techmaps.web.model.roadmap.request;
 
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 public class CreateRoadmapRequest {
     private String title;

@@ -55,39 +55,33 @@ insert into techmaps_platform.stage(id, roadmap_id, theme, status,
 
 --! Task Queries --!
 
-insert into techmaps_platform.task(id, stage_id, title, description,
+insert into techmaps_platform.task(id, stage_id, theme, info,
     repository_link, date_created, date_finished, dashboard_id)
     values ('13acdae6-fef5-4d1c-8ab4-23b4cf169350'::uuid,
-    '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'Learn OOP',
-    'Object-Oriented Programming is a programming paradigm based on the concept of objects',
-    'https://www.udemy.com/course/java-curso-completo/',
-    '2023-06-09 07:45:00', '2023-06-13 08:00:00',
-    '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
+    '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'LEARN_SPRING',
+    'SPG1', 'https://github.com/yellowisk/TechMaps-API', '2023-06-09 07:45:00',
+    '2023-06-13 08:00:00', '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, description,
+insert into techmaps_platform.task(id, stage_id, theme, info,
     repository_link, date_created, date_finished, dashboard_id)
     values ('b061df33-90c7-4b8e-b976-7909528f0dc0'::uuid,
-    '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'Learn lambda',
-    'a short block of code which takes in parameters and returns a value',
-    'https://www.udemy.com/course/java-curso-completo/',
-    '2023-06-09 07:45:00', null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
+    '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'LEARN_SPRING',
+    'SPG2', 'https://github.com/yellowisk/TechMaps-API', '2023-06-09 07:45:00',
+    null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, description,
+insert into techmaps_platform.task(id, stage_id, theme, info,
     repository_link, date_created, date_finished, dashboard_id)
     values ('beefb09f-1c66-4d82-9e97-dfe5cad7d580'::uuid,
-    '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'Learn animations',
-    'animations are done by programming gradual changes in an elements style',
-    'https://www.udemy.com/course/javascript-curso-completo/',
-    '2023-04-09 07:45:00', '2023-04-13 08:00:00',
-    '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
+    '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'LEARN_JS',
+    'JS1', 'https://github.com/yellowisk/TechMaps-API', '2023-04-09 07:45:00',
+    '2023-04-13 08:00:00', '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, title, description,
+insert into techmaps_platform.task(id, stage_id, theme, info,
     repository_link, date_created, date_finished, dashboard_id)
     values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid,
-    '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'Learn hooks',
-    'disassociate the components that can be reused from the functional components',
-    'https://www.udemy.com/course/javascript-curso-completo/',
-    '2023-04-12 07:45:00', null, '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
+    '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'LEARN_JS',
+    'JS2', 'https://github.com/yellowisk/TechMaps-API', '2023-04-12 07:45:00',
+    null, '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
 --! Task Commit Queries --!
 
@@ -110,3 +104,10 @@ insert into techmaps_platform.task_commit(id, task_id, tag, state, dashboard_id)
     values ('66767a71-7596-4754-8529-37b8e9bf1ca1'::uuid,
     'c8001af2-e2b8-4c22-bee3-92036902edf9', 'final: hooks | techmap', 'STAGED',
     '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
+
+--! Populate Tasks !--
+insert into techmaps_platform.task(id, stage_id, theme, repository_link,
+                                   date_created, date_finished, dashboard_id)
+values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid, '9c21f392-3fde-4cb9-bbc6-16ed6ad1b96e',
+        'LEARN_PYTHON', null, null, null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
+

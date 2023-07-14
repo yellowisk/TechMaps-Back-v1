@@ -7,13 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 @Repository

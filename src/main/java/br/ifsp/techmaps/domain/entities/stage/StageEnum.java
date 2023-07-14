@@ -1,11 +1,8 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum StageEnum {
     //Langs
-        LEARN_PYTHON("Learn python", "Backend"),
+        LEARN_PYTHON("Learn Python", "Backend"),
         LEARN_JAVA("Learn Java", "Backend"),
         LEARN_KOTLIN("Learn Kotlin", "Android"),
         LEARN_HTML("Learn HTML", "Frontend"),
@@ -35,7 +32,7 @@ public enum StageEnum {
 
     //SOFTWARES
         LEARN_VSCODE("Learn Visual studio Code", "General"),
-        LEARN_INTELLIJ("Learn IntelliJ", "General"),
+        LEARN_INTELLIJ("Learn IntelliJ IDEA", "General"),
         LEARN_ANDROID("Learn Android Studio", "Android"),
     //Frameworks
         LEARN_ANGULAR("Learn Angular", "Frontend"),
@@ -44,15 +41,15 @@ public enum StageEnum {
 
     //Databases
         LEARN_MYSQL("Learn MySQL", "Backend"),
-        LEARN_POSTGRES("Learn PostgresSQL", "Backend"),
+        LEARN_POSTGRES("Learn PostgreSQL", "Backend"),
         LEARN_DOCKER("Learn Docker", "Backend"),
         LEARN_FIREBASE("Learn Firebase", "Backend");
 
     private String topic;
     private String condition;
 
-    StageEnum(String status, String condition) {
-        this.topic = status;
+    StageEnum(String topic, String condition) {
+        this.topic = topic;
         this.condition = condition;
     }
 
@@ -60,8 +57,8 @@ public enum StageEnum {
         return topic;
     }
 
-    public void setTopic(String status) {
-        this.topic = status;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public String getCondition() {

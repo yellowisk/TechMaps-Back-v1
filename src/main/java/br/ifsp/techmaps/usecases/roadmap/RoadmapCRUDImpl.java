@@ -2,11 +2,7 @@ package br.ifsp.techmaps.usecases.roadmap;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
-import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -14,10 +10,7 @@ import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class RoadmapCRUDImpl implements RoadmapCRUD {

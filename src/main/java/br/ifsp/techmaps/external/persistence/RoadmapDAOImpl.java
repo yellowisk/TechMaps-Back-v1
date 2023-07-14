@@ -4,20 +4,14 @@ import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
-import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.*;
 
 @Repository

@@ -1,28 +1,27 @@
 package br.ifsp.techmaps.external.persistence;
 
+import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
+import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
+import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
+
+import java.sql.*;
 import java.util.*;
-import java.sql.ResultSet;
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 
 @Repository
 public class TaskDAOImpl implements TaskDAO {
 
     private final JdbcTemplate jdbcTemplate;
-
-    @Value("${queries.sql.task-dao.select.task-all}")
-    private String selectAllTasksQuery;
+    private final StageDAO stageDao;
+    private final DashboardDAO dashboardDao;
 
     @Value("${queries.sql.task-dao.select.task-by-id}")
     private String selectTaskByIdQuery;
@@ -33,32 +32,25 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-dao.select.task-by-stage-id}")
     private String selectTasksByStageIdQuery;
 
-    public TaskDAOImpl(JdbcTemplate jdbcTemplate) {
+    public TaskDAOImpl(JdbcTemplate jdbcTemplate, StageDAO stageDao, DashboardDAO dashboardDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.stageDao = stageDao;
+        this.dashboardDao = dashboardDao;
     }
 
 
     @Override
     public Task saveNewTask(Task task) {
-        UUID taskId = UUID.randomUUID();
-        jdbcTemplate.update(insertTaskQuery, taskId, task.getStage(), task.getTitle(),
-                task.getTitle(), task.getDate_created(), task.getDate_finished());
-            return Task.createWithOnlyId(taskId);
+        jdbcTemplate.update(insertTaskQuery, task.getId(), task.getStage().getStageId(),
+                task.getStage().getTheme().name(), task.getTaskBody().name(), task.getRepository(),
+                task.getDate_created(), task.getDate_finished(), task.getDashboard().getDashboardId());
+        return Task.createWithOnlyId(task.getId());
     }
 
     @Override
-    public List<Task> findAllTasks(UUID stageId) {
-        List<Task> tasks = jdbcTemplate.query(selectAllTasksQuery, (rs, rowNum) -> {
-            Task task = new Task();
-            task.setTaskId(UUID.fromString(rs.getString("id")));
-            Stage.createStageWithOnlyId((UUID) rs.getObject("stage_id"));
-            task.setTitle(rs.getString("title"));
-            task.setDate_created(rs.getTimestamp("date_created"));
-            task.setDate_finished(rs.getTimestamp("hour"));
-            return task;
-        }, stageId);
-
-        return tasks;
+    public List<Task> findAllTasksByStageId(UUID stageId) {
+        return jdbcTemplate.query(selectTasksByStageIdQuery,
+                this::mapperTaskFromRs, stageId);
     }
 
     @Override
@@ -103,4 +95,20 @@ public class TaskDAOImpl implements TaskDAO {
             return false;
         }
     }
+
+    private Task mapperTaskFromRs(ResultSet rs, int rowNum) throws SQLException {
+        UUID id = (UUID) rs.getObject("id");
+        UUID stageId = (UUID) rs.getObject("stage_id");
+        String repository = rs.getString("repository_link");
+        Timestamp dateCreated = rs.getTimestamp("date_created");
+        Timestamp dateFinished = rs.getTimestamp("date_finished");
+        UUID dashboardId = (UUID) rs.getObject("dashboard_id");
+
+        Stage stage = stageDao.findStageById(stageId).orElseThrow(() -> new SQLDataException("Stage not found"));
+        Dashboard dashboard = dashboardDao.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+
+        return Task.createwithoutTaskCommit
+                (id, stage, repository, dateCreated, dateFinished, dashboard);
+    }
+
 }

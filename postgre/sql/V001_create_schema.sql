@@ -135,12 +135,49 @@ ALTER TABLE techmaps_platform.stage
     ADD CONSTRAINT stage_roadmap_id_fkey FOREIGN KEY (roadmap_id)
         REFERENCES techmaps_platform.roadmap(id) ON DELETE CASCADE;
 
+CREATE TYPE techmaps_platform.task_body AS ENUM (
+    'PY1', 'PY2', 'PY3',
+    'JV1', 'JV2', 'JV3',
+    'KT1', 'KT2', 'KT3',
+    'HT1', 'HT2', 'HT3',
+    'CS1', 'CS2', 'CS3',
+    'JS1', 'JS2', 'JS3',
+    'INT1', 'IN2', 'IN3',
+    'DG1', 'DG2', 'DG3',
+    'WS1', 'WS2', 'WS3',
+    'CD1', 'CD2', 'CD3',
+    'GT1', 'GT2', 'GT3',
+    'GH1', 'GH2', 'GH3',
+    'AP1', 'AP2', 'AP3',
+    'RS1', 'RS2', 'RS3',
+    'SP1', 'SP2', 'SP3',
+    'AG1', 'AG2', 'AG3',
+    'DV1', 'DV2', 'DV3',
+    'OP1', 'OP2', 'OP3',
+    'SD1', 'SD2', 'SD3',
+    'CC1', 'CC2', 'CC3',
+    'TD1', 'TD2', 'TD3',
+    'CA1', 'CA2', 'CA3',
+    'VC1', 'VC2', 'VC3',
+    'II1', 'II2', 'II3',
+    'AD1', 'AD2', 'AD3',
+    'AN1', 'AN2', 'AN3',
+    'RE1', 'RE2', 'RE3',
+    'SPG1', 'SPG2', 'SPG3',
+    'MY1', 'MY2', 'MY3',
+    'PS1', 'PS2', 'PS3',
+    'DC1', 'DC2', 'DC3',
+    'FB1', 'FB2', 'FB3'
+);
+
+ALTER TYPE techmaps_platform.task_body OWNER TO "techmaps";
+
 CREATE TABLE techmaps_platform.task(
     id uuid NOT NULL,
     stage_id uuid NOT NULL,
-    title varchar NOT NULL,
-    description varchar NOT NULL,
-    repository_link varchar NOT NULL,
+    theme techmaps_platform.stage_theme,
+    info techmaps_platform.task_body,
+    repository_link varchar,
     date_created timestamp,
     date_finished timestamp,
     dashboard_id uuid NOT NULL

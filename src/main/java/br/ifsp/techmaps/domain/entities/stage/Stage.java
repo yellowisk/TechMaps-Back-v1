@@ -4,15 +4,10 @@ import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 @Entity
 @Table(name = "stage")
 public class Stage {
@@ -91,24 +86,24 @@ public class Stage {
 
     //TODO: BRING TO USE CASE
 
-    public static Task createTask(Stage stage, String title, String description,
-                                  String repository_link, Timestamp date_created,
-                                  Timestamp date_finished) {
-        User user = new User();
-        Task task = new Task(UUID.randomUUID(), stage, title,
-                description, repository_link, date_created,
-                date_finished);
-        if (task.getStage().getStageStatus() == StageStatus.DONE) {
-            throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
-        } else {
-            if (user.getGithub() == null) {
-                task.getTaskCommit().setCommitTag("");
-            } else {
-                task.getTaskCommit().setCommitTag(task);
-            }
-            return task;
-        }
-    }
+//    public static Task createTask(Stage stage, String title, String description,
+//                                  String repository_link, Timestamp date_created,
+//                                  Timestamp date_finished) {
+//        User user = new User();
+//        Task task = new Task(UUID.randomUUID(), stage, title,
+//                description, repository_link, date_created,
+//                date_finished);
+//        if (task.getStage().getStageStatus() == StageStatus.DONE) {
+//            throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
+//        } else {
+//            if (user.getGithub() == null) {
+//                task.getTaskCommit().setCommitTag("");
+//            } else {
+//                task.getTaskCommit().setCommitTag(task);
+//            }
+//            return task;
+//        }
+//    }
 
     public int findStageCommits(List<Task> tasks) {
         ArrayList<TaskCommit> stageCommits = new ArrayList<TaskCommit>();

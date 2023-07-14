@@ -5,8 +5,7 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.Task;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class StageResponse {
     private UUID stageId;

@@ -5,7 +5,7 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 public class RoadmapResponse {
 

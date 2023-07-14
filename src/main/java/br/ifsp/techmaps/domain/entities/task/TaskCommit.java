@@ -2,7 +2,7 @@ package br.ifsp.techmaps.domain.entities.task;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "task_commit")
@@ -50,9 +50,9 @@ public class TaskCommit {
     }
 
     //TODO: BRING TO USE CASE
-    public void setCommitTag(Task task) {
-        TaskCommit taskCommit = new TaskCommit();
-        taskCommit.setCommitTag("["+task.getTitle()+"| finalCommit]");
-    }
+//    public void setCommitTag(Task task) {
+//        TaskCommit taskCommit = new TaskCommit();
+//        taskCommit.setCommitTag("["+task.getTitle()+"| finalCommit]");
+//    }
 
 }

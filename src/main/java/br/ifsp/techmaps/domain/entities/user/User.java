@@ -1,10 +1,8 @@
 package br.ifsp.techmaps.domain.entities.user;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "users")

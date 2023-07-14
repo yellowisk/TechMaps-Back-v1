@@ -2,10 +2,7 @@ package br.ifsp.techmaps.usecases.roadmap.gateway;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public interface RoadmapDAO {
 

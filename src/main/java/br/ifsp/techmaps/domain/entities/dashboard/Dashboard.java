@@ -3,12 +3,9 @@ package br.ifsp.techmaps.domain.entities.dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.domain.entities.user.User;
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "dashboard")
@@ -33,16 +30,24 @@ public class Dashboard {
         this.totalTime = totalTime;
     }
 
-    public Dashboard() {
-    }
-
     public Dashboard(UUID dashboardId, int totalTime) {
         this.dashboardId = dashboardId;
         this.totalTime = totalTime;
     }
 
+    public Dashboard(UUID dashboardId) {
+        this.dashboardId = dashboardId;
+    }
+
+    public Dashboard() {
+    }
+
     public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, int totalTime) {
         return new Dashboard(dashboardId, totalTime);
+    }
+
+    public static Dashboard createWithOnlyId(UUID dashboardId) {
+        return new Dashboard(dashboardId);
     }
 
     public int calculateTotalTime(){

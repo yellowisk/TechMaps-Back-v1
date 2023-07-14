@@ -6,10 +6,9 @@ import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import br.ifsp.techmaps.usecases.roadmap.RoadmapCRUD;
 import org.springframework.http.ResponseEntity;
 
-import java.util.UUID;
+import java.util.*;
 
 @RequestMapping("api/v1/dashboard/{dashboardId}/roadmaps")
 @RestController

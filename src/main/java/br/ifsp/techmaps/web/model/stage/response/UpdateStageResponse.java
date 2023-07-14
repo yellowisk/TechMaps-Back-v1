@@ -1,12 +1,9 @@
 package br.ifsp.techmaps.web.model.stage.response;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
-import br.ifsp.techmaps.domain.entities.task.Task;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class UpdateStageResponse {
     private UUID stageId;
