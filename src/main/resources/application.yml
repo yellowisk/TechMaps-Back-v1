@@ -47,6 +47,9 @@ queries:
           SELECT * FROM techmaps_platform.stage WHERE id = ?
         stage-by-roadmap-id: >
             SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ?
+      update:
+        stage-status-and-commit-counter: >
+          UPDATE techmaps_platform.stage SET status = ?::techmaps_platform.stage_status, commit_counter = ? WHERE id = ?
     task-dao:
       insert:
           task: >

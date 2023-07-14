@@ -36,6 +36,9 @@ public class StageDAOImpl implements StageDAO {
     @Value("${queries.sql.stage-dao.select.stage-by-roadmap-id}")
     private String selectStageByRoadmapIdQuery;
 
+    @Value("${queries.sql.stage-dao.update.stage-status-and-commit-counter}")
+    private String updateStageStatusAndCommitCounterQuery;
+
     public StageDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil, RoadmapDAO roadmapDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.jsonUtil = jsonUtil;
@@ -97,6 +100,16 @@ public class StageDAOImpl implements StageDAO {
 
         return stages.stream().toList();
 
+    }
+
+    @Override
+    public Stage updateStage(Stage stage) {
+        jdbcTemplate.update(updateStageStatusAndCommitCounterQuery, ps -> {
+            ps.setString(1, stage.getStageStatus().name());
+            ps.setObject(2, stage.getStageCommit());
+            ps.setObject(3, stage.getStageId());
+        });
+        return stage;
     }
 
     private Stage mapperStageFromRs(ResultSet rs, int rowNum) throws SQLException {

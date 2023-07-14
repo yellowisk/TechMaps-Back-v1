@@ -28,6 +28,12 @@ public class StageResponse {
         this.stageCommit = stageCommit;
     }
 
+    public StageResponse(UUID stageId, StageStatus stageStatus, Integer stageCommit) {
+        this.stageId = stageId;
+        this.stageStatus = stageStatus;
+        this.stageCommit = stageCommit;
+    }
+
     public static StageResponse createJustId(UUID stageId) {
         return new StageResponse(stageId);
     }
@@ -37,6 +43,14 @@ public class StageResponse {
                 stage.getStageId(),
                 stage.getRoadmap().getRoadmapId(),
                 stage.getTheme(),
+                stage.getStageStatus(),
+                stage.getStageCommit()
+        );
+    }
+
+    public static StageResponse createForUpdate(Stage stage) {
+        return new StageResponse(
+                stage.getStageId(),
                 stage.getStageStatus(),
                 stage.getStageCommit()
         );

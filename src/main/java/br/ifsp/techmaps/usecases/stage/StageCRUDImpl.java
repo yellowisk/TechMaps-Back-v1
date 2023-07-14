@@ -9,6 +9,7 @@ import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import br.ifsp.techmaps.web.exception.ResourceNotFoundException;
+import br.ifsp.techmaps.web.model.stage.request.UpdateStageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -219,5 +220,19 @@ public class StageCRUDImpl implements StageCRUD {
 
         return stageDAO.findStagesByRoadmapId(roadmapId);
 //        return roadmapDAO.findRoadmapById(roadmapId).get().getStages();
+    }
+
+    @Override
+    public Stage updateStage(UUID stageId, UpdateStageRequest request) {
+        Optional<Stage> opt = stageDAO.findStageById(stageId);
+
+        if (opt.isEmpty()) {
+            ResourceNotFoundException excpt =
+                    new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
+        }
+
+        Stage stage = request.convertToStage();
+
+        return stageDAO.updateStage(stage.getNewInstanceWithId(stageId));
     }
 }

@@ -8,4 +8,7 @@ public interface StageDAO {
     Stage saveStage(Stage stage);
     Optional<Stage> findStageById(UUID stageId);
     List<Stage> findStagesByRoadmapId(UUID roadmapId);
+
+    Stage updateStage(Stage stage);
+
 }

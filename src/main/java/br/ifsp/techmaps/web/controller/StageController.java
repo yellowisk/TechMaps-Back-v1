@@ -3,7 +3,9 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
+import br.ifsp.techmaps.web.model.stage.request.UpdateStageRequest;
 import br.ifsp.techmaps.web.model.stage.response.StageResponse;
+import br.ifsp.techmaps.web.model.stage.response.UpdateStageResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +62,15 @@ public class StageController {
         }
 
         return ResponseEntity.ok(stageResponses);
+    }
+
+    @PatchMapping("/{stageId}")
+    public ResponseEntity<UpdateStageResponse> updateStageById(
+            @PathVariable UUID stageId,
+            @RequestBody @Valid UpdateStageRequest request) {
+        Stage stage = stageCRUD.updateStage(stageId, request);
+
+        return ResponseEntity.ok(UpdateStageResponse.createForUpdate(stage));
     }
 
 }
