@@ -3,6 +3,8 @@ package br.ifsp.techmaps.web.model.task.response;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 
+import java.util.*;
+
 public class UpdateCommitResponse {
 
     private CommitState state;
@@ -11,7 +13,7 @@ public class UpdateCommitResponse {
         this.state = state;
     }
 
-    public static UpdateCommitResponse convertFromTaskCommit(TaskCommit taskCommit) {
+    public static UpdateCommitResponse convertForUpdate(TaskCommit taskCommit) {
         return new UpdateCommitResponse(taskCommit.getState());
     }
 

@@ -3,6 +3,7 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
+import br.ifsp.techmaps.web.model.task.response.CommitResponse;
 import br.ifsp.techmaps.web.model.task.response.UpdateCommitResponse;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
 import br.ifsp.techmaps.web.model.task.response.TaskResponse;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RequestMapping("api/v1/roadmaps/{roadmapId}/stages/{stageId}/tasks")
+@RequestMapping("api/v1/stages/{stageId}/tasks")
 @RestController
 public class TaskController {
 
@@ -45,6 +46,14 @@ public class TaskController {
         return ResponseEntity.ok(taskResponses);
     }
 
+    @GetMapping("/commits/{commitId}")
+    public ResponseEntity<CommitResponse> getCommitById(
+            @PathVariable UUID commitId) {
+        TaskCommit taskCommit = taskCRUD.getTaskCommitById(commitId);
+
+        return ResponseEntity.ok(CommitResponse.convertFromTaskCommit(taskCommit));
+    }
+
     @PostMapping
     public ResponseEntity<List<TaskResponse>> addNewTask(
             @PathVariable UUID stageId,
@@ -65,7 +74,7 @@ public class TaskController {
             @PathVariable UUID commitId) {
         TaskCommit taskCommit = taskCRUD.updateTaskCommit(taskId, commitId);
 
-        return ResponseEntity.ok(UpdateCommitResponse.convertFromTaskCommit(taskCommit));
+        return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
     }
 
 }

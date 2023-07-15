@@ -47,6 +47,14 @@ public class TaskCommit {
         this.commitId = commitId;
     }
 
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
     public String getCommitTag() {
         return commitTag;
     }

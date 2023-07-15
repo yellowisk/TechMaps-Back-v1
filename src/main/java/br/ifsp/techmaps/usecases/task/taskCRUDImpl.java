@@ -92,13 +92,14 @@ public class taskCRUDImpl implements TaskCRUD {
 
     @Override
     public TaskCommit getTaskCommitById(UUID taskCommitId) {
-        return null;
+        return taskDAO.findTaskCommitById(taskCommitId)
+                .orElseThrow(() -> new NullPointerException("Couldn't TaskCommit with id: " + taskCommitId));
     }
 
     @Override
     public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId) {
         if(!taskDAO.TaskExists(taskId)) {
-            throw new NullPointerException("Task with id " + taskId + " does not exist");
+            throw new NullPointerException("Task with id " + taskId + " doesn't exist");
         }
 
         taskDAO.updateTaskCommmit(taskCommitId);
