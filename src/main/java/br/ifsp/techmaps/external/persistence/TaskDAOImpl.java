@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static br.ifsp.techmaps.domain.entities.task.CommitState.*;
@@ -45,8 +46,11 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-commit-dao.select.task-commit-by-id}")
     private String selectTaskCommitByIdQuery;
 
-    @Value("${queries.sql.task-dao.update.task-repository-and-date-finished}")
+    @Value("${queries.sql.task-dao.update.task-repository}")
     private String updateTaskRepositoryAndDateFinishedQuery;
+
+    @Value("${queries.sql.task-dao.update.task-date-finished}")
+    private String updateTaskDateFinishedQuery;
 
     @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
     private String updateTaskCommitStatusQuery;
@@ -91,7 +95,14 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Task updateTask(Task task) {
         jdbcTemplate.update(updateTaskRepositoryAndDateFinishedQuery, task.getRepository(),
-                task.getDate_finished(), task.getId());
+                task.getId());
+        return Task.createWithOnlyId(task.getId());
+    }
+
+    @Override
+    public Task updateDateFinished(Task task) {
+        jdbcTemplate.update(updateTaskDateFinishedQuery,
+                Timestamp.valueOf(LocalDateTime.now()), task.getId());
         return Task.createWithOnlyId(task.getId());
     }
 

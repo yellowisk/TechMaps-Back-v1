@@ -255,22 +255,9 @@ public class StageCRUDImpl implements StageCRUD {
                     new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
         }
 
-        List<CommitState> stagedCommits = stageDAO.findCommitsByStageId(stageId);
-        Integer counter = 0;
-
-        for (CommitState commit : stagedCommits) {
-            if(commit.equals(CommitState.STAGED)) {
-                counter++;
-            }
-        }
-
-        if(stagedCommits.size() == counter) {
-            Stage stage = stageDAO.findStageById(stageId).get();
-            stage.setStageStatus(StageStatus.DONE);
-            return stageDAO.updateStageStatus(stage);
-        } else {
-            throw new IllegalStateException("Stage is not done yet");
-        }
-
+        Stage stage = stageDAO.findStageById(stageId).get();
+        stage.setStageStatus(StageStatus.DONE);
+        return stageDAO.updateStageStatus(stage);
     }
+
 }

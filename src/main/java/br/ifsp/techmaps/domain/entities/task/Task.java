@@ -68,6 +68,10 @@ public class Task {
         this.date_finished = date_finished;
     }
 
+    public Task(String repository_link) {
+        this.repository_link = repository_link;
+    }
+
     private Task(UUID taskId) {
         this.taskId = taskId;
     }
@@ -76,10 +80,6 @@ public class Task {
 
     public static Task createWithOnlyId(UUID taskId) {
         return new Task(taskId);
-    }
-
-    public static Task createWithoutIdAndTaskCommit(Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
-        return new Task(stage, taskBody, repository_link, date_created, date_finished, dashboard);
     }
 
     public static Task createwithoutTaskCommit(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {

@@ -4,6 +4,7 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
+import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.UpdateTaskRequest;
 import br.ifsp.techmaps.web.model.task.response.CommitResponse;
 import br.ifsp.techmaps.web.model.task.response.UpdateCommitResponse;
@@ -21,10 +22,12 @@ public class TaskController {
 
     private final TaskCRUD taskCRUD;
     private final StageCRUD stageCRUD;
+    private final TaskDAO taskDAO;
 
-    public TaskController(TaskCRUD taskCRUD, StageCRUD stageCRUD) {
+    public TaskController(TaskCRUD taskCRUD, StageCRUD stageCRUD, TaskDAO taskDAO) {
         this.taskCRUD = taskCRUD;
         this.stageCRUD = stageCRUD;
+        this.taskDAO = taskDAO;
     }
 
     @GetMapping("{taskId}")
@@ -89,6 +92,7 @@ public class TaskController {
             @PathVariable UUID commitId) {
         TaskCommit taskCommit = taskCRUD.updateTaskCommit(taskId, commitId);
         stageCRUD.updateStageCommit(taskCommit.getTask().getStage().getStageId());
+        taskDAO.updateDateFinished(taskCommit.getTask());
 
         return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
     }

@@ -72,8 +72,10 @@ queries:
           SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
                                               dashboard_id FROM techmaps_platform.task WHERE stage_id = ?
       update:
-          task-repository-and-date-finished: >
-            UPDATE techmaps_platform.task SET repository_link = ?, date_finished = ? WHERE id = ?
+          task-repository: >
+            UPDATE techmaps_platform.task SET repository_link = ? WHERE id = ?
+          task-date-finished: >
+            UPDATE techmaps_platform.task SET date_finished = ? WHERE id = ?
       delete:
           task: >
       exists:
