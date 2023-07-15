@@ -12,17 +12,31 @@ public class TaskCommit {
     private UUID commitId;
     @OneToOne
     private Task task;
-
     private String commitTag;
     private CommitState state;
 
     public TaskCommit() {
     }
 
+    public TaskCommit(UUID commitId, Task task, String commitTag, CommitState state) {
+        this.commitId = commitId;
+        this.task = task;
+        this.commitTag = commitTag;
+        this.state = state;
+    }
+
     public TaskCommit(UUID commitId, String commitTag, CommitState state) {
         this.commitId = commitId;
         this.commitTag = commitTag;
         this.state = state;
+    }
+
+    public TaskCommit(UUID commitId) {
+        this.commitId = commitId;
+    }
+
+    public static TaskCommit createWithOnlyId(UUID commitId) {
+        return new TaskCommit(commitId);
     }
 
     public UUID getCommitId() {
@@ -50,9 +64,9 @@ public class TaskCommit {
     }
 
     //TODO: BRING TO USE CASE
-//    public void setCommitTag(Task task) {
-//        TaskCommit taskCommit = new TaskCommit();
-//        taskCommit.setCommitTag("["+task.getTitle()+"| finalCommit]");
-//    }
+    public static String createCommitTag(Task task) {
+        String tag = "[ "+task.getTaskBody().getTitle()+" | finalCommit]";
+        return tag;
+    }
 
 }

@@ -211,7 +211,7 @@ CREATE TABLE techmaps_platform.task_commit(
     dashboard_id uuid NOT NULL
 );
 
-ALTER TABLE techmaps_platform.task OWNER TO "techmaps";
+ALTER TABLE techmaps_platform.task_commit OWNER TO "techmaps";
 
 ALTER TABLE techmaps_platform.task_commit
     ADD CONSTRAINT task_commit_pkey PRIMARY KEY (id);

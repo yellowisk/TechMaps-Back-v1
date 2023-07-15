@@ -74,3 +74,17 @@ queries:
       exists:
           task-id: >
             SELECT EXISTS(SELECT 1 FROM techmaps_platform.task WHERE id = ?)
+    task-commit-dao:
+      insert:
+        task-commit: >
+          INSERT INTO techmaps_platform.task_commit (id, task_id, tag, state, dashboard_id) 
+          VALUES (?, ?, ?, ?::techmaps_platform.task_commit_status, ?)
+      select:
+        task-commit-by-id: >
+          SELECT * FROM techmaps_platform.task_commit WHERE id = ?
+        task-commit-by-task-id: >
+          SELECT * FROM techmaps_platform.task_commit WHERE task_id = ?
+      update:
+        task-state: >
+          UPDATE techmaps_platform.task_commit SET state = ?::techmaps_platform.task_commit_status WHERE id = ?
+          

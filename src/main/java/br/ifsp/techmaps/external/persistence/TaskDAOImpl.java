@@ -17,6 +17,8 @@ import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import java.sql.*;
 import java.util.*;
 
+import static br.ifsp.techmaps.domain.entities.task.CommitState.*;
+
 @Repository
 public class TaskDAOImpl implements TaskDAO {
 
@@ -35,6 +37,9 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Value("${queries.sql.task-dao.insert.task}")
     private String insertTaskQuery;
+
+    @Value("${queries.sql.task-commit-dao.insert.task-commit}")
+    private String insertTaskCommitQuery;
 
     public TaskDAOImpl(JdbcTemplate jdbcTemplate, StageDAO stageDao, DashboardDAO dashboardDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -80,7 +85,11 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public TaskCommit createTaskCommit(Task task) {
-        return null;
+        UUID taskCommitId = UUID.randomUUID();
+        jdbcTemplate.update(insertTaskCommitQuery, taskCommitId,
+                task.getId(), TaskCommit.createCommitTag(task),
+                UNSTAGED.name(), task.getDashboard().getDashboardId());
+        return TaskCommit.createWithOnlyId(taskCommitId);
     }
 
     @Override
