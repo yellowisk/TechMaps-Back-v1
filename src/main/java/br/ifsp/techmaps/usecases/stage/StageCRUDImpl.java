@@ -236,9 +236,14 @@ public class StageCRUDImpl implements StageCRUD {
             }
         }
 
-        System.out.println("counter: " + counter);
-        System.out.println("commits: " + commits.size());
+        System.out.println(">>> counter: " + counter);
+        System.out.println("commits: " + commits.size() + " <<<");
         stage.setStageCommit(counter);
+
+        if(commits.size() == counter) {
+            stage.setStageStatus(StageStatus.DONE);
+            stageDAO.updateStageStatus(stage);
+        }
 
         return stageDAO.updateStage(stage);
     }
