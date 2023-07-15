@@ -2,6 +2,7 @@ package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
@@ -40,6 +41,12 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Value("${queries.sql.task-commit-dao.insert.task-commit}")
     private String insertTaskCommitQuery;
+
+    @Value("${queries.sql.task-commit-dao.select.task-commit-by-id}")
+    private String selectTaskCommitByIdQuery;
+
+    @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
+    private String updateTaskCommitStatusQuery;
 
     public TaskDAOImpl(JdbcTemplate jdbcTemplate, StageDAO stageDao, DashboardDAO dashboardDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -84,6 +91,21 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
+    public Optional<TaskCommit> findTaskCommitById(UUID taskCommitId) {
+        TaskCommit taskCommit;
+        try {
+            taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByIdQuery, this::mapperTaskCommitFromRs, taskCommitId);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
+        if(Objects.isNull(taskCommit))
+            throw new IllegalStateException();
+
+        return Optional.of(taskCommit);
+    }
+
+    @Override
     public TaskCommit createTaskCommit(Task task) {
         UUID taskCommitId = UUID.randomUUID();
         jdbcTemplate.update(insertTaskCommitQuery, taskCommitId,
@@ -94,7 +116,8 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public TaskCommit updateTaskCommmit(UUID taskCommitId) {
-        return null;
+        jdbcTemplate.update(updateTaskCommitStatusQuery, STAGED.name(), taskCommitId);
+        return TaskCommit.createWithOnlyId(taskCommitId);
     }
 
     @Override
@@ -117,6 +140,19 @@ public class TaskDAOImpl implements TaskDAO {
 
         return Task.createwithoutTaskCommit
                 (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard);
+    }
+
+    private TaskCommit mapperTaskCommitFromRs(ResultSet rs, int rowNum) throws SQLException {
+        UUID id = (UUID) rs.getObject("id");
+        UUID taskId = (UUID) rs.getObject("task_id");
+        String commitTag = rs.getString("tag");
+        CommitState commitState = CommitState.valueOf(rs.getString("state"));
+        UUID dashboardId = (UUID) rs.getObject("dashboard_id");
+
+        Task task = findTaskById(taskId).orElseThrow(() -> new SQLDataException("Task not found"));
+        Dashboard dashboard = dashboardDao.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+
+        return new TaskCommit(id, task, commitTag, commitState);
     }
 
 }

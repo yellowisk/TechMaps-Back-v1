@@ -85,6 +85,6 @@ queries:
         task-commit-by-task-id: >
           SELECT * FROM techmaps_platform.task_commit WHERE task_id = ?
       update:
-        task-state: >
+        task-commit-state: >
           UPDATE techmaps_platform.task_commit SET state = ?::techmaps_platform.task_commit_status WHERE id = ?
           

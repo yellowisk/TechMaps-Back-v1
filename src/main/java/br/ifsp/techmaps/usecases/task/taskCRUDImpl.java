@@ -5,6 +5,7 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
+import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
@@ -89,4 +90,19 @@ public class taskCRUDImpl implements TaskCRUD {
         return null;
     }
 
+    @Override
+    public TaskCommit getTaskCommitById(UUID taskCommitId) {
+        return null;
+    }
+
+    @Override
+    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId) {
+        if(!taskDAO.TaskExists(taskId)) {
+            throw new NullPointerException("Task with id " + taskId + " does not exist");
+        }
+
+        taskDAO.updateTaskCommmit(taskCommitId);
+
+        return taskDAO.findTaskCommitById(taskCommitId).get();
+    }
 }
