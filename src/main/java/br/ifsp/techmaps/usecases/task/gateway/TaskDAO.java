@@ -11,7 +11,6 @@ public interface TaskDAO {
 
     List<Task> findAllTasksByStageId(UUID stageId);
     Optional<Task> findTaskById(UUID taskId);
-    Optional<Task> findTasksByRoadmapId(UUID roadmapId);
     Task updateTask(Task task);
     TaskCommit createTaskCommit(Task task);
 

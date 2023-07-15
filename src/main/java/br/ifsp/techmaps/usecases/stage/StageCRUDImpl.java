@@ -38,8 +38,6 @@ public class StageCRUDImpl implements StageCRUD {
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
                 request.getTheme(), StageStatus.UNDONE, 0);
 
-        System.out.println(stage.getRoadmap());
-
         if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())
                 || request.getTheme().getCondition() == "General") {
             return stageDAO.saveStage(stage);

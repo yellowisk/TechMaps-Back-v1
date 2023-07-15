@@ -3,6 +3,7 @@ package br.ifsp.techmaps.external.persistence;
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
@@ -23,14 +24,17 @@ public class TaskDAOImpl implements TaskDAO {
     private final StageDAO stageDao;
     private final DashboardDAO dashboardDao;
 
+    @Value("${queries.sql.task-dao.exists.task-id}")
+    private String existsTaskIdQuery;
+
     @Value("${queries.sql.task-dao.select.task-by-id}")
     private String selectTaskByIdQuery;
 
-    @Value("${queries.sql.task-dao.insert.task}")
-    private String insertTaskQuery;
-
     @Value("${queries.sql.task-dao.select.task-by-stage-id}")
     private String selectTasksByStageIdQuery;
+
+    @Value("${queries.sql.task-dao.insert.task}")
+    private String insertTaskQuery;
 
     public TaskDAOImpl(JdbcTemplate jdbcTemplate, StageDAO stageDao, DashboardDAO dashboardDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -48,27 +52,25 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public List<Task> findAllTasksByStageId(UUID stageId) {
-        return jdbcTemplate.query(selectTasksByStageIdQuery,
-                this::mapperTaskFromRs, stageId);
-    }
-
-    @Override
     public Optional<Task> findTaskById(UUID taskId) {
+        Task task;
         try {
-            Task task = jdbcTemplate.queryForObject(selectTaskByIdQuery, (rs, rowNum) -> {
-                UUID id = (UUID) rs.getObject("id");
-                return Task.createWithOnlyId(id);
-            }, taskId);
-            return Optional.of(task);
+            task = jdbcTemplate.queryForObject(selectTaskByIdQuery,
+                this::mapperTaskFromRs, taskId);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+
+        if(Objects.isNull(task))
+            throw new IllegalStateException();
+
+        return Optional.of(task);
     }
 
     @Override
-    public Optional<Task> findTasksByRoadmapId(UUID roadmapId) {
-        return Optional.empty();
+    public List<Task> findAllTasksByStageId(UUID stageId) {
+        return jdbcTemplate.query(selectTasksByStageIdQuery,
+                this::mapperTaskFromRs, stageId);
     }
 
     @Override
@@ -88,17 +90,14 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public Boolean TaskExists(UUID taskId) {
-        try {
-            jdbcTemplate.queryForObject(selectTaskByIdQuery, (rs, rowNum) -> null, taskId);
-            return true;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
+        Boolean exists = jdbcTemplate.queryForObject(existsTaskIdQuery, Boolean.class, taskId);
+        return Objects.nonNull(exists) && exists;
     }
 
     private Task mapperTaskFromRs(ResultSet rs, int rowNum) throws SQLException {
         UUID id = (UUID) rs.getObject("id");
         UUID stageId = (UUID) rs.getObject("stage_id");
+        TaskBody taskBody = TaskBody.valueOf(rs.getString("info"));
         String repository = rs.getString("repository_link");
         Timestamp dateCreated = rs.getTimestamp("date_created");
         Timestamp dateFinished = rs.getTimestamp("date_finished");
@@ -108,7 +107,7 @@ public class TaskDAOImpl implements TaskDAO {
         Dashboard dashboard = dashboardDao.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
 
         return Task.createwithoutTaskCommit
-                (id, stage, repository, dateCreated, dateFinished, dashboard);
+                (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard);
     }
 
 }

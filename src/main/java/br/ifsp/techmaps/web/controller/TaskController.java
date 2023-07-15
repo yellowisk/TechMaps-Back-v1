@@ -20,10 +20,27 @@ public class TaskController {
 
     @GetMapping("{taskId}")
     public ResponseEntity<TaskResponse> getTaskById(
+            @PathVariable UUID stageId,
             @PathVariable UUID taskId) {
-        Task task = taskCRUD.getTaskById(taskId);
+        Task task = taskCRUD.getTaskById(stageId, taskId);
+
+        System.out.println(task.getStage());
+        System.out.println(task.getStage().getStageId());
+        System.out.println(task.getStage().getTheme().getTopic());
 
         return ResponseEntity.ok(TaskResponse.createFromTask(task));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TaskResponse>> getTasksByStageId(
+            @PathVariable UUID stageId) {
+        List<Task> tasks = taskCRUD.getTasksByStageId(stageId);
+        List<TaskResponse> taskResponses = new ArrayList<>();
+        for (Task task : tasks) {
+            taskResponses.add(TaskResponse.createFromTask(task));
+        }
+
+        return ResponseEntity.ok(taskResponses);
     }
 
     @PostMapping

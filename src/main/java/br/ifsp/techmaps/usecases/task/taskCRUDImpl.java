@@ -37,6 +37,7 @@ public class taskCRUDImpl implements TaskCRUD {
     public List<Task> createNewTasks(UUID stageId, CreateTaskRequest createTaskRequest) {
         Stage stage = stageDAO.findStageById(stageId).get();
         StageEnum topic = stage.getTheme();
+
         Dashboard dashboard = dashboardDAO.findDashboardById(stage.getRoadmap().getDashboardId()).get();
 
         List<Task> tasks = new ArrayList<>();
@@ -58,7 +59,7 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
-    public Task getTaskByStageIdAndTaskId(UUID stageId, UUID taskId) {
+    public Task getTaskById(UUID stageId, UUID taskId) {
         Boolean stageExists = stageDAO.StageExists(stageId);
         if(!stageExists) {
             throw new NullPointerException("Stage with id " + stageId + " does not exist");
@@ -70,8 +71,12 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
-    public Task getTaskById(UUID TaskId) {
-        return null;
+    public List<Task> getTasksByStageId(UUID stageId) {
+        Boolean stageExists = stageDAO.StageExists(stageId);
+        if(!stageExists) {
+            throw new NullPointerException("Stage with id " + stageId + " does not exist");
+        }
+        return taskDAO.findAllTasksByStageId(stageId);
     }
 
     @Override

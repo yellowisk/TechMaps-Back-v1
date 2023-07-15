@@ -10,8 +10,8 @@ public interface TaskCRUD {
     List<Task> listAllTasks();
 
     List<Task> createNewTasks(UUID stageId, CreateTaskRequest createTaskRequest);
-    Task getTaskByStageIdAndTaskId(UUID stageId, UUID taskId);
-    Task getTaskById(UUID TaskId);
+    Task getTaskById(UUID stageId, UUID taskId);
+    List<Task> getTasksByStageId(UUID StageId);
     Task updateTask(UUID stageId, CreateTaskRequest createTaskRequest);
 
 }

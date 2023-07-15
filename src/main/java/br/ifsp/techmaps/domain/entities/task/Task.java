@@ -48,6 +48,15 @@ public class Task {
         this.dashboard = dashboard;
     }
 
+    public Task(Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+        this.stage = stage;
+        this.taskBody = taskBody;
+        this.repository_link = repository_link;
+        this.date_created = date_created;
+        this.date_finished = date_finished;
+        this.dashboard = dashboard;
+    }
+
     public Task(UUID taskId, String repository_link, Timestamp date_created) {
         this.taskId = taskId;
         this.repository_link = repository_link;
@@ -64,8 +73,12 @@ public class Task {
         return new Task(taskId);
     }
 
-    public static Task createwithoutTaskCommit(UUID taskId, Stage stage, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
-        return new Task(taskId, stage, repository_link, date_created, date_finished, dashboard);
+    public static Task createWithoutIdAndTaskCommit(Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+        return new Task(stage, taskBody, repository_link, date_created, date_finished, dashboard);
+    }
+
+    public static Task createwithoutTaskCommit(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+        return new Task(taskId, stage, taskBody, repository_link, date_created, date_finished, dashboard);
     }
 
     public static Task createForStage(UUID taskId, String repository_link, Timestamp date_created) {

@@ -50,6 +50,9 @@ queries:
       update:
         stage-status-and-commit-counter: >
           UPDATE techmaps_platform.stage SET status = ?::techmaps_platform.stage_status, commit_counter = ? WHERE id = ?
+      exists:
+        stage-id: >
+          SELECT EXISTS(SELECT 1 FROM techmaps_platform.stage WHERE id = ?)
     task-dao:
       insert:
           task: >
@@ -59,12 +62,15 @@ queries:
             ?::techmaps_platform.task_body, ?, ?, ?, ?)
       select:
         task-by-id: >
-          SELECT * FROM techmaps_platform.task WHERE id = ?
+          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
+                             dashboard_id FROM techmaps_platform.task WHERE id = ?
         task-by-stage-id: >
-          SELECT * FROM techmaps_platform.task WHERE stage_id = ?
+          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
+                                              dashboard_id FROM techmaps_platform.task WHERE stage_id = ?
       update:
           task: >
       delete:
           task: >
       exists:
-          task-by-id: >
+          task-id: >
+            SELECT EXISTS(SELECT 1 FROM techmaps_platform.task WHERE id = ?)

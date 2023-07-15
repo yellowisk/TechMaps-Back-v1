@@ -35,6 +35,9 @@ public class StageDAOImpl implements StageDAO {
     @Value("${queries.sql.stage-dao.update.stage-status-and-commit-counter}")
     private String updateStageStatusAndCommitCounterQuery;
 
+    @Value("${queries.sql.stage-dao.exists.stage-id}")
+    private String existsStageIdQuery;
+
     public StageDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil, RoadmapDAO roadmapDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.jsonUtil = jsonUtil;
@@ -43,19 +46,13 @@ public class StageDAOImpl implements StageDAO {
 
     @Override
     public Boolean StageExists(UUID stageId) {
-        return null;
+        Boolean exists = jdbcTemplate.queryForObject(existsStageIdQuery, Boolean.class, stageId);
+        return Objects.nonNull(exists) && exists;
     }
 
     @Override
     public Stage saveStage(Stage stage) {
-        UUID stageId = UUID.randomUUID();
-
-        System.out.println(stageId);
-        System.out.println(stage.getRoadmap());
-        System.out.println(stage.getRoadmap().getRoadmapId());
-        System.out.println(stage.getTheme().name());
-        System.out.println(stage.getStageStatus().name());
-        System.out.println(stage.getStageCommit());
+        UUID stageId = stage.getStageId();
 
         jdbcTemplate.update(insertStageQuery, stageId,
                 stage.getRoadmap().getRoadmapId(), stage.getTheme().name(),
