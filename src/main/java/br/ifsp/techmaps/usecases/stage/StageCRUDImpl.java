@@ -28,11 +28,6 @@ public class StageCRUDImpl implements StageCRUD {
     }
 
     @Override
-    public Boolean StageExists(UUID stageId) {
-        return null;
-    }
-
-    @Override
     public Stage addNewStage(UUID roadmapId, CreateStageRequest request) {
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
@@ -219,7 +214,6 @@ public class StageCRUDImpl implements StageCRUD {
         }
 
         return stageDAO.findStagesByRoadmapId(roadmapId);
-//        return roadmapDAO.findRoadmapById(roadmapId).get().getStages();
     }
 
     @Override
@@ -247,5 +241,31 @@ public class StageCRUDImpl implements StageCRUD {
         stage.setStageCommit(counter);
 
         return stageDAO.updateStage(stage);
+    }
+
+    @Override
+    public Stage updateStageStatus(UUID stageId) {
+        if(!stageDAO.StageExists(stageId)) {
+            ResourceNotFoundException excpt =
+                    new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
+        }
+
+        List<CommitState> stagedCommits = stageDAO.findCommitsByStageId(stageId);
+        Integer counter = 0;
+
+        for (CommitState commit : stagedCommits) {
+            if(commit.equals(CommitState.STAGED)) {
+                counter++;
+            }
+        }
+
+        if(stagedCommits.size() == counter) {
+            Stage stage = stageDAO.findStageById(stageId).get();
+            stage.setStageStatus(StageStatus.DONE);
+            return stageDAO.updateStageStatus(stage);
+        } else {
+            throw new IllegalStateException("Stage is not done yet");
+        }
+
     }
 }

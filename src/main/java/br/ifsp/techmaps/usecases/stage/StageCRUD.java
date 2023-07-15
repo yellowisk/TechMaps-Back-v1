@@ -8,15 +8,12 @@ import br.ifsp.techmaps.web.model.stage.request.UpdateStageRequest;
 import java.util.*;
 
 public interface StageCRUD {
-    Boolean StageExists(UUID stageId);
     Stage addNewStage(UUID RoadmapId, CreateStageRequest request);
-
     List<Stage> addStagesByRoadmapId(UUID roadmapId);
-
     Stage getStageById(UUID stageId);
     List<Stage> getStagesByRoadmapId(UUID roadmapId);
-
     Stage updateStageCommit(UUID stageId);
+    Stage updateStageStatus(UUID stageId);
 
 
 

@@ -52,8 +52,8 @@ queries:
       update:
         stage-commit-counter: >
           UPDATE techmaps_platform.stage SET commit_counter = ? WHERE id = ?
-      stage-status-and-commit-counter: >
-        UPDATE techmaps_platform.stage SET status = ?::techmaps_platform.stage_status WHERE id = ?
+        stage-status: >
+          UPDATE techmaps_platform.stage SET status = ?::techmaps_platform.stage_status WHERE id = ?
       exists:
         stage-id: >
           SELECT EXISTS(SELECT 1 FROM techmaps_platform.stage WHERE id = ?)

@@ -4,20 +4,20 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 
 import java.util.*;
 
-public class UpdateStageResponse {
+public class UpdateStagingResponse {
     private UUID stageId;
     private Integer stageCommit;
 
-    public UpdateStageResponse(UUID stageId,Integer stageCommit) {
+    public UpdateStagingResponse(UUID stageId, Integer stageCommit) {
         this.stageId = stageId;
         this.stageCommit = stageCommit;
     }
 
-    public UpdateStageResponse() {
+    public UpdateStagingResponse() {
     }
 
-    public static UpdateStageResponse createForUpdate(Stage stage) {
-        return new UpdateStageResponse(
+    public static UpdateStagingResponse createForUpdate(Stage stage) {
+        return new UpdateStagingResponse(
                 stage.getStageId(),
                 stage.getStageCommit()
         );

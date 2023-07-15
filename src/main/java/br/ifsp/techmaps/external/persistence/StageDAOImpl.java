@@ -40,6 +40,9 @@ public class StageDAOImpl implements StageDAO {
     @Value("${queries.sql.stage-dao.update.stage-commit-counter}")
     private String updateStageCommitCounterQuery;
 
+    @Value("${queries.sql.stage-dao.update.stage-status}")
+    private String updateStageStatusQuery;
+
     @Value("${queries.sql.stage-dao.exists.stage-id}")
     private String existsStageIdQuery;
 
@@ -116,9 +119,17 @@ public class StageDAOImpl implements StageDAO {
 
     @Override
     public Stage updateStage(Stage stage) {
-
         jdbcTemplate.update(updateStageCommitCounterQuery, ps -> {
             ps.setObject(1, stage.getStageCommit());
+            ps.setObject(2, stage.getStageId());
+        });
+        return stage;
+    }
+
+    @Override
+    public Stage updateStageStatus(Stage stage) {
+        jdbcTemplate.update(updateStageStatusQuery, ps -> {
+            ps.setObject(1, stage.getStageStatus().name());
             ps.setObject(2, stage.getStageId());
         });
         return stage;

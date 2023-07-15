@@ -13,5 +13,6 @@ public interface StageDAO {
     List<CommitState> findCommitsByStageId(UUID stageId);
 
     Stage updateStage(Stage stage);
+    Stage updateStageStatus(Stage stage);
 
 }
