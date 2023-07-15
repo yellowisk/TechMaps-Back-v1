@@ -10,6 +10,7 @@ import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
+import br.ifsp.techmaps.web.model.task.request.UpdateTaskRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -86,8 +87,18 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
-    public Task updateTask(UUID stageId, CreateTaskRequest createTaskRequest) {
-        return null;
+    public Task updateTask(UUID taskId, UpdateTaskRequest request) {
+        Boolean taskExists = taskDAO.TaskExists(taskId);
+        if(!taskExists) {
+            throw new NullPointerException("Task with id " + taskId + " does not exist");
+        }
+
+        Task task = request.convertToTask();
+        task.setId(taskId);
+
+        taskDAO.updateTask(task);
+
+        return taskDAO.findTaskById(taskId).get();
     }
 
     @Override

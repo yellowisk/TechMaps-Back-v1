@@ -45,6 +45,9 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-commit-dao.select.task-commit-by-id}")
     private String selectTaskCommitByIdQuery;
 
+    @Value("${queries.sql.task-dao.update.task-repository-and-date-finished}")
+    private String updateTaskRepositoryAndDateFinishedQuery;
+
     @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
     private String updateTaskCommitStatusQuery;
 
@@ -87,7 +90,9 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public Task updateTask(Task task) {
-        return null;
+        jdbcTemplate.update(updateTaskRepositoryAndDateFinishedQuery, task.getRepository(),
+                task.getDate_finished(), task.getId());
+        return Task.createWithOnlyId(task.getId());
     }
 
     @Override

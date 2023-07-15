@@ -63,6 +63,11 @@ public class Task {
         this.date_created = date_created;
     }
 
+    public Task(String repository_link, Timestamp date_finished) {
+        this.repository_link = repository_link;
+        this.date_finished = date_finished;
+    }
+
     private Task(UUID taskId) {
         this.taskId = taskId;
     }

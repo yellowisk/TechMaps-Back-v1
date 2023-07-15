@@ -3,6 +3,7 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
+import br.ifsp.techmaps.web.model.task.request.UpdateTaskRequest;
 import br.ifsp.techmaps.web.model.task.response.CommitResponse;
 import br.ifsp.techmaps.web.model.task.response.UpdateCommitResponse;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
@@ -66,6 +67,15 @@ public class TaskController {
         }
 
         return ResponseEntity.ok(taskResponses);
+    }
+
+    @PatchMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> updateTask(
+            @PathVariable UUID taskId,
+            @RequestBody @Valid UpdateTaskRequest request) {
+        Task task = taskCRUD.updateTask(taskId, request);
+
+        return ResponseEntity.ok(TaskResponse.createFromTask(task));
     }
 
     @PutMapping("/{taskId}/commits/{commitId}")
