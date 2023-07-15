@@ -4,14 +4,14 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 
 import java.sql.Timestamp;
 
-public class UpdateTaskRequest {
+public class UpdateRepositoryRequest {
     private String repositoryUrl;
 
-    public UpdateTaskRequest(String repositoryUrl, Timestamp date_finished) {
+    public UpdateRepositoryRequest(String repositoryUrl, Timestamp date_finished) {
         this.repositoryUrl = repositoryUrl;
     }
 
-    public UpdateTaskRequest() {
+    public UpdateRepositoryRequest() {
     }
 
     public Task convertToTask() {

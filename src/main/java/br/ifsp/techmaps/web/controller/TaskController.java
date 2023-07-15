@@ -5,7 +5,8 @@ import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
-import br.ifsp.techmaps.web.model.task.request.UpdateTaskRequest;
+import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
+import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import br.ifsp.techmaps.web.model.task.response.CommitResponse;
 import br.ifsp.techmaps.web.model.task.response.UpdateCommitResponse;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
@@ -78,10 +79,18 @@ public class TaskController {
     }
 
     @PatchMapping("/{taskId}")
-    public ResponseEntity<TaskResponse> updateTask(
+    public ResponseEntity<TaskResponse> updateTaskRepository(
             @PathVariable UUID taskId,
-            @RequestBody @Valid UpdateTaskRequest request) {
-        Task task = taskCRUD.updateTask(taskId, request);
+            @RequestBody @Valid UpdateRepositoryRequest request) {
+        Task task = taskCRUD.updateTaskRepository(taskId, request);
+
+        return ResponseEntity.ok(TaskResponse.createFromTask(task));
+    }
+
+    @PutMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> updateTaskDateFinished(
+            @PathVariable UUID taskId) {
+        Task task = taskCRUD.updateTaskDateFinished(taskId);
 
         return ResponseEntity.ok(TaskResponse.createFromTask(task));
     }
