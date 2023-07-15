@@ -16,7 +16,7 @@ public interface StageCRUD {
     Stage getStageById(UUID stageId);
     List<Stage> getStagesByRoadmapId(UUID roadmapId);
 
-    Stage updateStage(UUID stageId, UpdateStageRequest request);
+    Stage updateStageCommit(UUID stageId);
 
 
 

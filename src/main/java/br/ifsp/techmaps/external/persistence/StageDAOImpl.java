@@ -4,6 +4,8 @@ import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
+import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -32,8 +34,11 @@ public class StageDAOImpl implements StageDAO {
     @Value("${queries.sql.stage-dao.select.stage-by-roadmap-id}")
     private String selectStageByRoadmapIdQuery;
 
-    @Value("${queries.sql.stage-dao.update.stage-status-and-commit-counter}")
-    private String updateStageStatusAndCommitCounterQuery;
+    @Value("${queries.sql.stage-dao.select.commit-state-by-stage-id}")
+    private String selectCommitStateByStageIdQuery;
+
+    @Value("${queries.sql.stage-dao.update.stage-commit-counter}")
+    private String updateStageCommitCounterQuery;
 
     @Value("${queries.sql.stage-dao.exists.stage-id}")
     private String existsStageIdQuery;
@@ -96,11 +101,25 @@ public class StageDAOImpl implements StageDAO {
     }
 
     @Override
+    public List<CommitState> findCommitsByStageId(UUID stageId) {
+        List<CommitState> commitStates = new ArrayList<>();
+
+        List<String> commitStatesString = jdbcTemplate.query(selectCommitStateByStageIdQuery,
+                (rs, rowNum) -> rs.getString("state"), stageId);
+
+        for (String commitStateString : commitStatesString) {
+            commitStates.add(CommitState.valueOf(commitStateString));
+        }
+
+        return commitStates;
+    }
+
+    @Override
     public Stage updateStage(Stage stage) {
-        jdbcTemplate.update(updateStageStatusAndCommitCounterQuery, ps -> {
-            ps.setString(1, stage.getStageStatus().name());
-            ps.setObject(2, stage.getStageCommit());
-            ps.setObject(3, stage.getStageId());
+
+        jdbcTemplate.update(updateStageCommitCounterQuery, ps -> {
+            ps.setObject(1, stage.getStageCommit());
+            ps.setObject(2, stage.getStageId());
         });
         return stage;
     }

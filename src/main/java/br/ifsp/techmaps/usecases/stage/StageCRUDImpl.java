@@ -5,6 +5,8 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
+import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
@@ -221,7 +223,7 @@ public class StageCRUDImpl implements StageCRUD {
     }
 
     @Override
-    public Stage updateStage(UUID stageId, UpdateStageRequest request) {
+    public Stage updateStageCommit(UUID stageId) {
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
         if (opt.isEmpty()) {
@@ -229,8 +231,21 @@ public class StageCRUDImpl implements StageCRUD {
                     new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
         }
 
-        Stage stage = request.convertToStage();
+        Stage stage = opt.get();
 
-        return stageDAO.updateStage(stage.getNewInstanceWithId(stageId));
+        List<CommitState> commits = stageDAO.findCommitsByStageId(stageId);
+        Integer counter = 0;
+
+        for(CommitState commit : commits) {
+            if(commit.equals(CommitState.STAGED)) {
+                counter++;
+            }
+        }
+
+        System.out.println("counter: " + counter);
+        System.out.println("commits: " + commits.size());
+        stage.setStageCommit(counter);
+
+        return stageDAO.updateStage(stage);
     }
 }

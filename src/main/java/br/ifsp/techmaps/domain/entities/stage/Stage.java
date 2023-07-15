@@ -66,6 +66,10 @@ public class Stage {
         this.stageId = stageId;
     }
 
+    public Stage(Integer stageCommit) {
+        this.stageCommit = stageCommit;
+    }
+
     public static Stage createStageWithOnlyId(UUID stageId) {
         return new Stage(stageId);
     }

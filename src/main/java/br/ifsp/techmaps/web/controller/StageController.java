@@ -64,11 +64,11 @@ public class StageController {
         return ResponseEntity.ok(stageResponses);
     }
 
+    //Sorta useless
     @PatchMapping("/{stageId}")
-    public ResponseEntity<UpdateStageResponse> updateStageById(
-            @PathVariable UUID stageId,
-            @RequestBody @Valid UpdateStageRequest request) {
-        Stage stage = stageCRUD.updateStage(stageId, request);
+    public ResponseEntity<UpdateStageResponse> updateNumOfCommits(
+            @PathVariable UUID stageId) {
+        Stage stage = stageCRUD.updateStageCommit(stageId);
 
         return ResponseEntity.ok(UpdateStageResponse.createForUpdate(stage));
     }

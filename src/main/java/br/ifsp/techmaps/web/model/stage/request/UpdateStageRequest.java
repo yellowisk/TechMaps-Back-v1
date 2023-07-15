@@ -4,20 +4,13 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 
 public class UpdateStageRequest {
-    private StageStatus stageStatus;
     private Integer stageCommit;
 
-    public UpdateStageRequest(StageStatus stageStatus, Integer stageCommit) {
-        this.stageStatus = stageStatus;
+    public UpdateStageRequest(Integer stageCommit) {
         this.stageCommit = stageCommit;
     }
 
-    public StageStatus getStageStatus() {
-        return stageStatus;
-    }
-
-    public void setStageStatus(StageStatus stageStatus) {
-        this.stageStatus = stageStatus;
+    public UpdateStageRequest() {
     }
 
     public Integer getStageCommit() {
@@ -29,6 +22,6 @@ public class UpdateStageRequest {
     }
 
     public Stage convertToStage() {
-        return new Stage(stageStatus, stageCommit);
+        return new Stage(stageCommit);
     }
 }
