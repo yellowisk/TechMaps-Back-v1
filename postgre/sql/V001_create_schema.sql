@@ -19,9 +19,14 @@ ALTER TABLE techmaps_platform.user OWNER TO "techmaps";
 ALTER TABLE techmaps_platform.user
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
+DROP TABLE IF EXISTS techmaps_platform.dashboard CASCADE;
+
 CREATE TABLE techmaps_platform.dashboard(
     id uuid NOT NULL,
-    total_time int NOT NULL
+    total_roadmaps int NOT NULL,
+    total_tasks int NOT NULL,
+    total_commits int NOT NULL,
+    total_time timestamp
 );
 
 ALTER TABLE techmaps_platform.dashboard OWNER TO "techmaps";

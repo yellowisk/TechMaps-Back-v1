@@ -14,11 +14,11 @@ insert into techmaps_platform.user(id, username, email, password, github,
 
 --! Dashboard Queries --!
 
-insert into techmaps_platform.dashboard(id, total_time) values
-    ('582c710f-849c-4a9f-a10f-0b68c784f240'::uuid, 0);
+insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time) values
+    ('582c710f-849c-4a9f-a10f-0b68c784f240'::uuid, 0, 0, 0, null);
 
-insert into techmaps_platform.dashboard(id, total_time) values
-    ('436ee536-93a3-4c20-9271-18a19c01efdb'::uuid, 0);
+insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time) values
+    ('436ee536-93a3-4c20-9271-18a19c01efdb'::uuid, 0, 0, 0, null);
 
 --! Roadmap Queries --!
 
