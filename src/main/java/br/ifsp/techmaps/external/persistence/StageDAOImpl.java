@@ -134,7 +134,7 @@ public class StageDAOImpl implements StageDAO {
         if(stage.getStageStatus().equals(StageStatus.DONE)) {
             List<Task> tasks = stage.getTasks();
             for (Task task : tasks) {
-                if (task.getTaskStatus().equals(TaskStatus.TODO)) {
+                if (task.getTaskCommit().getState().equals(CommitState.UNSTAGED)) {
                     throw new IllegalStateException("There are tasks to do!");
                 }
             }
