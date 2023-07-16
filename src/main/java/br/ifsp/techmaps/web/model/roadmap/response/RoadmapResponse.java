@@ -5,7 +5,7 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 
-import java.time.LocalDateTime;
+import java.sql.*;
 import java.util.*;
 
 public class RoadmapResponse {
@@ -15,8 +15,8 @@ public class RoadmapResponse {
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
     private RoadmapLanguage roadmapLanguage;
-    private LocalDateTime startTime;
-    private LocalDateTime undoneDuration;
+    private Timestamp startTime;
+    private Timestamp undoneDuration;
     private Integer roadmapCommits;
     private UUID dashboardId;
 
@@ -26,7 +26,7 @@ public class RoadmapResponse {
 
     public RoadmapResponse(UUID id, String title, RoadmapType type,
                            RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                           LocalDateTime startTime, LocalDateTime undoneDuration,
+                           Timestamp startTime, Timestamp undoneDuration,
                            Integer roadmapCommits, UUID dashboardId) {
         this.id = id;
         this.title = title;
@@ -92,19 +92,19 @@ public class RoadmapResponse {
         this.roadmapLanguage = roadmapLanguage;
     }
 
-    public LocalDateTime getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getUndoneDuration() {
+    public Timestamp getUndoneDuration() {
         return undoneDuration;
     }
 
-    public void setUndoneDuration(LocalDateTime undoneDuration) {
+    public void setUndoneDuration(Timestamp undoneDuration) {
         this.undoneDuration = undoneDuration;
     }
 

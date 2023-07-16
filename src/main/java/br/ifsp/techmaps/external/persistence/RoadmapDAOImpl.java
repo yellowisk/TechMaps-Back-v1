@@ -50,10 +50,12 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
                 roadmap.getRoadmapStatus().name(), roadmap.getRoadmapLanguage().name(),
-                Timestamp.valueOf(roadmap.getStartTime()), roadmap.getFinishTime(),
+                roadmap.getStartTime(), roadmap.getFinishTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
-        return roadmap.getNewInstanceWithOnlyId(roadmapId);
+        return Roadmap.createWithoutStageAndFinishTime(roadmapId, roadmap.getTitle(), roadmap.getType(),
+                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
+                roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
 
     @Override
@@ -106,7 +108,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
         return Roadmap.createWithoutStageAndFinishTime(id, description, type, status, language,
-                startTime.toLocalDateTime(), commit_counter, dashboardId);
+                startTime, commit_counter, dashboardId);
     }
 
 }

@@ -50,12 +50,12 @@ public class Dashboard {
         return new Dashboard(dashboardId);
     }
 
-    public int calculateTotalTime(){
-        for (Roadmap concludedRoadmap : concludedRoadmaps) {
-            totalTime += concludedRoadmap.calculateDuration(concludedRoadmap).toHours();
-        }
-        return totalTime;
-    }
+//    public int calculateTotalTime(){
+//        for (Roadmap concludedRoadmap : concludedRoadmaps) {
+//            totalTime += concludedRoadmap.calculateDuration(concludedRoadmap).toHours();
+//        }
+//        return totalTime;
+//    }
 
     public void roadmapDisplayer() {
         for (Roadmap concludedRoadmap : concludedRoadmaps) {

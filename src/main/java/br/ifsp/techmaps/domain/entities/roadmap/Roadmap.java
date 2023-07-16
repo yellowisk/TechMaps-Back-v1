@@ -1,11 +1,11 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
-import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
+
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import jakarta.persistence.*;
 
 
-import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -19,8 +19,8 @@ public class Roadmap {
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
     private RoadmapLanguage roadmapLanguage;
-    private LocalDateTime startTime;
-    private LocalDateTime finishTime;
+    private Timestamp startTime;
+    private Timestamp finishTime;
     @OneToMany
     private List<Stage> stages;
     private Integer roadmapCommits;
@@ -30,8 +30,8 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
-                   LocalDateTime finishTime)
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
+                   Timestamp finishTime)
     {
         this.roadmapId = roadmapId;
         this.title = title;
@@ -43,7 +43,7 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime)
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime)
     {
         this.roadmapId = roadmapId;
         this.title = title;
@@ -54,7 +54,7 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   LocalDateTime startTime)
+                   Timestamp startTime)
     {
         this.roadmapId = roadmapId;
         this.title = title;
@@ -64,8 +64,8 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
-                   LocalDateTime finishTime, List<Stage> stages, Integer roadmapCommits, UUID dashboardId) {
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
+                   Timestamp finishTime, List<Stage> stages, Integer roadmapCommits, UUID dashboardId) {
         this.roadmapId = roadmapId;
         this.title = title;
         this.type = type;
@@ -80,8 +80,8 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
-                   LocalDateTime finishTime, Integer roadmapCommits, UUID dashboardId) {
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
+                   Timestamp finishTime, Integer roadmapCommits, UUID dashboardId) {
         this.roadmapId = roadmapId;
         this.title = title;
         this.type = type;
@@ -94,7 +94,7 @@ public class Roadmap {
     }
 
     public Roadmap(String title, RoadmapType type, RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                   LocalDateTime startTime, LocalDateTime finishTime, Integer roadmapCommits, UUID dashboardId) {
+                   Timestamp startTime, Timestamp finishTime, Integer roadmapCommits, UUID dashboardId) {
         this.title = title;
         this.type = type;
         this.roadmapStatus = roadmapStatus;
@@ -110,7 +110,7 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
                    Integer roadmapCommits, UUID dashboardId) {
         this.roadmapId = roadmapId;
         this.title = title;
@@ -124,7 +124,7 @@ public class Roadmap {
 
     public static Roadmap createWithoutStageAndFinishTime(UUID roadmapId, String title, RoadmapType type,
                                                           RoadmapStatus status, RoadmapLanguage language,
-                                                          LocalDateTime localDateTime, int commitCounter,
+                                                          Timestamp localDateTime, int commitCounter,
                                                           UUID dashboardId) {
         return new Roadmap(roadmapId, title, type, status, language, localDateTime, commitCounter, dashboardId);
 
@@ -140,31 +140,18 @@ public class Roadmap {
     }
 
     public static Roadmap createWithoutId(String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                                          RoadmapLanguage roadmapLanguage, LocalDateTime startTime,
-                                          LocalDateTime undoneDuration, Integer roadmapCommits,
+                                          RoadmapLanguage roadmapLanguage, Timestamp startTime,
+                                          Timestamp undoneDuration, Integer roadmapCommits,
                                           UUID dashboardId) {
         return new Roadmap(title, type, roadmapStatus, roadmapLanguage, startTime,
                 undoneDuration, roadmapCommits, dashboardId);
     }
 
-    //TODO: BRING TO USE CASE
-    public void concludeRoadmap() {
-        Dashboard dashboard = new Dashboard();
-        if (this.roadmapStatus == RoadmapStatus.UNCOMPLETE) {
-            this.roadmapStatus = RoadmapStatus.COMPLETE;
-            this.finishTime = LocalDateTime.now();
-            dashboard.getConcludedRoadmaps().add(this);
-            calculateDuration(this);
-        } else {
-            System.out.println("Roadmap already concluded");
-        }
-    }
-
-    //Stays here (for now)
-    public Duration calculateDuration(Roadmap roadmap) {
-        Duration duration = Duration.between(this.startTime, this.finishTime);
-        return duration;
-    }
+//    //Stays here (for now)
+//    public Duration calculateDuration(Roadmap roadmap) {
+//        Duration duration = Duration.between(this.startTime, this.finishTime);
+//        return duration;
+//    }
 
     //Stays here (for now)
     public int findRoadmapCommits() {
@@ -217,19 +204,19 @@ public class Roadmap {
         this.roadmapLanguage = roadmapLanguage;
     }
 
-    public LocalDateTime getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getFinishTime() {
+    public Timestamp getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(LocalDateTime undoneDuration) {
+    public void setFinishTime(Timestamp undoneDuration) {
         this.finishTime = undoneDuration;
     }
 

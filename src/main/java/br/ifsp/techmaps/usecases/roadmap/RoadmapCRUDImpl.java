@@ -9,6 +9,7 @@ import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -30,7 +31,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
         Optional<Dashboard> optionalDashboard = dashboardDAO.findDashboardById(dashboardId);
 
         Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), request.getType(), RoadmapStatus.UNCOMPLETE,
-                request.getRoadmapLanguage(), LocalDateTime.now(), null, 0,
+                request.getRoadmapLanguage(), Timestamp.valueOf(LocalDateTime.now()), null, 0,
                 dashboardId);
 
         return roadmapDAO.saveRoadmap(roadmap);
