@@ -21,6 +21,7 @@ queries:
     dashboard-dao:
       insert:
         dashboard: >
+            INSERT INTO techmaps_platform.dashboard (id, total_time) VALUES (?, ?, ?, ?::techmaps_platform.dashboard_lang, ?)
       select:
         dashboard-by-id: >
           SELECT * FROM techmaps_platform.dashboard WHERE id = ?

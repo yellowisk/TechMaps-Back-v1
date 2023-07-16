@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Repository
@@ -36,7 +37,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     public Optional<Dashboard> findDashboardById(UUID dashboardId) {
         try {
             Dashboard dashboard = jdbcTemplate.queryForObject(selectDashboardByIdQuery, (rs, rowNum) -> {
-                int total_time = rs.getInt("total_time");
+                Timestamp total_time = rs.getTimestamp("total_time");
                 return Dashboard.createWithOnlyIdAndTime(dashboardId, total_time);
             }, dashboardId);
 

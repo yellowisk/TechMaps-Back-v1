@@ -5,6 +5,7 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -20,9 +21,9 @@ public class Dashboard {
     @OneToMany
     private List<TaskCommit> totalCommits;
 
-    private int totalTime;
+    private Timestamp totalTime;
 
-    public Dashboard(UUID dashboardId, List<Roadmap> concludedRoadmaps, List<Task> concludedTasks, List<TaskCommit> totalCommits, int totalTime) {
+    public Dashboard(UUID dashboardId, List<Roadmap> concludedRoadmaps, List<Task> concludedTasks, List<TaskCommit> totalCommits, Timestamp totalTime) {
         this.dashboardId = dashboardId;
         this.concludedRoadmaps = concludedRoadmaps;
         this.concludedTasks = concludedTasks;
@@ -30,7 +31,7 @@ public class Dashboard {
         this.totalTime = totalTime;
     }
 
-    public Dashboard(UUID dashboardId, int totalTime) {
+    public Dashboard(UUID dashboardId, Timestamp totalTime) {
         this.dashboardId = dashboardId;
         this.totalTime = totalTime;
     }
@@ -42,7 +43,7 @@ public class Dashboard {
     public Dashboard() {
     }
 
-    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, int totalTime) {
+    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, Timestamp totalTime) {
         return new Dashboard(dashboardId, totalTime);
     }
 
@@ -97,11 +98,11 @@ public class Dashboard {
         this.totalCommits = totalCommits;
     }
 
-    public int getTotalTime() {
+    public Timestamp getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(int totalTime) {
+    public void setTotalTime(Timestamp totalTime) {
         this.totalTime = totalTime;
     }
 
