@@ -9,6 +9,7 @@ import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
+import br.ifsp.techmaps.web.exception.BadRequestException;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import br.ifsp.techmaps.web.exception.ResourceNotFoundException;
 import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
@@ -265,6 +266,18 @@ public class StageCRUDImpl implements StageCRUD {
         Stage stage = stageDAO.findStageById(stageId).get();
         stage.setStageStatus(request.getStatus());
 
+        List<CommitState> commitStates = stageDAO.findCommitsByStageId(stageId);
+        Integer counter = 0;
+
+        for (CommitState commitState : commitStates) {
+            if (commitState.equals(CommitState.STAGED)) {
+                counter++;
+            }
+        }
+
+        if (commitStates.size() == counter && request.getStatus().equals(StageStatus.UNDONE)) {
+            throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
+        }
         return stageDAO.updateStageStatus(stage);
     }
 

@@ -131,6 +131,15 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public Stage updateStageStatus(Stage stage) {
 
+        if(stage.getStageStatus().equals(StageStatus.DONE)) {
+            List<Task> tasks = stage.getTasks();
+            for (Task task : tasks) {
+                if (task.getTaskStatus().equals(TaskStatus.TODO)) {
+                    throw new IllegalStateException("There are tasks to do!");
+                }
+            }
+        }
+
         jdbcTemplate.update(updateStageStatusQuery, ps -> {
             ps.setObject(1, stage.getStageStatus().name());
             ps.setObject(2, stage.getStageId());
