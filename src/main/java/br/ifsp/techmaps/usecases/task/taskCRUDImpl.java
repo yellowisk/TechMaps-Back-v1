@@ -2,6 +2,7 @@ package br.ifsp.techmaps.usecases.task;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
@@ -10,7 +11,6 @@ import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
-import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import org.springframework.stereotype.Service;
 
@@ -127,6 +127,12 @@ public class taskCRUDImpl implements TaskCRUD {
     public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId) {
         if(!taskDAO.TaskExists(taskId)) {
             throw new NullPointerException("Task with id " + taskId + " doesn't exist");
+        }
+
+        TaskCommit commitToVerify = taskDAO.findTaskCommitById(taskCommitId).get();
+
+        if(commitToVerify.getState().equals(CommitState.STAGED)) {
+            throw new NullPointerException("TaskCommit with id " + taskCommitId + " is already staged");
         }
 
         taskDAO.updateTaskCommmit(taskCommitId);

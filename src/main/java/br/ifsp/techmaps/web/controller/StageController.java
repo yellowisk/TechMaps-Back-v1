@@ -3,7 +3,7 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
-import br.ifsp.techmaps.web.model.stage.request.UpdateStageRequest;
+import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import br.ifsp.techmaps.web.model.stage.response.StageResponse;
 import br.ifsp.techmaps.web.model.stage.response.UpdateStagingResponse;
 import br.ifsp.techmaps.web.model.stage.response.UpdateStatusResponse;
@@ -76,8 +76,10 @@ public class StageController {
 
     @PutMapping("/{stageId}")
     public ResponseEntity<UpdateStatusResponse> updateStageStatus(
-            @PathVariable UUID stageId) {
-        Stage stage = stageCRUD.updateStageStatus(stageId);
+            @PathVariable UUID roadmapId,
+            @PathVariable UUID stageId,
+            @RequestBody @Valid UpdateStatusRequest request) {
+        Stage stage = stageCRUD.updateStageStatus(roadmapId, stageId, request);
 
         return ResponseEntity.ok(UpdateStatusResponse.convertFromStage(stage));
     }

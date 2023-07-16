@@ -24,7 +24,7 @@ public class RoadmapController {
             @PathVariable UUID roadmapId) {
         Roadmap roadmap = roadmapCRUD.findRoadmapById(roadmapId);
 
-        return ResponseEntity.ok(RoadmapResponse.createJustId(roadmap.getRoadmapId()));
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
 
     @PostMapping
@@ -33,7 +33,7 @@ public class RoadmapController {
             @RequestBody @Valid CreateRoadmapRequest createRoadmapRequest) {
         Roadmap roadmap = roadmapCRUD.addNewRoadmap(dashboardId, createRoadmapRequest);
 
-        return ResponseEntity.ok(RoadmapResponse.createJustId(roadmap.getRoadmapId()));
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
 
 }

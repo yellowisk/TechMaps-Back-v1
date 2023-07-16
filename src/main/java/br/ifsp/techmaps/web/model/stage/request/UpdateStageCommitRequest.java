@@ -1,16 +1,15 @@
 package br.ifsp.techmaps.web.model.stage.request;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 
-public class UpdateStageRequest {
+public class UpdateStageCommitRequest {
     private Integer stageCommit;
 
-    public UpdateStageRequest(Integer stageCommit) {
+    public UpdateStageCommitRequest(Integer stageCommit) {
         this.stageCommit = stageCommit;
     }
 
-    public UpdateStageRequest() {
+    public UpdateStageCommitRequest() {
     }
 
     public Integer getStageCommit() {

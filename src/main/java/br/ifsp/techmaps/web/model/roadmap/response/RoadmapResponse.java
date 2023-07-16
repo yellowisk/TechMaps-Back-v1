@@ -1,5 +1,6 @@
 package br.ifsp.techmaps.web.model.roadmap.response;
 
+import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
@@ -38,16 +39,17 @@ public class RoadmapResponse {
         this.dashboardId = dashboardId;
     }
 
+    public RoadmapResponse() {
+    }
+
     public static RoadmapResponse createJustId(UUID id) {
         return new RoadmapResponse(id);
     }
 
-    public static RoadmapResponse create(UUID id, String title, RoadmapType type,
-                                         RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                                         LocalDateTime startTime, LocalDateTime undoneDuration,
-                                         Integer roadmapCommits, UUID dashboardId) {
-        return new RoadmapResponse(id, title, type, roadmapStatus, roadmapLanguage,
-                startTime, undoneDuration, roadmapCommits, dashboardId);
+    public static RoadmapResponse create(Roadmap roadmap) {
+        return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
+                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
+                roadmap.getFinishTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
 
     public UUID getId() {

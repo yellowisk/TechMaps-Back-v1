@@ -34,7 +34,8 @@ queries:
         roadmap-all: >
           SELECT * FROM techmaps_platform.roadmap
       update:
-        roadmap: >
+        complete-roadmap: >
+          UPDATE techmaps_platform.roadmap SET status = ?::techmaps_platform.roadmap_status, commit_counter = ?, finish_time=? WHERE id = ?
       exists:
         roadmap-by-id: >
           SELECT EXISTS(SELECT 1 FROM techmaps_platform.roadmap WHERE id = ?)

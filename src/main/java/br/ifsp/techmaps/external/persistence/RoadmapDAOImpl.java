@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -28,6 +29,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     @Value("${queries.sql.roadmap-dao.select.roadmap-by-id}")
     private String selectRoadmapByIdQuery;
+
+    @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
+    private String updateRoadmapStatusAndCommitCounterQuery;
 
     public RoadmapDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil) {
         this.jdbcTemplate = jdbcTemplate;
@@ -49,9 +53,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
                 Timestamp.valueOf(roadmap.getStartTime()), roadmap.getFinishTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
-//        Roadmap roady = findRoadmapById(roadmapId).get();
-
-        return roadmap.getNewInstanceWithOnlyId(roadmap.getRoadmapId());
+        return roadmap.getNewInstanceWithOnlyId(roadmapId);
     }
 
     @Override
@@ -62,19 +64,8 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Override
     public Optional<Roadmap> findRoadmapById(UUID roadmapId) {
         try {
-            Roadmap roadmap = jdbcTemplate.queryForObject(selectRoadmapByIdQuery, (rs, rowNum) -> {
-                UUID id = (UUID) rs.getObject("id");
-                String description = rs.getString("title");
-                RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
-                RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
-                RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
-                Timestamp startTime = rs.getTimestamp("start_time");
-                int commit_counter = rs.getInt("commit_counter");
-                UUID dashboardId = (UUID) rs.getObject("dashboard_id");
-
-                return Roadmap.createWithoutStageAndFinishTime(id, description, type, status, language,
-                        startTime.toLocalDateTime(), commit_counter, dashboardId);
-            }, roadmapId);
+            Roadmap roadmap = jdbcTemplate.queryForObject(selectRoadmapByIdQuery,
+                    this::mapperRoadmapFromRs, roadmapId);
 
             if (Objects.isNull(roadmap)) {
                 throw new IllegalStateException();
@@ -98,6 +89,24 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     @Override
     public Roadmap updateRoadmap(Roadmap roadmap) {
-        return null;
+        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getRoadmapStatus().name(),
+                roadmap.getRoadmapCommits(), Timestamp.valueOf(LocalDateTime.now()),
+                roadmap.getRoadmapId());
+        return roadmap;
     }
+
+    public Roadmap mapperRoadmapFromRs(ResultSet rs, int rowNum) throws SQLException {
+        UUID id = (UUID) rs.getObject("id");
+        String description = rs.getString("title");
+        RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
+        RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
+        RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
+        Timestamp startTime = rs.getTimestamp("start_time");
+        int commit_counter = rs.getInt("commit_counter");
+        UUID dashboardId = (UUID) rs.getObject("dashboard_id");
+
+        return Roadmap.createWithoutStageAndFinishTime(id, description, type, status, language,
+                startTime.toLocalDateTime(), commit_counter, dashboardId);
+    }
+
 }

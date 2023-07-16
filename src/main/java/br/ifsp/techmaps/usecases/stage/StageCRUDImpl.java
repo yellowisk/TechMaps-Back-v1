@@ -2,16 +2,16 @@ package br.ifsp.techmaps.usecases.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
-import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import br.ifsp.techmaps.web.exception.ResourceNotFoundException;
-import br.ifsp.techmaps.web.model.stage.request.UpdateStageRequest;
+import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -30,6 +30,10 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public Stage addNewStage(UUID roadmapId, CreateStageRequest request) {
 
+        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+            throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
+        }
+
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
 
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
@@ -45,6 +49,14 @@ public class StageCRUDImpl implements StageCRUD {
 
     @Override
     public List<Stage> addStagesByRoadmapId(UUID roadmapId) {
+
+        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+            throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
+        }
+
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new IllegalArgumentException("This Roadmap is already done!");
+        }
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
@@ -194,11 +206,9 @@ public class StageCRUDImpl implements StageCRUD {
 
     @Override
     public Stage getStageById(UUID stageId) {
-        Optional<Stage> opt = stageDAO.findStageById(stageId);
 
-        if (opt.isEmpty()) {
-            ResourceNotFoundException excpt =
-                    new ResourceNotFoundException("Stage not found");
+        if(!stageDAO.StageExists(stageId)) {
+            throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
         }
 
         return stageDAO.findStageById(stageId).get();
@@ -206,11 +216,9 @@ public class StageCRUDImpl implements StageCRUD {
 
     @Override
     public List<Stage> getStagesByRoadmapId(UUID roadmapId) {
-        Optional<Roadmap> opt = roadmapDAO.findRoadmapById(roadmapId);
 
-        if (opt.isEmpty()) {
-            ResourceNotFoundException excpt =
-                    new ResourceNotFoundException("Roadmap not found");
+        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+            throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
         }
 
         return stageDAO.findStagesByRoadmapId(roadmapId);
@@ -218,12 +226,12 @@ public class StageCRUDImpl implements StageCRUD {
 
     @Override
     public Stage updateStageCommit(UUID stageId) {
-        Optional<Stage> opt = stageDAO.findStageById(stageId);
 
-        if (opt.isEmpty()) {
-            ResourceNotFoundException excpt =
-                    new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
+        if(!stageDAO.StageExists(stageId)) {
+            throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
         }
+
+        Optional<Stage> opt = stageDAO.findStageById(stageId);
 
         Stage stage = opt.get();
 
@@ -249,14 +257,14 @@ public class StageCRUDImpl implements StageCRUD {
     }
 
     @Override
-    public Stage updateStageStatus(UUID stageId) {
+    public Stage updateStageStatus(UUID roadmapId, UUID stageId, UpdateStatusRequest request) {
         if(!stageDAO.StageExists(stageId)) {
-            ResourceNotFoundException excpt =
-                    new ResourceNotFoundException("Couldn't find stage with id: " + stageId);
+            throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
         }
 
         Stage stage = stageDAO.findStageById(stageId).get();
-        stage.setStageStatus(StageStatus.DONE);
+        stage.setStageStatus(request.getStatus());
+
         return stageDAO.updateStageStatus(stage);
     }
 
