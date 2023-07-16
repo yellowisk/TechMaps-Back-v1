@@ -32,8 +32,8 @@ queries:
       select:
         roadmap-by-id: >
           SELECT id, title, type, status, lang, start_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE id = ?
-        roadmap-all: >
-          SELECT * FROM techmaps_platform.roadmap
+        all-complete-roadmaps-by-dashboard-id: >
+          SELECT id, title, type, status, lang, start_time, finish_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
       update:
         complete-roadmap: >
           UPDATE techmaps_platform.roadmap SET status = ?::techmaps_platform.roadmap_status, commit_counter = ?, finish_time=? WHERE id = ?

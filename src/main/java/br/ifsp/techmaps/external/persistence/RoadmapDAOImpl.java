@@ -30,6 +30,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Value("${queries.sql.roadmap-dao.select.roadmap-by-id}")
     private String selectRoadmapByIdQuery;
 
+    @Value("${queries.sql.roadmap-dao.select.all-complete-roadmaps-by-dashboard-id}")
+    private String selectAllCompleteRoadmapsByDashboardIdQuery;
+
     @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
     private String updateRoadmapStatusAndCommitCounterQuery;
 
@@ -59,8 +62,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     }
 
     @Override
-    public List<Roadmap> findAll(UUID roadmapId) {
-        return null;
+    public List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId) {
+        return jdbcTemplate.query(selectAllCompleteRoadmapsByDashboardIdQuery, this::mapperRoadmapFromRs, dashboardId);
+
     }
 
     @Override

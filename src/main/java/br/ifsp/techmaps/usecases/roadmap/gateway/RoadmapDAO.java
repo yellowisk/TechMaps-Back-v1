@@ -8,7 +8,7 @@ public interface RoadmapDAO {
 
     Roadmap saveRoadmap(Roadmap roadmap);
 
-    List<Roadmap> findAll(UUID roadmapId);
+    List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId);
 
     Optional<Roadmap> findRoadmapById(UUID roadmapId);
 

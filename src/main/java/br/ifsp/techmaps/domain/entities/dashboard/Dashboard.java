@@ -14,20 +14,20 @@ public class Dashboard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID dashboardId;
-    @OneToMany
-    private List<Roadmap> concludedRoadmaps;
-    @OneToMany
-    private List<Task> concludedTasks;
-    @OneToMany
-    private List<TaskCommit> totalCommits;
+
+    private int totalRoadmaps;
+
+    private int totalCommits;
+
+    private int totalTasks;
 
     private Timestamp totalTime;
 
-    public Dashboard(UUID dashboardId, List<Roadmap> concludedRoadmaps, List<Task> concludedTasks, List<TaskCommit> totalCommits, Timestamp totalTime) {
+    public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Timestamp totalTime) {
         this.dashboardId = dashboardId;
-        this.concludedRoadmaps = concludedRoadmaps;
-        this.concludedTasks = concludedTasks;
+        this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
+        this.totalTasks = totalTasks;
         this.totalTime = totalTime;
     }
 
@@ -43,27 +43,16 @@ public class Dashboard {
     public Dashboard() {
     }
 
+    public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Timestamp totalTime) {
+        return new Dashboard(dashboardId, totalRoadmaps, totalCommits, totalTasks, totalTime);
+    }
+
     public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, Timestamp totalTime) {
         return new Dashboard(dashboardId, totalTime);
     }
 
     public static Dashboard createWithOnlyId(UUID dashboardId) {
         return new Dashboard(dashboardId);
-    }
-
-//    public int calculateTotalTime(){
-//        for (Roadmap concludedRoadmap : concludedRoadmaps) {
-//            totalTime += concludedRoadmap.calculateDuration(concludedRoadmap).toHours();
-//        }
-//        return totalTime;
-//    }
-
-    public void roadmapDisplayer() {
-        for (Roadmap concludedRoadmap : concludedRoadmaps) {
-            concludedRoadmap.getTitle();
-            concludedRoadmap.getFinishTime();
-            concludedRoadmap.findRoadmapCommits();
-        }
     }
 
     public UUID getDashboardId() {
@@ -74,28 +63,28 @@ public class Dashboard {
         this.dashboardId = dashboardId;
     }
 
-    public List<Roadmap> getConcludedRoadmaps() {
-        return concludedRoadmaps;
+    public int getTotalRoadmaps() {
+        return totalRoadmaps;
     }
 
-    public void setConcludedRoadmaps(List<Roadmap> concludedRoadmaps) {
-        this.concludedRoadmaps = concludedRoadmaps;
+    public void setTotalRoadmaps(int totalRoadmaps) {
+        this.totalRoadmaps = totalRoadmaps;
     }
 
-    public List<Task> getConcludedTasks() {
-        return concludedTasks;
-    }
-
-    public void setConcludedTasks(List<Task> concludedTasks) {
-        this.concludedTasks = concludedTasks;
-    }
-
-    public List<TaskCommit> getTotalCommits() {
+    public int getTotalCommits() {
         return totalCommits;
     }
 
-    public void setTotalCommits(List<TaskCommit> totalCommits) {
+    public void setTotalCommits(int totalCommits) {
         this.totalCommits = totalCommits;
+    }
+
+    public int getTotalTasks() {
+        return totalTasks;
+    }
+
+    public void setTotalTasks(int totalTasks) {
+        this.totalTasks = totalTasks;
     }
 
     public Timestamp getTotalTime() {
