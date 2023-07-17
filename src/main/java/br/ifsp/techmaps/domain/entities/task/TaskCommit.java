@@ -35,6 +35,10 @@ public class TaskCommit {
         this.commitId = commitId;
     }
 
+    public TaskCommit(CommitState state) {
+        this.state = state;
+    }
+
     public static TaskCommit createWithOnlyId(UUID commitId) {
         return new TaskCommit(commitId);
     }

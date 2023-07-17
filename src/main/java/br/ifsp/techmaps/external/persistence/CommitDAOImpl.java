@@ -18,6 +18,8 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static br.ifsp.techmaps.domain.entities.task.CommitState.UNSTAGED;
+
 @Repository
 public class CommitDAOImpl implements CommitDAO {
 
@@ -30,17 +32,57 @@ public class CommitDAOImpl implements CommitDAO {
         this.dashboardDAO = dashboardDAO;
     }
 
+    @Value("${queries.sql.task-commit-dao.insert.task-commit}")
+    private String insertTaskCommitQuery;
     @Value("${queries.sql.task-commit-dao.select.task-commit-by-task-with-stage-id}")
     private String selectTaskCommitByTaskWithStageIdQuery;
+    @Value("${queries.sql.task-commit-dao.select.task-commit-by-id}")
+    private String selectTaskCommitByIdQuery;
+    @Value("${queries.sql.task-commit-dao.select.task-commits-by-dashboard-id}")
+    private String selectTaskCommitsByDashboardIdQuery;
+    @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
+    private String updateTaskCommitStatusQuery;
+
+    @Override
+    public TaskCommit createTaskCommit(Task task) {
+        UUID taskCommitId = UUID.randomUUID();
+        jdbcTemplate.update(insertTaskCommitQuery, taskCommitId,
+                task.getId(), TaskCommit.createCommitTag(task),
+                UNSTAGED.name(), task.getDashboard().getDashboardId());
+        return TaskCommit.createWithOnlyId(taskCommitId);
+    }
 
     @Override
     public Optional<TaskCommit> findTaskCommitById(UUID taskCommitId) {
-        return Optional.empty();
+        TaskCommit taskCommit;
+        try {
+            taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByIdQuery, this::mapperTaskCommitFromRs, taskCommitId);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
+        if(Objects.isNull(taskCommit))
+            throw new IllegalStateException();
+
+        return Optional.of(taskCommit);
     }
 
     @Override
     public List<TaskCommit> commitsByStageId(UUID stageId) {
         return jdbcTemplate.query(selectTaskCommitByTaskWithStageIdQuery, this::mapperTaskCommitFromRs, stageId);
+    }
+
+    @Override
+    public List<TaskCommit> commitsByDashboardId(UUID dashboardId) {
+        List<TaskCommit> commits = jdbcTemplate.query(selectTaskCommitsByDashboardIdQuery,
+                this::mapperTaskCommitFromRs, dashboardId);
+    }
+
+    @Override
+    public TaskCommit updateTaskCommmit(TaskCommit taskCommit) {
+        jdbcTemplate.update(updateTaskCommitStatusQuery, taskCommit.getState().name(),
+                taskCommit.getCommitId());
+        return TaskCommit.createWithOnlyId(taskCommit.getCommitId());
     }
 
     private TaskCommit mapperTaskCommitFromRs(ResultSet rs, int rowNum) throws SQLException {

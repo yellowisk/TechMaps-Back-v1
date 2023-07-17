@@ -3,7 +3,7 @@ package br.ifsp.techmaps.usecases.task;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
-import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
+import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 
 import java.util.*;
@@ -21,6 +21,6 @@ public interface TaskCRUD {
 
     TaskCommit getTaskCommitById(UUID taskCommitId);
 
-    TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId);
+    TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatus request);
 
 }

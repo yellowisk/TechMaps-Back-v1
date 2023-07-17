@@ -13,10 +13,6 @@ public interface TaskDAO {
     Optional<Task> findTaskById(UUID taskId);
     Task updateTask(Task task);
     Task updateDateFinished(Task task);
-    TaskCommit createTaskCommit(Task task);
-    Optional<TaskCommit> findTaskCommitById(UUID taskCommitId);
-
-    TaskCommit updateTaskCommmit(UUID taskCommitId);
 
     Boolean TaskExists(UUID taskId);
 

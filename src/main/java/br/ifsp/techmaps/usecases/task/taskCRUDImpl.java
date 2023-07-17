@@ -8,10 +8,12 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
+import br.ifsp.techmaps.usecases.commit.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
+import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,13 @@ import java.util.*;
 public class taskCRUDImpl implements TaskCRUD {
 
     private final TaskDAO taskDAO;
+    private final CommitDAO commitDAO;
     private final StageDAO stageDAO;
     private final DashboardDAO dashboardDAO;
 
-    public taskCRUDImpl(TaskDAO taskDAO, StageDAO stageDAO, DashboardDAO dashboardDAO) {
+    public taskCRUDImpl(TaskDAO taskDAO, CommitDAO commitDAO, StageDAO stageDAO, DashboardDAO dashboardDAO) {
         this.taskDAO = taskDAO;
+        this.commitDAO = commitDAO;
         this.stageDAO = stageDAO;
         this.dashboardDAO = dashboardDAO;
     }
@@ -50,7 +54,7 @@ public class taskCRUDImpl implements TaskCRUD {
         }
 
         tasks.forEach(task -> taskDAO.saveNewTask(task));
-        tasks.forEach(task -> taskDAO.createTaskCommit(task));
+        tasks.forEach(task -> commitDAO.createTaskCommit(task));
         stage.setTasks(tasks);
 
         return tasks;
@@ -139,24 +143,22 @@ public class taskCRUDImpl implements TaskCRUD {
 
     @Override
     public TaskCommit getTaskCommitById(UUID taskCommitId) {
-        return taskDAO.findTaskCommitById(taskCommitId)
+        return commitDAO.findTaskCommitById(taskCommitId)
                 .orElseThrow(() -> new NullPointerException("Couldn't TaskCommit with id: " + taskCommitId));
     }
 
     @Override
-    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId) {
+    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatus request) {
         if(!taskDAO.TaskExists(taskId)) {
             throw new NullPointerException("Task with id " + taskId + " doesn't exist");
         }
 
-        TaskCommit commitToVerify = taskDAO.findTaskCommitById(taskCommitId).get();
+        TaskCommit commitToVerify = commitDAO.findTaskCommitById(taskCommitId).get();
 
-        if(commitToVerify.getState().equals(CommitState.STAGED)) {
-            throw new NullPointerException("TaskCommit with id " + taskCommitId + " is already staged");
-        }
+        commitToVerify.setState(request.getStatus());
 
-        taskDAO.updateTaskCommmit(taskCommitId);
+        commitDAO.updateTaskCommmit(commitToVerify);
 
-        return taskDAO.findTaskCommitById(taskCommitId).get();
+        return commitDAO.findTaskCommitById(taskCommitId).get();
     }
 }
