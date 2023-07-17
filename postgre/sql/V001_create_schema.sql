@@ -58,6 +58,8 @@ CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
 
 ALTER TYPE techmaps_platform.roadmap_lang OWNER TO "techmaps";
 
+DROP TABLE IF EXISTS techmaps_platform.roadmap CASCADE;
+
 CREATE TABLE techmaps_platform.roadmap(
     id uuid NOT NULL,
     title varchar NOT NULL,
@@ -66,6 +68,7 @@ CREATE TABLE techmaps_platform.roadmap(
     lang techmaps_platform.roadmap_lang,
     start_time timestamp NOT NULL,
     finish_time timestamp,
+    total_time interval,
     commit_counter integer,
     dashboard_id uuid NOT NULL
 );

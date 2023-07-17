@@ -16,7 +16,8 @@ public class RoadmapResponse {
     private RoadmapStatus roadmapStatus;
     private RoadmapLanguage roadmapLanguage;
     private Timestamp startTime;
-    private Timestamp undoneDuration;
+    private Timestamp finishTime;
+    private Long totalTime;
     private Integer roadmapCommits;
     private UUID dashboardId;
 
@@ -26,7 +27,7 @@ public class RoadmapResponse {
 
     public RoadmapResponse(UUID id, String title, RoadmapType type,
                            RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                           Timestamp startTime, Timestamp undoneDuration,
+                           Timestamp startTime, Timestamp finishTime, Long totalTime,
                            Integer roadmapCommits, UUID dashboardId) {
         this.id = id;
         this.title = title;
@@ -34,13 +35,13 @@ public class RoadmapResponse {
         this.roadmapStatus = roadmapStatus;
         this.roadmapLanguage = roadmapLanguage;
         this.startTime = startTime;
-        this.undoneDuration = undoneDuration;
+        this.finishTime = finishTime;
+        this.totalTime = totalTime;
         this.roadmapCommits = roadmapCommits;
         this.dashboardId = dashboardId;
     }
 
-    public RoadmapResponse() {
-    }
+    public RoadmapResponse() {}
 
     public static RoadmapResponse createJustId(UUID id) {
         return new RoadmapResponse(id);
@@ -49,7 +50,8 @@ public class RoadmapResponse {
     public static RoadmapResponse create(Roadmap roadmap) {
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
                 roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
-                roadmap.getFinishTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
+                roadmap.getFinishTime(), roadmap.getTotalTime(), roadmap.getRoadmapCommits(),
+                roadmap.getDashboardId());
     }
 
     public UUID getId() {
@@ -100,12 +102,20 @@ public class RoadmapResponse {
         this.startTime = startTime;
     }
 
-    public Timestamp getUndoneDuration() {
-        return undoneDuration;
+    public Timestamp getFinishTime() {
+        return finishTime;
     }
 
-    public void setUndoneDuration(Timestamp undoneDuration) {
-        this.undoneDuration = undoneDuration;
+    public void setFinishTime(Timestamp finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public Long getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(Long totalTime) {
+        this.totalTime = totalTime;
     }
 
     public Integer getRoadmapCommits() {

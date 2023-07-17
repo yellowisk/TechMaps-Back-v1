@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.*;
 
 @Repository
@@ -53,18 +53,18 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
                 roadmap.getRoadmapStatus().name(), roadmap.getRoadmapLanguage().name(),
-                roadmap.getStartTime(), roadmap.getFinishTime(),
+                roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
-        return Roadmap.createWithoutStageAndFinishTime(roadmapId, roadmap.getTitle(), roadmap.getType(),
+        return Roadmap.createWithoutStages(roadmapId, roadmap.getTitle(), roadmap.getType(),
                 roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
-                roadmap.getRoadmapCommits(), roadmap.getDashboardId());
+                roadmap.getFinishTime(), roadmap.getTotalTime(), roadmap.getRoadmapCommits(),
+                roadmap.getDashboardId());
     }
 
     @Override
     public List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId) {
         return jdbcTemplate.query(selectAllCompleteRoadmapsByDashboardIdQuery, this::mapperRoadmapFromRs, dashboardId);
-
     }
 
     @Override
@@ -72,6 +72,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         try {
             Roadmap roadmap = jdbcTemplate.queryForObject(selectRoadmapByIdQuery,
                     this::mapperRoadmapFromRs, roadmapId);
+
+            System.out.println(roadmap.getTotalTime());
+            System.out.println(roadmap.getFinishTime());
 
             if (Objects.isNull(roadmap)) {
                 throw new IllegalStateException();
@@ -108,11 +111,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
         RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
         Timestamp startTime = rs.getTimestamp("start_time");
+        Timestamp finishTime = rs.getTimestamp("finish_time");
+        Long total_time = rs.getLong("total_time");
         int commit_counter = rs.getInt("commit_counter");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        return Roadmap.createWithoutStageAndFinishTime(id, description, type, status, language,
-                startTime, commit_counter, dashboardId);
+        return Roadmap.createWithoutStages(id, description, type, status, language,
+                startTime, finishTime, total_time, commit_counter, dashboardId);
     }
 
 }

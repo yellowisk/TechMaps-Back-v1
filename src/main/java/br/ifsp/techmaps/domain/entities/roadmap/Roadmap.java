@@ -21,6 +21,7 @@ public class Roadmap {
     private RoadmapLanguage roadmapLanguage;
     private Timestamp startTime;
     private Timestamp finishTime;
+    private Long totalTime;
     @OneToMany
     private List<Stage> stages;
     private Integer roadmapCommits;
@@ -29,78 +30,30 @@ public class Roadmap {
     public Roadmap() {
     }
 
-    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                   Timestamp finishTime)
-    {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = roadmapType;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-    }
-
-    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime)
-    {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = roadmapType;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.startTime = startTime;
-    }
-
-    public Roadmap(UUID roadmapId, String title, RoadmapType roadmapType, RoadmapStatus roadmapStatus,
-                   Timestamp startTime)
-    {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = roadmapType;
-        this.roadmapStatus = roadmapStatus;
-        this.startTime = startTime;
-    }
-
-    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                   Timestamp finishTime, List<Stage> stages, Integer roadmapCommits, UUID dashboardId) {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = type;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-        this.stages = stages;
-        stages.forEach(stage -> stage.setRoadmap(this));
-        this.roadmapCommits = roadmapCommits;
-        this.dashboardId = dashboardId;
-    }
-
-    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                   Timestamp finishTime, Integer roadmapCommits, UUID dashboardId) {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = type;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-        this.roadmapCommits = roadmapCommits;
-        this.dashboardId = dashboardId;
-    }
-
     public Roadmap(String title, RoadmapType type, RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                   Timestamp startTime, Timestamp finishTime, Integer roadmapCommits, UUID dashboardId) {
+                   Timestamp startTime, Timestamp finishTime, Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.title = title;
         this.type = type;
         this.roadmapStatus = roadmapStatus;
         this.roadmapLanguage = roadmapLanguage;
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.totalTime = totalTime;
+        this.roadmapCommits = roadmapCommits;
+        this.dashboardId = dashboardId;
+    }
+
+    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
+                   RoadmapLanguage roadmapLanguage, Timestamp startTime, Timestamp finishTime,
+                   Long totalTime, Integer roadmapCommits, UUID dashboardId) {
+        this.roadmapId = roadmapId;
+        this.title = title;
+        this.type = type;
+        this.roadmapStatus = roadmapStatus;
+        this.roadmapLanguage = roadmapLanguage;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.totalTime = totalTime;
         this.roadmapCommits = roadmapCommits;
         this.dashboardId = dashboardId;
     }
@@ -109,30 +62,12 @@ public class Roadmap {
         this.roadmapId = roadmapId;
     }
 
-    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                   Integer roadmapCommits, UUID dashboardId) {
-        this.roadmapId = roadmapId;
-        this.title = title;
-        this.type = type;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.startTime = startTime;
-        this.roadmapCommits = roadmapCommits;
-        this.dashboardId = dashboardId;
-    }
-
-    public static Roadmap createWithoutStageAndFinishTime(UUID roadmapId, String title, RoadmapType type,
+    public static Roadmap createWithoutStages(UUID roadmapId, String title, RoadmapType type,
                                                           RoadmapStatus status, RoadmapLanguage language,
-                                                          Timestamp localDateTime, int commitCounter,
-                                                          UUID dashboardId) {
-        return new Roadmap(roadmapId, title, type, status, language, localDateTime, commitCounter, dashboardId);
+                                                          Timestamp startTime, Timestamp finishTime, Long totalTime,
+                                                          int commitCounter, UUID dashboardId) {
+        return new Roadmap(roadmapId, title, type, status, language, startTime, finishTime, totalTime, commitCounter, dashboardId);
 
-    }
-
-    public Roadmap getNewInstanceWithId(UUID roadmapId) {
-        return new Roadmap(roadmapId, title, type, roadmapStatus, roadmapLanguage, startTime,
-                finishTime, stages, roadmapCommits, dashboardId);
     }
 
     public static Roadmap getNewInstanceWithOnlyId(UUID roadmapId) {
@@ -141,17 +76,11 @@ public class Roadmap {
 
     public static Roadmap createWithoutId(String title, RoadmapType type, RoadmapStatus roadmapStatus,
                                           RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                                          Timestamp undoneDuration, Integer roadmapCommits,
+                                          Timestamp finishTime, Long totalTime, Integer roadmapCommits,
                                           UUID dashboardId) {
         return new Roadmap(title, type, roadmapStatus, roadmapLanguage, startTime,
-                undoneDuration, roadmapCommits, dashboardId);
+                finishTime, totalTime, roadmapCommits, dashboardId);
     }
-
-//    //Stays here (for now)
-//    public Duration calculateDuration(Roadmap roadmap) {
-//        Duration duration = Duration.between(this.startTime, this.finishTime);
-//        return duration;
-//    }
 
     //Stays here (for now)
     public int findRoadmapCommits() {
@@ -216,8 +145,16 @@ public class Roadmap {
         return finishTime;
     }
 
-    public void setFinishTime(Timestamp undoneDuration) {
-        this.finishTime = undoneDuration;
+    public void setFinishTime(Timestamp finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public Long getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(Long totalTime) {
+        this.totalTime = totalTime;
     }
 
     public List<Stage> getStages() {

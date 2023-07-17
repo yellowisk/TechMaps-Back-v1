@@ -23,16 +23,16 @@ insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_c
 --! Roadmap Queries --!
 
 insert into techmaps_platform.roadmap(id, title, type, status, lang,
-    start_time, finish_time, commit_counter, dashboard_id) values
+    start_time, finish_time, total_time, commit_counter, dashboard_id) values
     ('3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'Java Roadmap',
     'BACKEND', 'UNCOMPLETE', 'JAVA', '2023-06-09 08:00:00',
-    '2023-06-19 18:00:00', 0, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
+    '2023-06-19 18:00:00', '10 days 10:00:00'::interval, 0, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
 insert into techmaps_platform.roadmap(id, title, type, status, lang,
-    start_time, finish_time, commit_counter, dashboard_id) values
+    start_time, finish_time, total_time, commit_counter, dashboard_id) values
         ('50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'JS Roadmap',
         'FRONTEND', 'COMPLETE', 'JAVASCRIPT', '2023-02-19 08:00:00',
-         '2023-06-28 16:00:00', 5,
+         '2023-06-28 16:00:00', '129 days 08:00:00'::interval ,5,
         '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
 --! Stage Queries --!
