@@ -95,9 +95,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     @Override
     public Roadmap updateRoadmap(Roadmap roadmap) {
+
+        Timestamp startTime = roadmap.getStartTime();
+        Timestamp finishTime = Timestamp.valueOf(LocalDateTime.now());
+        Long totalTime = (finishTime.getTime() - startTime.getTime())/1000;
+
         jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getRoadmapStatus().name(),
-                roadmap.getRoadmapCommits(), Timestamp.valueOf(LocalDateTime.now()),
-                roadmap.getRoadmapId());
+                roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
         return roadmap;
     }
 
