@@ -192,7 +192,6 @@ public class StageDAOImpl implements StageDAO {
                 time = time + generalRoadmap.getTotalTime();
             }
 
-
             dashboardDAO.updateTotalRoadmapsAndTotalTime(dashboardId, completedRoadmaps, time);
         }
 
