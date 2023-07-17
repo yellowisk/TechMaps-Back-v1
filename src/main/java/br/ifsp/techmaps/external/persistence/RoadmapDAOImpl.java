@@ -73,9 +73,6 @@ public class RoadmapDAOImpl implements RoadmapDAO {
             Roadmap roadmap = jdbcTemplate.queryForObject(selectRoadmapByIdQuery,
                     this::mapperRoadmapFromRs, roadmapId);
 
-            System.out.println(roadmap.getTotalTime());
-            System.out.println(roadmap.getFinishTime());
-
             if (Objects.isNull(roadmap)) {
                 throw new IllegalStateException();
             }

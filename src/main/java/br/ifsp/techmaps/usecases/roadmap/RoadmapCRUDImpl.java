@@ -47,9 +47,6 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Roadmap not found");
         }
 
-        System.out.println(opt.get().getTotalTime());
-        System.out.println(opt.get().getFinishTime());
-
         return opt.get();
     }
 
