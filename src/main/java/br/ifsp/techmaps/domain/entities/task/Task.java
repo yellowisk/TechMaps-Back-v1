@@ -28,6 +28,16 @@ public class Task {
     @OneToOne
     private TaskCommit taskCommit;
 
+    public Task(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard, TaskCommit taskCommit) {
+        this.taskId = taskId;
+        this.stage = stage;
+        this.taskBody = taskBody;
+        this.repository_link = repository_link;
+        this.date_created = date_created;
+        this.date_finished = date_finished;
+        this.dashboard = dashboard;
+        this.taskCommit = taskCommit;
+    }
 
     public Task(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
         this.taskId = taskId;
@@ -88,6 +98,10 @@ public class Task {
 
     public static Task createwithoutTaskCommit(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
         return new Task(taskId, stage, taskBody, repository_link, date_created, date_finished, dashboard);
+    }
+
+    public static Task createWithTaskCommit(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard, TaskCommit taskCommit) {
+        return new Task(taskId, stage, taskBody, repository_link, date_created, date_finished, dashboard, taskCommit);
     }
 
     public static Task createForStage(UUID taskId, String repository_link, Timestamp date_created) {

@@ -33,6 +33,9 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Value("${queries.sql.roadmap-dao.select.all-complete-roadmaps-by-dashboard-id}")
     private String selectAllCompleteRoadmapsByDashboardIdQuery;
 
+    @Value("${queries.sql.roadmap-dao.select.all-roadmaps-by-dashboard-id}")
+    private String selectAllRoadmapsByDashboardIdQuery;
+
     @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
     private String updateRoadmapStatusAndCommitCounterQuery;
 
@@ -63,11 +66,6 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     }
 
     @Override
-    public List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId) {
-        return jdbcTemplate.query(selectAllCompleteRoadmapsByDashboardIdQuery, this::mapperRoadmapFromRs, dashboardId);
-    }
-
-    @Override
     public Optional<Roadmap> findRoadmapById(UUID roadmapId) {
         try {
             Roadmap roadmap = jdbcTemplate.queryForObject(selectRoadmapByIdQuery,
@@ -84,13 +82,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     }
 
     @Override
-    public List<Roadmap> findAllRoadmapStagesByRoadmapId(UUID roadmapId) {
-        return null;
+    public List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId) {
+        return jdbcTemplate.query(selectAllCompleteRoadmapsByDashboardIdQuery, this::mapperRoadmapFromRs, dashboardId);
     }
 
     @Override
-    public Roadmap findRoadmapStageByStageId(UUID roadmapId) {
-        return null;
+    public List<Roadmap> findAllByDashboardId(UUID dashboardId) {
+        return jdbcTemplate.query(selectAllRoadmapsByDashboardIdQuery, this::mapperRoadmapFromRs, dashboardId);
     }
 
     @Override

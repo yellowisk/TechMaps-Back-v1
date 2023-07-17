@@ -26,7 +26,7 @@ CREATE TABLE techmaps_platform.dashboard(
     total_roadmaps int NOT NULL,
     total_tasks int NOT NULL,
     total_commits int NOT NULL,
-    total_time timestamp
+    total_time interval
 );
 
 ALTER TABLE techmaps_platform.dashboard OWNER TO "techmaps";

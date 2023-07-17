@@ -2,6 +2,7 @@ package br.ifsp.techmaps.usecases.task;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
@@ -109,10 +110,29 @@ public class taskCRUDImpl implements TaskCRUD {
             throw new NullPointerException("Task with id " + taskId + " does not exist");
         }
 
-        Task task = taskDAO.findTaskById(taskId).get();
-        task.setId(taskId);
+        Task taskToFinish = taskDAO.findTaskById(taskId).get();
+        taskToFinish.setId(taskId);
 
-        taskDAO.updateDateFinished(task);
+        taskDAO.updateDateFinished(taskToFinish);
+
+        Stage stage = stageDAO.findStageById(taskToFinish.getStage().getStageId()).get();
+
+        List<Task> allTasksFromStage = taskDAO.findAllTasksByStageId(stage.getStageId());
+        List<Task> tasksFinished = new ArrayList<>();
+
+        for (Task task : allTasksFromStage) {
+            if (task.getDate_finished() != null) {
+                tasksFinished.add(task);
+                System.out.println("taskFinished: " + tasksFinished.size());
+                System.out.println("allTasksFromStage: " + allTasksFromStage.size());
+            }
+        }
+
+        if(tasksFinished.size() == allTasksFromStage.size()) {
+            stage.setStageStatus(StageStatus.DONE);
+            stageDAO.updateStageStatus(stage);
+            System.out.println("Stage " + stage.getStageId() + " is done");
+        }
 
         return taskDAO.findTaskById(taskId).get();
     }

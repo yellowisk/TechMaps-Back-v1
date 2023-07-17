@@ -7,13 +7,13 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
+import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
+import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -25,8 +25,9 @@ import static br.ifsp.techmaps.domain.entities.task.CommitState.*;
 public class TaskDAOImpl implements TaskDAO {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RoadmapDAO roadmapDao;
     private final StageDAO stageDao;
-    private final DashboardDAO dashboardDao;
+    private final DashboardDAO dashboardDAO;
 
     @Value("${queries.sql.task-dao.exists.task-id}")
     private String existsTaskIdQuery;
@@ -46,6 +47,12 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-commit-dao.select.task-commit-by-id}")
     private String selectTaskCommitByIdQuery;
 
+    @Value("${queries.sql.task-dao.select.tasks-by-dashboard-id}")
+    private String selectTasksByDashboardIdQuery;
+
+    @Value("${queries.sql.task-commit-dao.select.task-commits-by-dashboard-id}")
+    private String selectTaskCommitsByDashboardIdQuery;
+
     @Value("${queries.sql.task-dao.update.task-repository}")
     private String updateTaskRepositoryAndDateFinishedQuery;
 
@@ -55,10 +62,11 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
     private String updateTaskCommitStatusQuery;
 
-    public TaskDAOImpl(JdbcTemplate jdbcTemplate, StageDAO stageDao, DashboardDAO dashboardDao) {
+    public TaskDAOImpl(JdbcTemplate jdbcTemplate, RoadmapDAO roadmapDAO, StageDAO stageDao, DashboardDAO dashboardDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.roadmapDao = roadmapDAO;
         this.stageDao = stageDao;
-        this.dashboardDao = dashboardDao;
+        this.dashboardDAO = dashboardDAO;
     }
 
 
@@ -103,6 +111,33 @@ public class TaskDAOImpl implements TaskDAO {
     public Task updateDateFinished(Task task) {
         jdbcTemplate.update(updateTaskDateFinishedQuery,
                 Timestamp.valueOf(LocalDateTime.now()), task.getId());
+
+        Dashboard dashboard = dashboardDAO.findDashboardById(
+                task.getStage().getRoadmap().getDashboardId()).get();
+
+        List<Task> tasks = jdbcTemplate.query(selectTasksByDashboardIdQuery,
+                this::mapperTaskFromRs, dashboard.getDashboardId());
+        List<Task> tasksFinished = new ArrayList<>();
+
+        for (Task t : tasks) {
+            if (t.getDate_finished() != null) {
+                tasksFinished.add(t);
+            }
+        }
+
+        List<TaskCommit> commits = jdbcTemplate.query(selectTaskCommitsByDashboardIdQuery,
+                this::mapperTaskCommitFromRs, dashboard.getDashboardId());
+        List<TaskCommit> stagedCommits = new ArrayList<>();
+
+        for (TaskCommit c : commits) {
+            if (c.getState() == STAGED) {
+                stagedCommits.add(c);
+            }
+        }
+
+        dashboardDAO.updateTotalTasks(dashboard.getDashboardId(), tasksFinished);
+        dashboardDAO.updateTotalCommits(dashboard.getDashboardId(), stagedCommits);
+
         return Task.createWithOnlyId(task.getId());
     }
 
@@ -152,7 +187,7 @@ public class TaskDAOImpl implements TaskDAO {
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
         Stage stage = stageDao.findStageById(stageId).orElseThrow(() -> new SQLDataException("Stage not found"));
-        Dashboard dashboard = dashboardDao.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+        Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
 
         return Task.createwithoutTaskCommit
                 (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard);
@@ -166,7 +201,7 @@ public class TaskDAOImpl implements TaskDAO {
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
         Task task = findTaskById(taskId).orElseThrow(() -> new SQLDataException("Task not found"));
-        Dashboard dashboard = dashboardDao.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+        Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
 
         return new TaskCommit(id, task, commitTag, commitState);
     }

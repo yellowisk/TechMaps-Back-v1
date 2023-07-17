@@ -24,7 +24,14 @@ queries:
             INSERT INTO techmaps_platform.dashboard (id, total_roadmaps, total_tasks, total_commits, total_time) VALUES (?, ?, ?, ?, ?)
       select:
         dashboard-by-id: >
-          SELECT * FROM techmaps_platform.dashboard WHERE id = ?
+          SELECT id, total_roadmaps, total_tasks, total_commits, extract(epoch from total_time) as total_time FROM techmaps_platform.dashboard WHERE id = ?
+      update:
+        dashboard-total-roadmaps-and-total_time: >
+            UPDATE techmaps_platform.dashboard SET total_roadmaps = ?, total_time = make_interval(secs => ?) WHERE id = ?
+        dashboard-total-tasks: >
+            UPDATE techmaps_platform.dashboard SET total_tasks = ? WHERE id = ?
+        dashboard-total-commits: >
+            UPDATE techmaps_platform.dashboard SET total_commits = ? WHERE id = ?
     roadmap-dao:
       insert:
         roadmap: >
@@ -33,7 +40,9 @@ queries:
         roadmap-by-id: >
           SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE id = ?
         all-complete-roadmaps-by-dashboard-id: >
-          SELECT id, title, type, status, lang, start_time, finish_time, total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
+          SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
+        all-roadmaps-by-dashboard-id: >
+          SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ?
       update:
         complete-roadmap: >
           UPDATE techmaps_platform.roadmap SET status = ?::techmaps_platform.roadmap_status, commit_counter = ?, finish_time=?, total_time =  make_interval(secs => ?) WHERE id = ?
@@ -73,6 +82,9 @@ queries:
         task-by-stage-id: >
           SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
                                               dashboard_id FROM techmaps_platform.task WHERE stage_id = ?
+        tasks-by-dashboard-id: >
+          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
+                                              dashboard_id FROM techmaps_platform.task WHERE dashboard_id = ?
       update:
           task-repository: >
             UPDATE techmaps_platform.task SET repository_link = ? WHERE id = ?
@@ -93,6 +105,10 @@ queries:
           SELECT * FROM techmaps_platform.task_commit WHERE id = ?
         task-commit-by-task-id: >
           SELECT * FROM techmaps_platform.task_commit WHERE task_id = ?
+        task-commits-by-dashboard-id: >
+          SELECT * FROM techmaps_platform.task_commit WHERE dashboard_id = ?
+        task-commit-by-task-with-stage-id: >
+          SELECT * FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
       update:
         task-commit-state: >
           UPDATE techmaps_platform.task_commit SET state = ?::techmaps_platform.task_commit_status WHERE id = ?

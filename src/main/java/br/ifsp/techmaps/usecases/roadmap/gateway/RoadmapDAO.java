@@ -10,11 +10,9 @@ public interface RoadmapDAO {
 
     List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId);
 
+    List<Roadmap> findAllByDashboardId(UUID dashboardId);
+
     Optional<Roadmap> findRoadmapById(UUID roadmapId);
-
-    List<Roadmap> findAllRoadmapStagesByRoadmapId(UUID roadmapId);
-
-    Roadmap findRoadmapStageByStageId(UUID roadmapId);
 
     Roadmap updateRoadmap(Roadmap roadmap);
 

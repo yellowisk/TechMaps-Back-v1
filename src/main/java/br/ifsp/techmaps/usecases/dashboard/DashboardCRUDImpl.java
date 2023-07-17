@@ -16,8 +16,9 @@ public class DashboardCRUDImpl implements DashboardCRUD {
     }
 
     @Override
-    public Dashboard saveNewDashboard(Dashboard dashboard) {
-        return null;
+    public Dashboard saveNewDashboard() {
+        UUID dashboardId = UUID.randomUUID();
+        return dashboardDAO.saveNewDashboard(dashboardId);
     }
 
     @Override

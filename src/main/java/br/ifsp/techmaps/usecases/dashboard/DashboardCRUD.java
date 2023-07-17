@@ -5,7 +5,7 @@ import java.util.*;
 
 public interface DashboardCRUD {
 
-    Dashboard saveNewDashboard(Dashboard dashboard);
+    Dashboard saveNewDashboard();
 
     Dashboard getDashboardById (UUID dashboardId);
 

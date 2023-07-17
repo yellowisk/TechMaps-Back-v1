@@ -1,8 +1,5 @@
 package br.ifsp.techmaps.domain.entities.dashboard;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.task.Task;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -21,9 +18,9 @@ public class Dashboard {
 
     private int totalTasks;
 
-    private Timestamp totalTime;
+    private Long totalTime;
 
-    public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Timestamp totalTime) {
+    public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
         this.dashboardId = dashboardId;
         this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
@@ -31,7 +28,7 @@ public class Dashboard {
         this.totalTime = totalTime;
     }
 
-    public Dashboard(UUID dashboardId, Timestamp totalTime) {
+    public Dashboard(UUID dashboardId, Long totalTime) {
         this.dashboardId = dashboardId;
         this.totalTime = totalTime;
     }
@@ -43,11 +40,11 @@ public class Dashboard {
     public Dashboard() {
     }
 
-    public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Timestamp totalTime) {
+    public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
         return new Dashboard(dashboardId, totalRoadmaps, totalCommits, totalTasks, totalTime);
     }
 
-    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, Timestamp totalTime) {
+    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, Long totalTime) {
         return new Dashboard(dashboardId, totalTime);
     }
 
@@ -87,11 +84,11 @@ public class Dashboard {
         this.totalTasks = totalTasks;
     }
 
-    public Timestamp getTotalTime() {
+    public Long getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Timestamp totalTime) {
+    public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
     }
 

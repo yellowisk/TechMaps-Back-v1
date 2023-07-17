@@ -26,4 +26,10 @@ public class DashboardController {
         return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
     }
 
+    @PostMapping
+    public ResponseEntity<DashboardResponse> saveNewDashboard() {
+        Dashboard dashboard = dashboardCRUD.saveNewDashboard();
+        return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
+    }
+
 }

@@ -14,12 +14,12 @@ public class DashboardResponse {
 
     private int totalTasks;
 
-    private Timestamp totalTime;
+    private Long totalTime;
 
     public DashboardResponse() {
     }
 
-    public DashboardResponse(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Timestamp totalTime) {
+    public DashboardResponse(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
         this.dashboardId = dashboardId;
         this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
@@ -65,11 +65,11 @@ public class DashboardResponse {
         this.totalTasks = totalTasks;
     }
 
-    public Timestamp getTotalTime() {
+    public Long getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Timestamp totalTime) {
+    public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
     }
 }
