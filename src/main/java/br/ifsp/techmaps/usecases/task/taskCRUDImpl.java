@@ -17,6 +17,9 @@ import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -116,6 +119,7 @@ public class taskCRUDImpl implements TaskCRUD {
 
         Task taskToFinish = taskDAO.findTaskById(taskId).get();
         taskToFinish.setId(taskId);
+        taskToFinish.setDate_finished(Timestamp.valueOf(LocalDateTime.now()));
 
         taskDAO.updateDateFinished(taskToFinish);
 

@@ -76,6 +76,7 @@ public class CommitDAOImpl implements CommitDAO {
     public List<TaskCommit> commitsByDashboardId(UUID dashboardId) {
         List<TaskCommit> commits = jdbcTemplate.query(selectTaskCommitsByDashboardIdQuery,
                 this::mapperTaskCommitFromRs, dashboardId);
+        return commits;
     }
 
     @Override
@@ -92,9 +93,10 @@ public class CommitDAOImpl implements CommitDAO {
         CommitState commitState = CommitState.valueOf(rs.getString("state"));
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
+        Task task = Task.createWithOnlyId(taskId);
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
 
-        return new TaskCommit(id,commitTag, commitState);
+        return new TaskCommit(id, task, commitTag, commitState);
     }
 
 }
