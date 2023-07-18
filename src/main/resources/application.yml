@@ -60,6 +60,8 @@ queries:
             SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ?
         commit-state-by-stage-id: >
             SELECT state FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
+        date-finished-of-tasks-by-stage-id: >
+            SELECT date_finished FROM techmaps_platform.task WHERE stage_id = ?
       update:
         stage-commit-counter: >
           UPDATE techmaps_platform.stage SET commit_counter = ? WHERE id = ?

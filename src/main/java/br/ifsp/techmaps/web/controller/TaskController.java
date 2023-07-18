@@ -110,13 +110,8 @@ public class TaskController {
 
         stageCRUD.updateStageCommit(task.getStage().getStageId());
 
-        if(taskCommit.getState() != CommitState.UNSTAGED) {
-            task.setDate_finished(Timestamp.valueOf(LocalDateTime.now()));
-            taskDAO.updateDateFinished(task);
-        } else {
-            task.setDate_finished(null);
-            taskDAO.updateDateFinished(task);
-        }
+        if(taskCommit.getState().equals(CommitState.STAGED))
+            taskCRUD.updateTaskDateFinished(taskId);
 
         return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
     }

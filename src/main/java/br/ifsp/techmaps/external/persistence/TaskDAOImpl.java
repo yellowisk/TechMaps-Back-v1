@@ -2,11 +2,10 @@ package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.usecases.commit.CommitDAO;
+import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -17,7 +16,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static br.ifsp.techmaps.domain.entities.task.CommitState.*;

@@ -1,17 +1,13 @@
 package br.ifsp.techmaps.external.persistence;
 
-import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
-import br.ifsp.techmaps.domain.entities.task.Task;
-import br.ifsp.techmaps.domain.entities.task.TaskBody;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.external.persistence.util.JsonUtil;
-import br.ifsp.techmaps.usecases.commit.CommitDAO;
+import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -46,6 +42,9 @@ public class StageDAOImpl implements StageDAO {
 
     @Value("${queries.sql.stage-dao.select.commit-state-by-stage-id}")
     private String selectCommitStateByStageIdQuery;
+
+    @Value("${queries.sql.stage-dao.select.date-finished-of-tasks-by-stage-id}")
+    private String selectDateFinishedOfTasksByStageIdQuery;
 
     @Value("${queries.sql.stage-dao.update.stage-commit-counter}")
     private String updateStageCommitCounterQuery;
@@ -119,6 +118,12 @@ public class StageDAOImpl implements StageDAO {
     }
 
     @Override
+    public List<Timestamp> findDateFinishedOfTasksByStageId(UUID stageId) {
+        return jdbcTemplate.query(selectDateFinishedOfTasksByStageIdQuery,
+                (rs, rowNum) -> rs.getTimestamp("date_finished"), stageId);
+    }
+
+    @Override
     public List<CommitState> findCommitsByStageId(UUID stageId) {
         List<CommitState> commitStates = new ArrayList<>();
 
@@ -144,13 +149,19 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public Stage updateStageStatus(Stage stage) {
 
-        if(stage.getStageStatus().equals(StageStatus.DONE)) {
-            List<TaskCommit> coms = commitDAO.commitsByStageId(stage.getStageId());
-            for (TaskCommit com : coms) {
-                if (com.getState().equals(CommitState.UNSTAGED)) {
-                    throw new IllegalStateException("There are tasks to do!");
-                }
-            }
+//        if(stage.getStageStatus().equals(StageStatus.DONE)) {
+//            List<TaskCommit> coms = commitDAO.commitsByStageId(stage.getStageId());
+//            for (TaskCommit com : coms) {
+//                if (com.getState().equals(CommitState.UNSTAGED)) {
+//                    throw new IllegalStateException("There are tasks to do!");
+//                }
+//            }
+//        }
+
+        UUID roadmapId = stage.getRoadmap().getRoadmapId();
+        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+        if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
+            throw new IllegalStateException("Roadmap is already complete!");
         }
 
         jdbcTemplate.update(updateStageStatusQuery, ps -> {
@@ -158,8 +169,6 @@ public class StageDAOImpl implements StageDAO {
             ps.setObject(2, stage.getStageId());
         });
 
-        UUID roadmapId = stage.getRoadmap().getRoadmapId();
-        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
         Integer stageDoneCounter = 0;
         Integer commitStagedCounter = 0;
         List<Stage> stages = jdbcTemplate.query(selectStageByRoadmapIdQuery,
@@ -172,10 +181,6 @@ public class StageDAOImpl implements StageDAO {
                     commitStagedCounter = commitStagedCounter + roadmapStage.getStageCommit();
                 }
             }
-        }
-
-        if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
-            throw new IllegalStateException("Roadmap is already complete!");
         }
 
         if (stageDoneCounter == stages.size()) {
@@ -209,5 +214,7 @@ public class StageDAOImpl implements StageDAO {
 
         return Stage.createStageWithoutTasks(id, rm, theme, status, stageCommit);
     }
+
+
 
 }

@@ -4,18 +4,15 @@ import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.usecases.commit.CommitDAO;
+import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
-import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
-import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static br.ifsp.techmaps.domain.entities.task.CommitState.UNSTAGED;
@@ -40,6 +37,8 @@ public class CommitDAOImpl implements CommitDAO {
     private String selectTaskCommitByIdQuery;
     @Value("${queries.sql.task-commit-dao.select.task-commits-by-dashboard-id}")
     private String selectTaskCommitsByDashboardIdQuery;
+    @Value("${queries.sql.task-commit-dao.select.task-commit-by-task-id}")
+    private String selectTaskCommitByTaskIdQuery;
     @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
     private String updateTaskCommitStatusQuery;
 
@@ -57,6 +56,21 @@ public class CommitDAOImpl implements CommitDAO {
         TaskCommit taskCommit;
         try {
             taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByIdQuery, this::mapperTaskCommitFromRs, taskCommitId);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
+        if(Objects.isNull(taskCommit))
+            throw new IllegalStateException();
+
+        return Optional.of(taskCommit);
+    }
+
+    @Override
+    public Optional<TaskCommit> findTaskCommitByTaskId(UUID taskId) {
+        TaskCommit taskCommit;
+        try {
+            taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByTaskIdQuery, this::mapperTaskCommitFromRs, taskId);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

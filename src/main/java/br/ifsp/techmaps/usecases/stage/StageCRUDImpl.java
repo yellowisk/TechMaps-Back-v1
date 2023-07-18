@@ -14,6 +14,7 @@ import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import br.ifsp.techmaps.web.exception.*;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -32,6 +33,10 @@ public class StageCRUDImpl implements StageCRUD {
 
         if(!roadmapDAO.RoadmapExists(roadmapId)) {
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
+        }
+
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new IllegalArgumentException("This Roadmap is already done!");
         }
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
@@ -77,7 +82,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             System.out.println("----->" + backendThemes);
 
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
                         StageStatus.UNDONE, 0);
                 if (i < backendThemes.size()) {
@@ -91,7 +96,7 @@ public class StageCRUDImpl implements StageCRUD {
         }
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVASCRIPT)) {
-            List<Stage> stages = new ArrayList<>();
+            List<Stage> stages = new ArrayList<>(5);
             Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JS, StageStatus.UNDONE, 0);
             stages.add(stage);
             stageDAO.saveStage(stage);
@@ -106,7 +111,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             System.out.println("----->" + frontendThemes);
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < frontendThemes.size(); i++) {
                 Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
                         StageStatus.UNDONE, 0);
 
@@ -138,7 +143,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             System.out.println("----->" + backendThemes);
 
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
                         StageStatus.UNDONE, 0);
                 if (i < backendThemes.size()) {
@@ -167,7 +172,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             System.out.println("----->" + backendThemes);
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
                         StageStatus.UNDONE, 0);
                 if (i < backendThemes.size()) {
@@ -188,7 +193,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             System.out.println("----->" + androidThemes);
 
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < androidThemes.size(); i++) {
                 Stage stageAndroid = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
                         StageStatus.UNDONE, 0);
                 if (i < androidThemes.size()) {
@@ -262,22 +267,45 @@ public class StageCRUDImpl implements StageCRUD {
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
         }
 
-        Stage stage = stageDAO.findStageById(stageId).get();
-        stage.setStageStatus(request.getStatus());
-
         List<CommitState> commitStates = stageDAO.findCommitsByStageId(stageId);
-        Integer counter = 0;
+        Integer counterCommit = 0;
 
         for (CommitState commitState : commitStates) {
             if (commitState.equals(CommitState.STAGED)) {
-                counter++;
+                counterCommit++;
             }
         }
 
-        if (commitStates.size() == counter && request.getStatus().equals(StageStatus.UNDONE)) {
-            BadRequestException badRequestException = new
-                    BadRequestException("You can't change status to UNDONE, because all commits are staged");
+        List<Timestamp> finishedDates = stageDAO.findDateFinishedOfTasksByStageId(stageId);
+        Integer counterDates = 0;
+
+        for (Timestamp finishedDate : finishedDates) {
+            if (finishedDate != null) {
+                counterDates++;
+            }
         }
+
+        System.out.println("counterCommit ----->" + counterCommit);
+        System.out.println("counterDates ----->" + counterDates);
+        System.out.println("commitStates.size() ----->" + commitStates.size());
+        System.out.println("finishedDates.size() ----->" + finishedDates.size());
+        System.out.println("request ----->" + request.getStatus());
+
+        if (commitStates.size() == counterCommit && request.getStatus().equals(StageStatus.UNDONE)) {
+            throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
+        }
+
+        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE)) {
+            throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
+        }
+
+        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE)) {
+            throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
+        }
+
+        Stage stage = stageDAO.findStageById(stageId).get();
+        stage.setStageStatus(request.getStatus());
+
         return stageDAO.updateStageStatus(stage);
     }
 
