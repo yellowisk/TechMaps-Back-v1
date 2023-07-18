@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
-@RequestMapping("api/v1/dashboard/{dashboardId}/roadmaps")
+@RequestMapping("api/v1/dashboard/{dashboardId}/")
 @RestController
 public class RoadmapController {
     private final RoadmapCRUD roadmapCRUD;
@@ -19,7 +19,7 @@ public class RoadmapController {
         this.roadmapCRUD = roadmapCRUD;
     }
 
-    @GetMapping("/{roadmapId}")
+    @GetMapping("roadmaps/{roadmapId}")
     public ResponseEntity<RoadmapResponse> getRoadmapById(
             @PathVariable UUID roadmapId) {
         Roadmap roadmap = roadmapCRUD.findRoadmapById(roadmapId);
@@ -27,11 +27,31 @@ public class RoadmapController {
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
 
-    @PostMapping
+    @PostMapping("roadmaps")
     public ResponseEntity<RoadmapResponse> addNewRoadmap(
             @PathVariable UUID dashboardId,
             @RequestBody @Valid CreateRoadmapRequest createRoadmapRequest) {
         Roadmap roadmap = roadmapCRUD.addNewRoadmap(dashboardId, createRoadmapRequest);
+
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
+    }
+
+    @GetMapping("roadmaps")
+    public ResponseEntity<List<RoadmapResponse>> listAllRoadmaps(
+            @PathVariable UUID dashboardId) {
+        List<Roadmap> roadmaps = roadmapCRUD.findRoadmapsByDashboardId(dashboardId);
+
+        return ResponseEntity.ok(
+                roadmaps.stream()
+                        .map(RoadmapResponse::create)
+                        .collect(java.util.stream.Collectors.toList())
+        );
+    }
+
+    @DeleteMapping("roadmaps/{roadmapId}")
+    public ResponseEntity<RoadmapResponse> deleteRoadmapById(
+            @PathVariable UUID roadmapId) {
+        Roadmap roadmap = roadmapCRUD.deleteRoadmapById(roadmapId);
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }

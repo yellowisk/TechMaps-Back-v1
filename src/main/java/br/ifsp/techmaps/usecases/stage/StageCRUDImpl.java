@@ -285,12 +285,6 @@ public class StageCRUDImpl implements StageCRUD {
             }
         }
 
-        System.out.println("counterCommit ----->" + counterCommit);
-        System.out.println("counterDates ----->" + counterDates);
-        System.out.println("commitStates.size() ----->" + commitStates.size());
-        System.out.println("finishedDates.size() ----->" + finishedDates.size());
-        System.out.println("request ----->" + request.getStatus());
-
         if (commitStates.size() == counterCommit && request.getStatus().equals(StageStatus.UNDONE)) {
             throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
         }
@@ -309,4 +303,23 @@ public class StageCRUDImpl implements StageCRUD {
         return stageDAO.updateStageStatus(stage);
     }
 
+    @Override
+    public Stage deleteStageById(UUID roadmapId, UUID stageId) {
+
+        if(!stageDAO.StageExists(stageId)) {
+            throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
+        }
+
+        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+
+        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new RuntimeException("Couldn't delete because it's Roadmap complete");
+        }
+
+        Optional<Stage> opt = stageDAO.findStageById(stageId);
+
+        stageDAO.deleteStageById(stageId);
+
+        return opt.get();
+    }
 }

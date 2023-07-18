@@ -12,7 +12,7 @@ public interface StageDAO {
     Optional<Stage> findStageById(UUID stageId);
     List<Stage> findStagesByRoadmapId(UUID roadmapId);
     List<Timestamp> findDateFinishedOfTasksByStageId(UUID stageId);
-
+    Stage deleteStageById(UUID stageId);
     List<CommitState> findCommitsByStageId(UUID stageId);
 
     Stage updateStage(Stage stage);

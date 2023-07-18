@@ -84,4 +84,13 @@ public class StageController {
         return ResponseEntity.ok(UpdateStatusResponse.convertFromStage(stage));
     }
 
+    @DeleteMapping("/{stageId}")
+    public ResponseEntity<StageResponse> deleteStageById(
+            @PathVariable UUID roadmapId,
+            @PathVariable UUID stageId) {
+        Stage stage = stageCRUD.deleteStageById(roadmapId, stageId);
+
+        return ResponseEntity.ok(StageResponse.createFromStage(stage));
+    }
+
 }

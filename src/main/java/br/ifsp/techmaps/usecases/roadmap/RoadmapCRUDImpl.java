@@ -50,5 +50,21 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
         return opt.get();
     }
 
+    @Override
+    public List<Roadmap> findRoadmapsByDashboardId(UUID dashboardId) {
+        return roadmapDAO.findAllByDashboardId(dashboardId);
+    }
 
+    @Override
+    public Roadmap deleteRoadmapById(UUID roadmapId) {
+
+        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+
+        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new RuntimeException("Couldn't delete because it's Roadmap complete");
+        }
+
+        roadmapDAO.deleteRoadmapById(roadmapId);
+        return Roadmap.getNewInstanceWithOnlyId(roadmapId);
+    }
 }

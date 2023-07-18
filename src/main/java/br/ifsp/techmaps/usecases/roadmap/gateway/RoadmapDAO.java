@@ -7,14 +7,10 @@ import java.util.*;
 public interface RoadmapDAO {
 
     Roadmap saveRoadmap(Roadmap roadmap);
-
     List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId);
-
     List<Roadmap> findAllByDashboardId(UUID dashboardId);
-
     Optional<Roadmap> findRoadmapById(UUID roadmapId);
-
     Roadmap updateRoadmap(Roadmap roadmap);
-
+    Roadmap deleteRoadmapById(UUID roadmapId);
     Boolean RoadmapExists(UUID roadmapId);
 }

@@ -15,6 +15,6 @@ public interface StageCRUD {
     Stage updateStageCommit(UUID stageId);
     Stage updateStageStatus(UUID roadmapId, UUID stageId, UpdateStatusRequest request);
 
-
+    Stage deleteStageById(UUID roadmapId, UUID stageId);
 
 }

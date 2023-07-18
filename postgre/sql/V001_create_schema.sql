@@ -19,8 +19,6 @@ ALTER TABLE techmaps_platform.user OWNER TO "techmaps";
 ALTER TABLE techmaps_platform.user
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
-DROP TABLE IF EXISTS techmaps_platform.dashboard CASCADE;
-
 CREATE TABLE techmaps_platform.dashboard(
     id uuid NOT NULL,
     total_roadmaps int NOT NULL,
@@ -57,8 +55,6 @@ CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
 );
 
 ALTER TYPE techmaps_platform.roadmap_lang OWNER TO "techmaps";
-
-DROP TABLE IF EXISTS techmaps_platform.roadmap CASCADE;
 
 CREATE TABLE techmaps_platform.roadmap(
     id uuid NOT NULL,

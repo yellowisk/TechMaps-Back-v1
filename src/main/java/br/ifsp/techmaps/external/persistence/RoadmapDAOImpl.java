@@ -5,7 +5,6 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
-import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +36,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
     private String updateRoadmapStatusAndCommitCounterQuery;
+
+    @Value("${queries.sql.roadmap-dao.delete.roadmap-by-id}")
+    private String deleteRoadmapByIdQuery;
+    @Value("${queries.sql.roadmap-dao.delete.task-by-roadmap-id}")
+    private String deleteTaskByRoadmapIdQuery;
+    @Value("${queries.sql.roadmap-dao.delete.task-commit-by-roadmap-id}")
+    private String deleteTaskCommitByRoadmapIdQuery;
 
     public RoadmapDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -99,6 +105,20 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getRoadmapStatus().name(),
                 roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
         return roadmap;
+    }
+
+    @Override
+    public Roadmap deleteRoadmapById(UUID roadmapId) {
+        Optional<Roadmap> roadmap = findRoadmapById(roadmapId);
+
+        if (roadmap.isEmpty()) {
+            throw new IllegalStateException("Couldn't find roadmpa with id: " + roadmapId);
+        }
+
+        jdbcTemplate.update(deleteTaskCommitByRoadmapIdQuery, roadmapId);
+        jdbcTemplate.update(deleteTaskByRoadmapIdQuery, roadmapId);
+        jdbcTemplate.update(deleteRoadmapByIdQuery, roadmapId);
+        return roadmap.get();
     }
 
     public Roadmap mapperRoadmapFromRs(ResultSet rs, int rowNum) throws SQLException {

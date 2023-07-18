@@ -23,11 +23,8 @@ import java.util.*;
 public class StageDAOImpl implements StageDAO {
 
     private final JdbcTemplate jdbcTemplate;
-
     private final RoadmapDAO roadmapDAO;
-
     private final DashboardDAO dashboardDAO;
-
     private final CommitDAO commitDAO;
 
     @Value("${queries.sql.stage-dao.insert.stage}")
@@ -50,6 +47,11 @@ public class StageDAOImpl implements StageDAO {
 
     @Value("${queries.sql.stage-dao.update.stage-status}")
     private String updateStageStatusQuery;
+
+    @Value("${queries.sql.stage-dao.delete.stage-by-id}")
+    private String deleteStageByIdQuery;
+    @Value("${queries.sql.stage-dao.delete.task-commit-by-stage-id}")
+    private String deleteTaskCommitByStageIdQuery;
 
     @Value("${queries.sql.stage-dao.exists.stage-id}")
     private String existsStageIdQuery;
@@ -147,15 +149,6 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public Stage updateStageStatus(Stage stage) {
 
-//        if(stage.getStageStatus().equals(StageStatus.DONE)) {
-//            List<TaskCommit> coms = commitDAO.commitsByStageId(stage.getStageId());
-//            for (TaskCommit com : coms) {
-//                if (com.getState().equals(CommitState.UNSTAGED)) {
-//                    throw new IllegalStateException("There are tasks to do!");
-//                }
-//            }
-//        }
-
         UUID roadmapId = stage.getRoadmap().getRoadmapId();
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
         if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
@@ -199,6 +192,20 @@ public class StageDAOImpl implements StageDAO {
         }
 
         return stage;
+    }
+
+    @Override
+    public Stage deleteStageById(UUID stageId) {
+        Optional<Stage> stageOptional = findStageById(stageId);
+
+        if (stageOptional.isEmpty()) {
+            throw new IllegalStateException("Couldn't find stage with id: " + stageId);
+        }
+
+        jdbcTemplate.update(deleteTaskCommitByStageIdQuery, stageId);
+        jdbcTemplate.update(deleteStageByIdQuery, stageId);
+
+        return stageOptional.get();
     }
 
     private Stage mapperStageFromRs(ResultSet rs, int rowNum) throws SQLException {
