@@ -19,7 +19,6 @@ import java.util.*;
 public class RoadmapDAOImpl implements RoadmapDAO {
 
     private final JdbcTemplate jdbcTemplate;
-    private final JsonUtil jsonUtil;
 
     @Value("${queries.sql.roadmap-dao.exists.roadmap-by-id}")
     private String existsRoadmapQuery;
@@ -39,9 +38,8 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
     private String updateRoadmapStatusAndCommitCounterQuery;
 
-    public RoadmapDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil) {
+    public RoadmapDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.jsonUtil = jsonUtil;
     }
 
     @Override

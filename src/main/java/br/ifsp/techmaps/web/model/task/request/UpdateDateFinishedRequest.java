@@ -1,25 +1,27 @@
 package br.ifsp.techmaps.web.model.task.request;
 
-import br.ifsp.techmaps.domain.entities.task.Task;
-
-import java.sql.Timestamp;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdateDateFinishedRequest {
-    private Timestamp date_finished;
+    @JsonProperty
+    private Boolean isFinished;
 
-    public UpdateDateFinishedRequest(Timestamp date_finished) {
-        this.date_finished = date_finished;
+    public UpdateDateFinishedRequest(Boolean isFinished) {
+        this.isFinished = isFinished;
     }
 
-    public Task convertToTask() {
-        return new Task(date_finished);
+    public UpdateDateFinishedRequest() {
     }
 
-    public Timestamp getDate_finished() {
-        return date_finished;
+    public static UpdateDateFinishedRequest create(Boolean isFinished) {
+        return new UpdateDateFinishedRequest(isFinished);
     }
 
-    public void setDate_finished(Timestamp date_finished) {
-        this.date_finished = date_finished;
+    public Boolean getDate_finished() {
+        return isFinished;
+    }
+
+    public void setDate_finished(Boolean isFinished) {
+        this.isFinished = isFinished;
     }
 }

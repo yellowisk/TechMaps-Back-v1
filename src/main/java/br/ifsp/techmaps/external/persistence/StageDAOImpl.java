@@ -23,7 +23,6 @@ import java.util.*;
 public class StageDAOImpl implements StageDAO {
 
     private final JdbcTemplate jdbcTemplate;
-    private final JsonUtil jsonUtil;
 
     private final RoadmapDAO roadmapDAO;
 
@@ -59,7 +58,6 @@ public class StageDAOImpl implements StageDAO {
                         RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO,
                         CommitDAO commitDAO) {
         this.jdbcTemplate = jdbcTemplate;
-        this.jsonUtil = jsonUtil;
         this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
         this.commitDAO = commitDAO;

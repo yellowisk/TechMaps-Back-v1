@@ -1,7 +1,7 @@
 package br.ifsp.techmaps.usecases.commit;
 
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.comit.request.UpdateCommitStatus;
 
 import java.util.UUID;
 

@@ -7,14 +7,16 @@ import br.ifsp.techmaps.usecases.commit.CommitCRUD;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
-import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
-import br.ifsp.techmaps.web.model.task.response.CommitResponse;
-import br.ifsp.techmaps.web.model.task.response.UpdateCommitResponse;
-import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
+import br.ifsp.techmaps.web.model.comit.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.comit.response.CommitResponse;
+import br.ifsp.techmaps.web.model.comit.response.UpdateCommitResponse;
+import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RequestMapping("api/v1/tasks/")
@@ -62,7 +64,8 @@ public class CommitController {
         stageCRUD.updateStageCommit(task.getStage().getStageId());
 
         if(taskCommit.getState().equals(CommitState.STAGED))
-            taskCRUD.updateTaskDateFinished(taskId);
+            taskCRUD.updateTaskDateFinished(taskId,
+                    UpdateDateFinishedRequest.create(true));
 
         return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
     }

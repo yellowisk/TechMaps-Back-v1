@@ -1,18 +1,20 @@
 package br.ifsp.techmaps.usecases.task;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
+import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
+import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
-import br.ifsp.techmaps.web.model.task.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +28,15 @@ public class taskCRUDImpl implements TaskCRUD {
     private final TaskDAO taskDAO;
     private final CommitDAO commitDAO;
     private final StageDAO stageDAO;
+    private final RoadmapDAO roadmapDAO;
     private final DashboardDAO dashboardDAO;
 
-    public taskCRUDImpl(TaskDAO taskDAO, CommitDAO commitDAO, StageDAO stageDAO, DashboardDAO dashboardDAO) {
+    public taskCRUDImpl(TaskDAO taskDAO, CommitDAO commitDAO, StageDAO stageDAO,
+                        RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
         this.taskDAO = taskDAO;
         this.commitDAO = commitDAO;
         this.stageDAO = stageDAO;
+        this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
     }
 
@@ -109,15 +114,24 @@ public class taskCRUDImpl implements TaskCRUD {
     }
 
     @Override
-    public Task updateTaskDateFinished(UUID taskId) {
+    public Task updateTaskDateFinished(UUID taskId, UpdateDateFinishedRequest request) {
         Boolean taskExists = taskDAO.TaskExists(taskId);
         if(!taskExists) {
             throw new NullPointerException("Task with id " + taskId + " does not exist");
         }
 
         Task taskToFinish = taskDAO.findTaskById(taskId).get();
-        taskToFinish.setId(taskId);
-        taskToFinish.setDate_finished(Timestamp.valueOf(LocalDateTime.now()));
+        Roadmap roadmap = roadmapDAO.findRoadmapById(taskToFinish.getStage().getRoadmap()
+                .getRoadmapId()).get();
+        if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
+            throw new IllegalStateException("Roadmap is already complete!");
+        }
+
+        if (request.getDate_finished() == false) {
+            taskToFinish.setDate_finished(null);
+        } else {
+            taskToFinish.setDate_finished(Timestamp.valueOf(LocalDateTime.now()));
+        }
 
         taskDAO.updateDateFinished(taskToFinish);
 

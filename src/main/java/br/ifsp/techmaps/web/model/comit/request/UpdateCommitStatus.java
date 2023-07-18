@@ -1,4 +1,4 @@
-package br.ifsp.techmaps.web.model.task.request;
+package br.ifsp.techmaps.web.model.comit.request;
 
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;

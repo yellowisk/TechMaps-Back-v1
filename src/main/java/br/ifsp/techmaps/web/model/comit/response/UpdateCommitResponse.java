@@ -1,9 +1,7 @@
-package br.ifsp.techmaps.web.model.task.response;
+package br.ifsp.techmaps.web.model.comit.response;
 
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
-
-import java.util.*;
 
 public class UpdateCommitResponse {
 
