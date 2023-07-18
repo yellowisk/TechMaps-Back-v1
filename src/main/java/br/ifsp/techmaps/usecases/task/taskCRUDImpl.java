@@ -129,38 +129,15 @@ public class taskCRUDImpl implements TaskCRUD {
         for (Task task : allTasksFromStage) {
             if (task.getDate_finished() != null) {
                 tasksFinished.add(task);
-                System.out.println("taskFinished: " + tasksFinished.size());
-                System.out.println("allTasksFromStage: " + allTasksFromStage.size());
             }
         }
 
         if(tasksFinished.size() == allTasksFromStage.size()) {
             stage.setStageStatus(StageStatus.DONE);
             stageDAO.updateStageStatus(stage);
-            System.out.println("Stage " + stage.getStageId() + " is done");
         }
 
         return taskDAO.findTaskById(taskId).get();
     }
 
-    @Override
-    public TaskCommit getTaskCommitById(UUID taskCommitId) {
-        return commitDAO.findTaskCommitById(taskCommitId)
-                .orElseThrow(() -> new NullPointerException("Couldn't TaskCommit with id: " + taskCommitId));
-    }
-
-    @Override
-    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatus request) {
-        if(!taskDAO.TaskExists(taskId)) {
-            throw new NullPointerException("Task with id " + taskId + " doesn't exist");
-        }
-
-        TaskCommit commitToVerify = commitDAO.findTaskCommitById(taskCommitId).get();
-
-        commitToVerify.setState(request.getStatus());
-
-        commitDAO.updateTaskCommmit(commitToVerify);
-
-        return commitDAO.findTaskCommitById(taskCommitId).get();
-    }
 }

@@ -77,7 +77,7 @@ public class TaskCommit {
 
     //TODO: BRING TO USE CASE
     public static String createCommitTag(Task task) {
-        String tag = "[ "+task.getTaskBody().getTitle()+" | finalCommit]";
+        String tag = "[ "+task.getTaskBody().getTitle()+" | finalCommit ]";
         return tag;
     }
 

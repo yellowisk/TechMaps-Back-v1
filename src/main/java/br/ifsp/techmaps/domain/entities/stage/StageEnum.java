@@ -31,7 +31,7 @@ public enum StageEnum {
         LEARN_CLEAN_ARCHITECTURE("Learn Clean Architecture", "General"),
 
     //SOFTWARES
-        LEARN_VSCODE("Learn Visual studio Code", "General"),
+        LEARN_VSCODE("Learn Visual Studio Code", "General"),
         LEARN_INTELLIJ("Learn IntelliJ IDEA", "General"),
         LEARN_ANDROID("Learn Android Studio", "Android"),
     //Frameworks
