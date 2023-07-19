@@ -18,12 +18,10 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
     private final RoadmapDAO roadmapDAO;
     private final DashboardDAO dashboardDAO;
-    private final StageDAO stageDAO;
 
     public RoadmapCRUDImpl(RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO, StageDAO stageDAO) {
         this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
-        this.stageDAO = stageDAO;
     }
 
     @Override
@@ -42,6 +40,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     public Roadmap findRoadmapById(UUID roadmapId) {
 
         Optional<Roadmap> opt = roadmapDAO.findRoadmapById(roadmapId);
+        roadmapDAO.refreshRoadmap(roadmapDAO.findRoadmapById(roadmapId).get());
 
         if (opt.isEmpty()) {
             throw new RuntimeException("Roadmap not found");
@@ -52,7 +51,16 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
     @Override
     public List<Roadmap> findRoadmapsByDashboardId(UUID dashboardId) {
-        return roadmapDAO.findAllByDashboardId(dashboardId);
+        List<Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
+        roadmaps.forEach(roadmap -> roadmapDAO.refreshRoadmap(roadmap));
+        return roadmaps;
+    }
+
+    @Override
+    public List<Roadmap> findCompletedRoadmapsByDashboardId(UUID dashboardId) {
+        List<Roadmap> roadmaps = roadmapDAO.findAllCompletedByDashboardId(dashboardId);
+        roadmaps.forEach(roadmapDAO::refreshRoadmap);
+        return roadmaps;
     }
 
     @Override
@@ -61,10 +69,12 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
         if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
-            throw new RuntimeException("Couldn't delete because it's Roadmap complete");
+            throw new RuntimeException("Couldn't delete because the roadmap '"
+                    + roadmap.getTitle() + "' is complete");
         }
 
         roadmapDAO.deleteRoadmapById(roadmapId);
+        dashboardDAO.refreshDashboard(roadmap.getDashboardId());
         return Roadmap.getNewInstanceWithOnlyId(roadmapId);
     }
 }

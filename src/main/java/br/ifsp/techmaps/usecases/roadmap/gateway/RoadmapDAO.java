@@ -7,6 +7,9 @@ import java.util.*;
 public interface RoadmapDAO {
 
     Roadmap saveRoadmap(Roadmap roadmap);
+
+    Roadmap refreshRoadmap(Roadmap roadmap);
+
     List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId);
     List<Roadmap> findAllByDashboardId(UUID dashboardId);
     Optional<Roadmap> findRoadmapById(UUID roadmapId);

@@ -22,6 +22,13 @@ public class CommitCRUDImpl implements CommitCRUD {
     }
 
     @Override
+    public TaskCommit getTaskCommitByTaskId(UUID taskId) {
+        return commitDAO.findTaskCommitByTaskId(taskId)
+                .orElseThrow(() -> new NullPointerException("Couldn't find TaskCommit with task id: "
+                        + taskId));
+    }
+
+    @Override
     public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatus request) {
         TaskCommit taskCommit = commitDAO.findTaskCommitById(taskCommitId)
                 .orElseThrow(() -> new NullPointerException("Couldn't find TaskCommit with id: "
@@ -32,12 +39,5 @@ public class CommitCRUDImpl implements CommitCRUD {
         commitDAO.updateTaskCommmit(taskCommit);
 
         return taskCommit;
-    }
-
-    @Override
-    public TaskCommit getTaskCommitByTaskId(UUID taskId) {
-        return commitDAO.findTaskCommitByTaskId(taskId)
-                .orElseThrow(() -> new NullPointerException("Couldn't find TaskCommit with task id: "
-                        + taskId));
     }
 }

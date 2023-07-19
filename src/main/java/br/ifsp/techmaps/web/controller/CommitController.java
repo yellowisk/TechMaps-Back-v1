@@ -59,13 +59,13 @@ public class CommitController {
             @RequestBody @Valid UpdateCommitStatus request) {
         TaskCommit taskCommit = commitCRUD.updateTaskCommit(taskId, commitId, request);
 
-        Task task = taskDAO.findTaskById(taskCommit.getTask().getId()).get();
-
-        stageCRUD.updateStageCommit(task.getStage().getStageId());
-
         if(taskCommit.getState().equals(CommitState.STAGED))
             taskCRUD.updateTaskDateFinished(taskId,
                     UpdateDateFinishedRequest.create(true));
+
+        Task task = taskDAO.findTaskById(taskCommit.getTask().getId()).get();
+
+        stageCRUD.updateStageCommit(task.getStage().getStageId());
 
         return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
     }

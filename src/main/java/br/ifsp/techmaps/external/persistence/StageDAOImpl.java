@@ -6,6 +6,7 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
+import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
@@ -25,44 +26,33 @@ public class StageDAOImpl implements StageDAO {
     private final JdbcTemplate jdbcTemplate;
     private final RoadmapDAO roadmapDAO;
     private final DashboardDAO dashboardDAO;
-    private final CommitDAO commitDAO;
 
     @Value("${queries.sql.stage-dao.insert.stage}")
     private String insertStageQuery;
-
     @Value("${queries.sql.stage-dao.select.stage-by-id}")
     private String selectStageByIdQuery;
-
     @Value("${queries.sql.stage-dao.select.stage-by-roadmap-id}")
     private String selectStageByRoadmapIdQuery;
-
     @Value("${queries.sql.stage-dao.select.commit-state-by-stage-id}")
     private String selectCommitStateByStageIdQuery;
-
     @Value("${queries.sql.stage-dao.select.date-finished-of-tasks-by-stage-id}")
     private String selectDateFinishedOfTasksByStageIdQuery;
-
     @Value("${queries.sql.stage-dao.update.stage-commit-counter}")
     private String updateStageCommitCounterQuery;
-
     @Value("${queries.sql.stage-dao.update.stage-status}")
     private String updateStageStatusQuery;
-
     @Value("${queries.sql.stage-dao.delete.stage-by-id}")
     private String deleteStageByIdQuery;
     @Value("${queries.sql.stage-dao.delete.task-commit-by-stage-id}")
     private String deleteTaskCommitByStageIdQuery;
-
     @Value("${queries.sql.stage-dao.exists.stage-id}")
     private String existsStageIdQuery;
 
     public StageDAOImpl(JdbcTemplate jdbcTemplate, JsonUtil jsonUtil,
-                        RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO,
-                        CommitDAO commitDAO) {
+                        RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
-        this.commitDAO = commitDAO;
     }
 
     @Override
@@ -179,16 +169,16 @@ public class StageDAOImpl implements StageDAO {
             roadmap.setRoadmapCommits(commitStagedCounter);
             roadmapDAO.updateRoadmap(roadmap);
 
-            UUID dashboardId = roadmap.getDashboardId();
-            List<Roadmap> completedRoadmaps = roadmapDAO.findAllCompletedByDashboardId(roadmap.getDashboardId());
-            List<Roadmap> generalRoadmaps = roadmapDAO.findAllByDashboardId(roadmap.getDashboardId());
-            Long time = 0L;
+//            UUID dashboardId = roadmap.getDashboardId();
+//            List<Roadmap> completedRoadmaps = roadmapDAO.findAllCompletedByDashboardId(roadmap.getDashboardId());
+//            List<Roadmap> generalRoadmaps = roadmapDAO.findAllByDashboardId(roadmap.getDashboardId());
+//            Long time = 0L;
+//
+//            for (Roadmap generalRoadmap : generalRoadmaps) {
+//                time = time + generalRoadmap.getTotalTime();
+//            }
 
-            for (Roadmap generalRoadmap : generalRoadmaps) {
-                time = time + generalRoadmap.getTotalTime();
-            }
-
-            dashboardDAO.updateTotalRoadmapsAndTotalTime(dashboardId, completedRoadmaps, time);
+//            dashboardDAO.updateTotalRoadmapsAndTotalTime(dashboardId, completedRoadmaps, time);
         }
 
         return stage;

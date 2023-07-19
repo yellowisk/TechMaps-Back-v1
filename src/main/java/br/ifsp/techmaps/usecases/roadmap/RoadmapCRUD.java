@@ -9,5 +9,6 @@ public interface RoadmapCRUD {
     Roadmap addNewRoadmap(UUID projectId, CreateRoadmapRequest request);
     Roadmap findRoadmapById(UUID roadmapId);
     List<Roadmap> findRoadmapsByDashboardId(UUID dashboardId);
+    List<Roadmap> findCompletedRoadmapsByDashboardId(UUID dashboardId);
     Roadmap deleteRoadmapById(UUID roadmapId);
 }

@@ -48,6 +48,18 @@ public class RoadmapController {
         );
     }
 
+    @GetMapping("roadmaps/completed")
+    public ResponseEntity<List<RoadmapResponse>> listAllCompletedRoadmaps(
+            @PathVariable UUID dashboardId) {
+        List<Roadmap> roadmaps = roadmapCRUD.findCompletedRoadmapsByDashboardId(dashboardId);
+
+        return ResponseEntity.ok(
+                roadmaps.stream()
+                        .map(RoadmapResponse::create)
+                        .collect(java.util.stream.Collectors.toList())
+        );
+    }
+
     @DeleteMapping("roadmaps/{roadmapId}")
     public ResponseEntity<RoadmapResponse> deleteRoadmapById(
             @PathVariable UUID roadmapId) {

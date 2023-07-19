@@ -25,6 +25,14 @@ queries:
       select:
         dashboard-by-id: >
           SELECT id, total_roadmaps, total_tasks, total_commits, extract(epoch from total_time) as total_time FROM techmaps_platform.dashboard WHERE id = ?
+        count-complete-roadmaps-by-dashboard-id: >
+            SELECT COUNT(*) FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
+        count-tasks-with-date-finished-by-dashboard-id: >
+            SELECT COUNT(*) FROM techmaps_platform.task WHERE dashboard_id = ? AND date_finished IS NOT NULL
+        count-commits-with-staged-state-by-dashboard-id: >
+          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE dashboard_id = ? AND state = 'STAGED'
+        count-total-time-from-roadmaps-by-dashboard-id: >
+          SELECT SUM(extract(epoch from total_time)) FROM techmaps_platform.roadmap WHERE dashboard_id = ?
       update:
         dashboard-total-roadmaps-and-total_time: >
             UPDATE techmaps_platform.dashboard SET total_roadmaps = ?, total_time = make_interval(secs => ?) WHERE id = ?
@@ -43,9 +51,15 @@ queries:
           SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
         all-roadmaps-by-dashboard-id: >
           SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ?
+        count-commits-by-task-with-stage-from-roadmap-by-id: >
+          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id IN (SELECT id FROM techmaps_platform.stage WHERE roadmap_id = ?)) AND state = 'STAGED'
       update:
         complete-roadmap: >
           UPDATE techmaps_platform.roadmap SET status = ?::techmaps_platform.roadmap_status, commit_counter = ?, finish_time=?, total_time =  make_interval(secs => ?) WHERE id = ?
+        roadmap-commit-counter: >
+          UPDATE techmaps_platform.roadmap SET commit_counter = ? WHERE id = ?
+        roadmap-total-time: >
+          UPDATE techmaps_platform.roadmap SET total_time = make_interval(secs => ?) WHERE id = ?
       delete:
         roadmap-by-id: >
           DELETE FROM techmaps_platform.roadmap WHERE id = ?;
@@ -69,6 +83,8 @@ queries:
             SELECT state FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
         date-finished-of-tasks-by-stage-id: >
             SELECT date_finished FROM techmaps_platform.task WHERE stage_id = ?
+        task-commits-by-stage-id: >
+            SELECT * FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
       update:
         stage-commit-counter: >
           UPDATE techmaps_platform.stage SET commit_counter = ? WHERE id = ?

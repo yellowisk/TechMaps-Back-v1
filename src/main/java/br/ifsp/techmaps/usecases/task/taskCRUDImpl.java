@@ -121,8 +121,8 @@ public class taskCRUDImpl implements TaskCRUD {
         }
 
         Task taskToFinish = taskDAO.findTaskById(taskId).get();
-        Roadmap roadmap = roadmapDAO.findRoadmapById(taskToFinish.getStage().getRoadmap()
-                .getRoadmapId()).get();
+        Roadmap roadmap = roadmapDAO.findRoadmapById(taskToFinish.getStage().getRoadmap().getRoadmapId()).get();
+
         if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
             throw new IllegalStateException("Roadmap is already complete!");
         }

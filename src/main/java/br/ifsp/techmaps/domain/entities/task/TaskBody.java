@@ -34,8 +34,8 @@ public enum TaskBody {
     DG3("Learn Diagrams", "Design a sequence diagram", "Illustrate the interaction between objects and the order of message exchanges in a system using UML sequence diagrams."),
 
     WS1("Learn WebServers", "Study web server concepts", "Learn about HTTP methods, request-response cycle, and server-side scripting."),
-    WS2("Learn Webservers", "Set up a web server", "Install and configure a web server software (e.g., Apache, Nginx) to host and serve websites."),
-    WS3("Learn Webservers", "Deploy a sample website", "Upload your web pages and assets to the web server and verify their accessibility through a browser."),
+    WS2("Learn WebServers", "Set up a web server", "Install and configure a web server software (e.g., Apache, Nginx) to host and serve websites."),
+    WS3("Learn WebServers", "Deploy a sample website", "Upload your web pages and assets to the web server and verify their accessibility through a browser."),
 
     CD1("Learn Cloud Systems", "Understand cloud computing", "Learn about cloud service models (IaaS, PaaS, SaaS) and deployment models (public, private, hybrid)."),
     CD2("Learn Cloud Systems", "Explore cloud providers", "Familiarize yourself with popular cloud platforms such as AWS, Azure, or Google Cloud."),

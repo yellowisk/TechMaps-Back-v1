@@ -29,17 +29,14 @@ public class TaskDAOImpl implements TaskDAO {
     private final CommitDAO commitDAO;
     private final DashboardDAO dashboardDAO;
 
-    @Value("${queries.sql.task-dao.exists.task-id}")
-    private String existsTaskIdQuery;
+    @Value("${queries.sql.task-dao.insert.task}")
+    private String insertTaskQuery;
 
     @Value("${queries.sql.task-dao.select.task-by-id}")
     private String selectTaskByIdQuery;
 
     @Value("${queries.sql.task-dao.select.task-by-stage-id}")
     private String selectTasksByStageIdQuery;
-
-    @Value("${queries.sql.task-dao.insert.task}")
-    private String insertTaskQuery;
 
     @Value("${queries.sql.task-dao.select.tasks-by-dashboard-id}")
     private String selectTasksByDashboardIdQuery;
@@ -49,6 +46,9 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Value("${queries.sql.task-dao.update.task-date-finished}")
     private String updateTaskDateFinishedQuery;
+
+    @Value("${queries.sql.task-dao.exists.task-id}")
+    private String existsTaskIdQuery;
 
     public TaskDAOImpl(JdbcTemplate jdbcTemplate, RoadmapDAO roadmapDAO, StageDAO stageDao,
                        CommitDAO commitDAO, DashboardDAO dashboardDAO) {
@@ -102,30 +102,30 @@ public class TaskDAOImpl implements TaskDAO {
         jdbcTemplate.update(updateTaskDateFinishedQuery,
                 task.getDate_finished(), task.getId());
 
-        Dashboard dashboard = dashboardDAO.findDashboardById(
-                task.getStage().getRoadmap().getDashboardId()).get();
+//        Dashboard dashboard = dashboardDAO.findDashboardById(
+//                task.getStage().getRoadmap().getDashboardId()).get();
 
-        List<Task> tasks = jdbcTemplate.query(selectTasksByDashboardIdQuery,
-                this::mapperTaskFromRs, dashboard.getDashboardId());
-        List<Task> tasksFinished = new ArrayList<>();
+//        List<Task> tasks = jdbcTemplate.query(selectTasksByDashboardIdQuery,
+//                this::mapperTaskFromRs, dashboard.getDashboardId());
+//        List<Task> tasksFinished = new ArrayList<>();
+//
+//        for (Task t : tasks) {
+//            if (t.getDate_finished() != null) {
+//                tasksFinished.add(t);
+//            }
+//        }
 
-        for (Task t : tasks) {
-            if (t.getDate_finished() != null) {
-                tasksFinished.add(t);
-            }
-        }
+//        List<TaskCommit> commits = commitDAO.commitsByDashboardId(dashboard.getDashboardId());
+//        List<TaskCommit> stagedCommits = new ArrayList<>();
+//
+//        for (TaskCommit c : commits) {
+//            if (c.getState() == STAGED) {
+//                stagedCommits.add(c);
+//            }
+//        }
 
-        List<TaskCommit> commits = commitDAO.commitsByDashboardId(dashboard.getDashboardId());
-        List<TaskCommit> stagedCommits = new ArrayList<>();
-
-        for (TaskCommit c : commits) {
-            if (c.getState() == STAGED) {
-                stagedCommits.add(c);
-            }
-        }
-
-        dashboardDAO.updateTotalTasks(dashboard.getDashboardId(), tasksFinished);
-        dashboardDAO.updateTotalCommits(dashboard.getDashboardId(), stagedCommits);
+//        dashboardDAO.updateTotalTasks(dashboard.getDashboardId(), tasksFinished);
+//        dashboardDAO.updateTotalCommits(dashboard.getDashboardId(), stagedCommits);
 
         return Task.createWithOnlyId(task.getId());
     }

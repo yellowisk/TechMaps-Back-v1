@@ -207,6 +207,8 @@ CREATE TYPE techmaps_platform.task_commit_status AS ENUM (
 
 ALTER TYPE techmaps_platform.task_commit_status OWNER TO "techmaps";
 
+DROP TABLE IF EXISTS techmaps_platform.task_commit;
+
 CREATE TABLE techmaps_platform.task_commit(
     id uuid NOT NULL,
     task_id uuid NOT NULL,

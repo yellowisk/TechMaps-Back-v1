@@ -20,4 +20,6 @@ public interface DashboardDAO {
     Dashboard updateTotalRoadmapsAndTotalTime(UUID dashboardId, List<Roadmap> roadmaps,
                                               Long totalTime);
 
+    Dashboard refreshDashboard(UUID dashboardId);
+
 }

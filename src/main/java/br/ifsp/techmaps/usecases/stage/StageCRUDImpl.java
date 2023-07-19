@@ -7,8 +7,10 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
+import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
+import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import br.ifsp.techmaps.web.exception.*;
@@ -21,11 +23,13 @@ import java.util.*;
 public class StageCRUDImpl implements StageCRUD {
 
     private final StageDAO stageDAO;
+    private final DashboardDAO dashboardDAO;
     private final RoadmapDAO roadmapDAO;
 
-    public StageCRUDImpl(StageDAO stageDAO, RoadmapDAO roadmapDAO) {
+    public StageCRUDImpl(StageDAO stageDAO, RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
         this.stageDAO = stageDAO;
         this.roadmapDAO = roadmapDAO;
+        this.dashboardDAO = dashboardDAO;
     }
 
     @Override
@@ -312,13 +316,14 @@ public class StageCRUDImpl implements StageCRUD {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
-        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
-            throw new RuntimeException("Couldn't delete because it's Roadmap complete");
-        }
-
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
+        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new RuntimeException("Couldn't delete '" + opt.get().getTheme().name() + "' because its Roadmap is complete");
+        }
+
         stageDAO.deleteStageById(stageId);
+        dashboardDAO.refreshDashboard(roadmap.getDashboardId());
 
         return opt.get();
     }
