@@ -27,7 +27,7 @@ public class StageController {
             @PathVariable UUID stageId) {
         Stage stage = stageCRUD.getStageById(stageId);
 
-        return ResponseEntity.ok(StageResponse.createFromStage(stage));
+        return ResponseEntity.ok(StageResponse.createForStage(stage));
     }
 
     @GetMapping
@@ -37,7 +37,7 @@ public class StageController {
         List<StageResponse> stageResponses = new ArrayList<>();
 
         for (Stage stage : stages) {
-            stageResponses.add(StageResponse.createFromStage(stage));
+            stageResponses.add(StageResponse.createForStage(stage));
         }
 
         return ResponseEntity.ok(stageResponses);

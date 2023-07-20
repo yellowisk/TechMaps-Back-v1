@@ -82,15 +82,15 @@ public class Roadmap {
                 finishTime, totalTime, roadmapCommits, dashboardId);
     }
 
-    //Stays here (for now)
-    public int findRoadmapCommits() {
-        int roadmapCommits = 0;
-        for (Stage stages : stages) {
-            int stageCommit = stages.findStageCommits(stages.getTasks());
-            roadmapCommits = roadmapCommits + stageCommit;
-        }
-        return roadmapCommits;
-    }
+//    //Stays here (for now)
+//    public int findRoadmapCommits() {
+//        int roadmapCommits = 0;
+//        for (Stage stages : stages) {
+//            int stageCommit = stages.findStageCommits(stages.getTasks());
+//            roadmapCommits = roadmapCommits + stageCommit;
+//        }
+//        return roadmapCommits;
+//    }
 
     public UUID getRoadmapId() {
         return roadmapId;

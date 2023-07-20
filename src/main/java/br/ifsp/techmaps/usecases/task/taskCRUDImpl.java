@@ -61,7 +61,6 @@ public class taskCRUDImpl implements TaskCRUD {
 
         tasks.forEach(task -> taskDAO.saveNewTask(task));
         tasks.forEach(task -> commitDAO.createTaskCommit(task));
-        stage.setTasks(tasks);
 
         return tasks;
     }

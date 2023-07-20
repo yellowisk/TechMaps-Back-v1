@@ -30,19 +30,19 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
-        this.stageId = stageId;
-        this.roadmap = roadmap;
-        this.theme = theme;
-        this.stageStatus = stageStatus;
-    }
-
     public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
         this.stageStatus = stageStatus;
         this.stageCommit = stageCommit;
+    }
+
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
+        this.stageId = stageId;
+        this.roadmap = roadmap;
+        this.theme = theme;
+        this.stageStatus = stageStatus;
     }
 
     public Stage(Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
@@ -92,38 +92,10 @@ public class Stage {
 
     public Stage() {}
 
-    //TODO: BRING TO USE CASE
-
-//    public static Task createTask(Stage stage, String title, String description,
-//                                  String repository_link, Timestamp date_created,
-//                                  Timestamp date_finished) {
-//        User user = new User();
-//        Task task = new Task(UUID.randomUUID(), stage, title,
-//                description, repository_link, date_created,
-//                date_finished);
-//        if (task.getStage().getStageStatus() == StageStatus.DONE) {
-//            throw new IllegalArgumentException("Não é possível criar uma tarefa em uma etapa concluída");
-//        } else {
-//            if (user.getGithub() == null) {
-//                task.getTaskCommit().setCommitTag("");
-//            } else {
-//                task.getTaskCommit().setCommitTag(task);
-//            }
-//            return task;
-//        }
-//    }
-
-    public int findStageCommits(List<Task> tasks) {
-        ArrayList<TaskCommit> stageCommits = new ArrayList<TaskCommit>();
-        for (Task task : tasks) {
-            if (task.getTaskCommit().getState() == CommitState.STAGED) {
-                stageCommits.add(task.getTaskCommit());
-            }
-        }
-        int numCommits = stageCommits.size();
-        return numCommits;
+    public void addTask(Task task) {
+        task.setStage(this);
+        tasks.add(task);
     }
-
     public UUID getStageId() {
         return stageId;
     }

@@ -86,8 +86,10 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public List<Task> findAllTasksByStageId(UUID stageId) {
-        return jdbcTemplate.query(selectTasksByStageIdQuery,
+        List<Task> tasks = jdbcTemplate.query(selectTasksByStageIdQuery,
                 this::mapperTaskFromRs, stageId);
+        tasks.forEach(task -> task.setTaskCommit(commitDAO.findTaskCommitByTaskId(task.getId()).get()));
+        return tasks;
     }
 
     @Override
@@ -147,9 +149,10 @@ public class TaskDAOImpl implements TaskDAO {
 
         Stage stage = stageDao.findStageById(stageId).orElseThrow(() -> new SQLDataException("Stage not found"));
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+        TaskCommit taskCommit = commitDAO.findTaskCommitByTaskId(id).get();
 
-        return Task.createwithoutTaskCommit
-                (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard);
+        return Task.createFull
+                (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard, taskCommit);
     }
 
 }

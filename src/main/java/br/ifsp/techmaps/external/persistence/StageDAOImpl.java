@@ -1,5 +1,6 @@
 package br.ifsp.techmaps.external.persistence;
 
+import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
@@ -7,6 +8,7 @@ import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
@@ -37,6 +39,8 @@ public class StageDAOImpl implements StageDAO {
     private String selectCommitStateByStageIdQuery;
     @Value("${queries.sql.stage-dao.select.date-finished-of-tasks-by-stage-id}")
     private String selectDateFinishedOfTasksByStageIdQuery;
+    @Value("${queries.sql.task-dao.select.task-by-stage-id}")
+    private String selectTaskByStageIdQuery;
     @Value("${queries.sql.stage-dao.update.stage-commit-counter}")
     private String updateStageCommitCounterQuery;
     @Value("${queries.sql.stage-dao.update.stage-status}")
@@ -83,14 +87,14 @@ public class StageDAOImpl implements StageDAO {
         try {
             stage = jdbcTemplate.queryForObject(selectStageByIdQuery,
                     this::mapperStageFromRs, stageId);
+
+            if(Objects.isNull(stage))
+                throw new NullPointerException("Stage not found");
+
+            return Optional.of(stage);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
-
-        if (Objects.isNull(stage))
-            throw new IllegalStateException();
-
-        return Optional.of(stage);
     }
 
     @Override
@@ -207,9 +211,8 @@ public class StageDAOImpl implements StageDAO {
 
         Roadmap rm = roadmapDAO.findRoadmapById(roadmapId).get();
 
+
         return Stage.createStageWithoutTasks(id, rm, theme, status, stageCommit);
     }
-
-
 
 }

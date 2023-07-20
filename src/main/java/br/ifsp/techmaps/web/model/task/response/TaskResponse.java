@@ -14,6 +14,21 @@ public class TaskResponse {
     private Timestamp date_created;
     private Timestamp date_finished;
     private UUID dashboardId;
+    private UUID commitId;
+
+    public TaskResponse(UUID taskId, UUID stageId, String title, String description,
+                        String repository_link, Timestamp date_created, Timestamp date_finished,
+                        UUID dashboardId, UUID commitId) {
+        this.taskId = taskId;
+        this.stageId = stageId;
+        this.title = title;
+        this.description = description;
+        this.repository_link = repository_link;
+        this.date_created = date_created;
+        this.date_finished = date_finished;
+        this.dashboardId = dashboardId;
+        this.commitId = commitId;
+    }
 
     public TaskResponse(UUID taskId, UUID stageId, String title, String description,
                         String repository_link, Timestamp date_created, Timestamp date_finished,
@@ -29,6 +44,13 @@ public class TaskResponse {
     }
 
     public static TaskResponse createFromTask(Task task) {
+        return new TaskResponse(task.getId(), task.getStage().getStageId(),
+                task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
+                task.getRepository(), task.getDate_created(), task.getDate_finished(),
+                task.getDashboard().getDashboardId(), task.getTaskCommit().getCommitId());
+    }
+
+    public static TaskResponse createFromTaskWithoutCommit(Task task) {
         return new TaskResponse(task.getId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
                 task.getRepository(), task.getDate_created(), task.getDate_finished(),
@@ -97,5 +119,13 @@ public class TaskResponse {
 
     public void setDashboardId(UUID dashboardId) {
         this.dashboardId = dashboardId;
+    }
+
+    public UUID getCommitId() {
+        return commitId;
+    }
+
+    public void setCommitId(UUID commitId) {
+        this.commitId = commitId;
     }
 }

@@ -7,6 +7,7 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
+import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -25,10 +26,12 @@ public class StageCRUDImpl implements StageCRUD {
     private final StageDAO stageDAO;
     private final DashboardDAO dashboardDAO;
     private final RoadmapDAO roadmapDAO;
+    private final TaskDAO taskDAO;
 
-    public StageCRUDImpl(StageDAO stageDAO, RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
+    public StageCRUDImpl(StageDAO stageDAO, RoadmapDAO roadmapDAO, TaskDAO taskDAO, DashboardDAO dashboardDAO) {
         this.stageDAO = stageDAO;
         this.roadmapDAO = roadmapDAO;
+        this.taskDAO = taskDAO;
         this.dashboardDAO = dashboardDAO;
     }
 
@@ -220,7 +223,11 @@ public class StageCRUDImpl implements StageCRUD {
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
         }
 
-        return stageDAO.findStageById(stageId).get();
+        List<Task> tasks = taskDAO.findAllTasksByStageId(stageId);
+        Stage stage = stageDAO.findStageById(stageId).get();
+        stage.setTasks(tasks);
+
+        return stage;
     }
 
     @Override
@@ -230,7 +237,10 @@ public class StageCRUDImpl implements StageCRUD {
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
         }
 
-        return stageDAO.findStagesByRoadmapId(roadmapId);
+        List<Stage> stages = stageDAO.findStagesByRoadmapId(roadmapId);
+        stages.forEach(stage -> stage.setTasks(taskDAO.findAllTasksByStageId(stage.getStageId())));
+
+        return stages;
     }
 
     @Override
