@@ -1,9 +1,7 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -74,28 +72,11 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-    public static Stage createStageWithOnlyId(UUID stageId) {
-        return new Stage(stageId);
-    }
-
-    public static Stage createStageWithTheme(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
-        return new Stage(id, roadmap, theme, StageStatus.UNDONE);
-    }
-
     public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
         return new Stage(id, roadmap, theme, stageStatus, stageCommit);
     }
 
-    public Stage getNewInstanceWithId(UUID id) {
-        return new Stage(id, stageStatus, stageCommit);
-    }
-
     public Stage() {}
-
-    public void addTask(Task task) {
-        task.setStage(this);
-        tasks.add(task);
-    }
     public UUID getStageId() {
         return stageId;
     }

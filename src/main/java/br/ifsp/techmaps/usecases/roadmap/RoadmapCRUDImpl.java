@@ -19,7 +19,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     private final RoadmapDAO roadmapDAO;
     private final DashboardDAO dashboardDAO;
 
-    public RoadmapCRUDImpl(RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO, StageDAO stageDAO) {
+    public RoadmapCRUDImpl(RoadmapDAO roadmapDAO, DashboardDAO dashboardDAO) {
         this.roadmapDAO = roadmapDAO;
         this.dashboardDAO = dashboardDAO;
     }

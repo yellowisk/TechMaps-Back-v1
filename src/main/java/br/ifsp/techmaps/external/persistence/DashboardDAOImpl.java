@@ -76,14 +76,6 @@ public class DashboardDAOImpl implements DashboardDAO {
     @Override
     public Optional<Dashboard> findDashboardById(UUID dashboardId) {
         try {
-//            int count_roadmaps = jdbcTemplate.queryForObject(selectCountRoadmapsByDashboardIdQuery,
-//                    Integer.class, dashboardId);
-//            int count_tasks = jdbcTemplate.queryForObject(selectCountTasksByDashboardIdQuery, Integer.class,
-//                    dashboardId);
-//            int count_commits = jdbcTemplate.queryForObject(selectCountCommitsByDashboardIdQuery,
-//                    Integer.class, dashboardId);
-//            Long total_time = jdbcTemplate.queryForObject(selectCountTotalTimeFromRoadmapsByDashboardIdQuery,
-//                    Long.class, dashboardId);
 
             List <Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
             roadmaps.forEach(roadmap -> {
@@ -92,9 +84,6 @@ public class DashboardDAOImpl implements DashboardDAO {
 
             Dashboard dashboard = jdbcTemplate.queryForObject(selectDashboardByIdQuery, this::mapperDashboardFromRs,
                     dashboardId);
-//
-//            List<Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
-//            updateTotalRoadmapsAndTotalTime();
 
             if (Objects.isNull(dashboard)) {
                 throw new IllegalStateException("Dashboard not found");

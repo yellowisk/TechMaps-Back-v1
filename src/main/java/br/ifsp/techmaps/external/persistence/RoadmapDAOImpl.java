@@ -44,8 +44,6 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     private String deleteRoadmapByIdQuery;
     @Value("${queries.sql.roadmap-dao.delete.task-by-roadmap-id}")
     private String deleteTaskByRoadmapIdQuery;
-    @Value("${queries.sql.roadmap-dao.delete.task-commit-by-roadmap-id}")
-    private String deleteTaskCommitByRoadmapIdQuery;
 
     @Override
     public Boolean RoadmapExists(UUID roadmapId) {
@@ -129,7 +127,6 @@ public class RoadmapDAOImpl implements RoadmapDAO {
             throw new IllegalStateException("Couldn't find roadmpa with id: " + roadmapId);
         }
 
-//        jdbcTemplate.update(deleteTaskCommitByRoadmapIdQuery, roadmapId);
         jdbcTemplate.update(deleteTaskByRoadmapIdQuery, roadmapId);
         jdbcTemplate.update(deleteRoadmapByIdQuery, roadmapId);
         return roadmap.get();

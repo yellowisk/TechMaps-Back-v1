@@ -3,7 +3,6 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.usecases.dashboard.DashboardCRUD;
 import br.ifsp.techmaps.web.model.dashboard.response.DashboardResponse;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 

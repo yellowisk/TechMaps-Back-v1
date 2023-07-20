@@ -2,7 +2,6 @@ package br.ifsp.techmaps.domain.entities.dashboard;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -42,10 +41,6 @@ public class Dashboard {
 
     public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
         return new Dashboard(dashboardId, totalRoadmaps, totalCommits, totalTasks, totalTime);
-    }
-
-    public static Dashboard createWithOnlyIdAndTime(UUID dashboardId, Long totalTime) {
-        return new Dashboard(dashboardId, totalTime);
     }
 
     public static Dashboard createWithOnlyId(UUID dashboardId) {

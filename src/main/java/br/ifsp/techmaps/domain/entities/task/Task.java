@@ -100,10 +100,6 @@ public class Task {
         return new Task(taskId, stage, taskBody, repository_link, date_created, date_finished, dashboard, taskCommit);
     }
 
-    public static Task createwithoutTaskCommit(UUID taskId, Stage stage, TaskBody taskBody, String repository_link, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
-        return new Task(taskId, stage, taskBody, repository_link, date_created, date_finished, dashboard);
-    }
-
     public static Task createForStage(UUID taskId, String repository_link, Timestamp date_created) {
         return new Task(taskId, repository_link, date_created);
     }

@@ -38,13 +38,11 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public Stage addNewStage(UUID roadmapId, CreateStageRequest request) {
 
-        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+        if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
-        }
 
-        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE))
             throw new IllegalArgumentException("This Roadmap is already done!");
-        }
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
 
@@ -62,13 +60,11 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public List<Stage> addStagesByRoadmapId(UUID roadmapId) {
 
-        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+        if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
-        }
 
-        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE))
             throw new IllegalArgumentException("This Roadmap is already done!");
-        }
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
@@ -219,9 +215,8 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public Stage getStageById(UUID stageId) {
 
-        if(!stageDAO.StageExists(stageId)) {
+        if(!stageDAO.StageExists(stageId))
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
-        }
 
         List<Task> tasks = taskDAO.findAllTasksByStageId(stageId);
         Stage stage = stageDAO.findStageById(stageId).get();
@@ -233,9 +228,8 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public List<Stage> getStagesByRoadmapId(UUID roadmapId) {
 
-        if(!roadmapDAO.RoadmapExists(roadmapId)) {
+        if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
-        }
 
         List<Stage> stages = stageDAO.findStagesByRoadmapId(roadmapId);
         stages.forEach(stage -> stage.setTasks(taskDAO.findAllTasksByStageId(stage.getStageId())));
@@ -246,9 +240,8 @@ public class StageCRUDImpl implements StageCRUD {
     @Override
     public Stage updateStageCommit(UUID stageId) {
 
-        if(!stageDAO.StageExists(stageId)) {
+        if(!stageDAO.StageExists(stageId))
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
-        }
 
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
@@ -257,59 +250,45 @@ public class StageCRUDImpl implements StageCRUD {
         List<CommitState> commits = stageDAO.findCommitsByStageId(stageId);
         Integer counter = 0;
 
-        for(CommitState commit : commits) {
-            if(commit.equals(CommitState.STAGED)) {
+        for(CommitState commit : commits)
+            if(commit.equals(CommitState.STAGED))
                 counter++;
-            }
-        }
 
         stage.setStageCommit(counter);
 
         Stage response = stageDAO.updateStage(stage);
 
-        if(commits.size() == counter) {
+        if(commits.size() == counter)
             stage.setStageStatus(StageStatus.DONE);
             stageDAO.updateStageStatus(stage);
-        }
 
         return response;
     }
 
     @Override
     public Stage updateStageStatus(UUID roadmapId, UUID stageId, UpdateStatusRequest request) {
-        if(!stageDAO.StageExists(stageId)) {
+        if(!stageDAO.StageExists(stageId))
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
-        }
 
         List<CommitState> commitStates = stageDAO.findCommitsByStageId(stageId);
         Integer counterCommit = 0;
 
-        for (CommitState commitState : commitStates) {
-            if (commitState.equals(CommitState.STAGED)) {
+        for (CommitState commitState : commitStates)
+            if (commitState.equals(CommitState.STAGED))
                 counterCommit++;
-            }
-        }
 
         List<Timestamp> finishedDates = stageDAO.findDateFinishedOfTasksByStageId(stageId);
         Integer counterDates = 0;
 
-        for (Timestamp finishedDate : finishedDates) {
-            if (finishedDate != null) {
+        for (Timestamp finishedDate : finishedDates)
+            if (finishedDate != null)
                 counterDates++;
-            }
-        }
 
-        if (commitStates.size() == counterCommit && request.getStatus().equals(StageStatus.UNDONE)) {
+        if (commitStates.size() == counterCommit && request.getStatus().equals(StageStatus.UNDONE))
             throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
-        }
 
-        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE)) {
+        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE))
             throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
-        }
-
-        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE)) {
-            throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
-        }
 
         Stage stage = stageDAO.findStageById(stageId).get();
         stage.setStageStatus(request.getStatus());
