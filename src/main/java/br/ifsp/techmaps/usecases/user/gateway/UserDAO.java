@@ -6,6 +6,7 @@ import java.util.*;
 
 public interface UserDAO {
     User addNewUser(User user);
+    Optional<User> findById(UUID id);
     Optional<User> findByEmail(String email);
-    Optional<User> findById(String id);
+    Optional<User> findByUsername(String username);
 }

@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(UUID id) {
         try {
             User user = jdbcTemplate.queryForObject(selectUserByIdQuery,
                     this::mapperUserFromRs, id);
@@ -77,6 +77,22 @@ public class UserDAOImpl implements UserDAO {
 
             if(Objects.isNull(user)) {
                 throw new ResourceNotFoundException("Could not find user with email: " + email);
+            }
+
+            return Optional.of(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        try {
+            User user = jdbcTemplate.queryForObject(selectUserByUsernameQuery,
+                    this::mapperUserFromRs, username);
+
+            if(Objects.isNull(user)) {
+                throw new ResourceNotFoundException("Could not find user with username: " + username);
             }
 
             return Optional.of(user);
