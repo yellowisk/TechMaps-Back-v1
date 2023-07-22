@@ -7,9 +7,8 @@ CREATE TABLE techmaps_platform.user(
     username varchar NOT NULL UNIQUE,
     email varchar NOT NULL UNIQUE,
     password varchar NOT NULL,
-    github varchar,
     is_account_non_expired boolean default false,
-    is_account_nonLocked boolean default false,
+    is_account_non_locked boolean default false,
     is_credentials_non_expired boolean default false,
     is_enabled boolean default false
 );

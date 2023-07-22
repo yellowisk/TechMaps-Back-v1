@@ -1,3 +1,9 @@
+application:
+  jwt:
+    secretKey: '30D23120F64952244FF49AE84EA967EBF2E6B114162EA798CEF0D98B59FB153A'
+    tokenPrefix: 'Bearer '
+    tokenExpirationAfterMinutes: 5
+    refreshTokenExpirationAfterDays: 14
 spring:
   application:
     name: techmaps-application
@@ -18,6 +24,20 @@ spring:
 
 queries:
   sql:
+    user-dao:
+      insert:
+        user: >
+          INSERT INTO techmaps_platform.user (id, username, email, 
+          password, is_account_non_expired, is_account_non_locked, 
+          is_credentials_non_expired, is_enabled) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      select:
+        user-by-email: >
+          SELECT * FROM techmaps_platform.user WHERE email = ?
+        user-by-username: >
+            SELECT * FROM techmaps_platform.user WHERE username = ?
+        user-by-id: >
+          SELECT * FROM techmaps_platform.user WHERE id = ?
     dashboard-dao:
       insert:
         dashboard: >

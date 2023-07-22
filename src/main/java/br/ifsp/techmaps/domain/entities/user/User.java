@@ -1,69 +1,69 @@
 package br.ifsp.techmaps.domain.entities.user;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-@Entity
-@Table(name = "users")
-public class User {
+
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String username;
     private String email;
     private String password;
-    private String github;
+
+    private Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
-
-    public User(UUID id, String username, String email, String password) {
+    public User(UUID id, String username, String email, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
-
-    public User(UUID id, String username, String email, String password, String github) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.github = github;
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
-
-    public User(UUID id, String username, String email, String password, String github,
-                boolean isAccountNonExpired, boolean isAccountNonLocked,
-                boolean isCredentialsNonExpired, boolean isEnabled) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.github = github;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
+    }
+
+    public User(String username, String email, String password, Collection<? extends GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public static User createFromUser(String username, String email, String password) {
+        return new User(username, email, password);
+    }
+
+    public static User createFull(UUID id, String username, String email, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+        return new User(id, username, email, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+    }
+
+    public User createWithId(UUID id) {
+        return new User(id, username, email, password, true, true, true, true);
     }
 
     public User() {}
@@ -76,6 +76,7 @@ public class User {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -92,22 +93,21 @@ public class User {
         this.email = email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public String getGithub() {
-        return github;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setGithub(String github) {
-        this.github = github;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
+    @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
@@ -116,6 +116,7 @@ public class User {
         isAccountNonExpired = accountNonExpired;
     }
 
+    @Override
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
@@ -124,6 +125,7 @@ public class User {
         isAccountNonLocked = accountNonLocked;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
@@ -132,6 +134,7 @@ public class User {
         isCredentialsNonExpired = credentialsNonExpired;
     }
 
+    @Override
     public boolean isEnabled() {
         return isEnabled;
     }
