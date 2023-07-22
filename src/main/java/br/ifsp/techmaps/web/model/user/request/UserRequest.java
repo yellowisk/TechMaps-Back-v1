@@ -1,4 +1,4 @@
-package br.ifsp.techmaps.web.model.user;
+package br.ifsp.techmaps.web.model.user.request;
 
 import br.ifsp.techmaps.domain.entities.user.User;
 
