@@ -4,7 +4,7 @@ import br.ifsp.techmaps.domain.entities.user.User;
 import br.ifsp.techmaps.usecases.user.UserCRUD;
 import br.ifsp.techmaps.web.model.user.request.UserRequest;
 import br.ifsp.techmaps.web.model.user.response.UserResponse;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
         User user = userCRUD.registerNewUser(userRequest);
         return ResponseEntity.ok(UserResponse.createFromUser(user));
     }

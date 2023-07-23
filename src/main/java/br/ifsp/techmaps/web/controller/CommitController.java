@@ -11,7 +11,7 @@ import br.ifsp.techmaps.web.model.comit.request.UpdateCommitStatus;
 import br.ifsp.techmaps.web.model.comit.response.CommitResponse;
 import br.ifsp.techmaps.web.model.comit.response.UpdateCommitResponse;
 import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +54,7 @@ public class CommitController {
     public ResponseEntity<UpdateCommitResponse> updateCommit(
             @PathVariable UUID taskId,
             @PathVariable UUID commitId,
-            @RequestBody @Valid UpdateCommitStatus request) {
+            @RequestBody UpdateCommitStatus request) {
         TaskCommit taskCommit = commitCRUD.updateTaskCommit(taskId, commitId, request);
 
         if(taskCommit.getState().equals(CommitState.STAGED))

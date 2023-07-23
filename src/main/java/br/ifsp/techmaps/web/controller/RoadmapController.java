@@ -4,7 +4,7 @@ import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.usecases.roadmap.RoadmapCRUD;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -30,7 +30,7 @@ public class RoadmapController {
     @PostMapping("roadmaps")
     public ResponseEntity<RoadmapResponse> addNewRoadmap(
             @PathVariable UUID dashboardId,
-            @RequestBody @Valid CreateRoadmapRequest createRoadmapRequest) {
+            @RequestBody CreateRoadmapRequest createRoadmapRequest) {
         Roadmap roadmap = roadmapCRUD.addNewRoadmap(dashboardId, createRoadmapRequest);
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));

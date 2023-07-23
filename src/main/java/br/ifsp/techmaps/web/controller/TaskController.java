@@ -6,7 +6,7 @@ import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
 import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
 import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
 import br.ifsp.techmaps.web.model.task.response.TaskResponse;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +46,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<List<TaskResponse>> addNewTask(
             @PathVariable UUID stageId,
-            @RequestBody @Valid CreateTaskRequest request) {
+            @RequestBody CreateTaskRequest request) {
 
         List<Task> tasks = taskCRUD.createNewTasks(stageId, request);
         List<TaskResponse> taskResponses = new ArrayList<>();
@@ -60,7 +60,7 @@ public class TaskController {
     @PatchMapping("/{taskId}")
     public ResponseEntity<TaskResponse> updateTaskRepository(
             @PathVariable UUID taskId,
-            @RequestBody @Valid UpdateRepositoryRequest request) {
+            @RequestBody UpdateRepositoryRequest request) {
         Task task = taskCRUD.updateTaskRepository(taskId, request);
 
         return ResponseEntity.ok(TaskResponse.createFromTask(task));
@@ -69,7 +69,7 @@ public class TaskController {
     @PutMapping("/{taskId}")
     public ResponseEntity<TaskResponse> updateTaskDateFinished(
             @PathVariable UUID taskId,
-            @RequestBody @Valid UpdateDateFinishedRequest request) {
+            @RequestBody UpdateDateFinishedRequest request) {
         Task task = taskCRUD.updateTaskDateFinished(taskId, request);
 
         return ResponseEntity.ok(TaskResponse.createFromTask(task));

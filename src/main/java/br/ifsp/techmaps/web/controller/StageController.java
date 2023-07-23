@@ -7,7 +7,7 @@ import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import br.ifsp.techmaps.web.model.stage.response.StageResponse;
 import br.ifsp.techmaps.web.model.stage.response.UpdateStagingResponse;
 import br.ifsp.techmaps.web.model.stage.response.UpdateStatusResponse;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -46,7 +46,7 @@ public class StageController {
     @PostMapping
     public ResponseEntity<StageResponse> addNewStage(
             @PathVariable UUID roadmapId,
-            @RequestBody @Valid CreateStageRequest request) {
+            @RequestBody CreateStageRequest request) {
         Stage stage = stageCRUD.addNewStage(roadmapId, request);
 
         return ResponseEntity.ok(StageResponse.createFromStage(stage));
@@ -78,7 +78,7 @@ public class StageController {
     public ResponseEntity<UpdateStatusResponse> updateStageStatus(
             @PathVariable UUID roadmapId,
             @PathVariable UUID stageId,
-            @RequestBody @Valid UpdateStatusRequest request) {
+            @RequestBody UpdateStatusRequest request) {
         Stage stage = stageCRUD.updateStageStatus(roadmapId, stageId, request);
 
         return ResponseEntity.ok(UpdateStatusResponse.convertFromStage(stage));
