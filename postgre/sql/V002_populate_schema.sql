@@ -105,9 +105,3 @@ insert into techmaps_platform.task_commit(id, task_id, tag, state, dashboard_id)
     'c8001af2-e2b8-4c22-bee3-92036902edf9', 'final: hooks | techmap', 'STAGED',
     '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
---! Populate Tasks !--
-insert into techmaps_platform.task(id, stage_id, theme, repository_link,
-                                   date_created, date_finished, dashboard_id)
-values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid, '9c21f392-3fde-4cb9-bbc6-16ed6ad1b96e',
-        'LEARN_PYTHON', null, null, null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
-
