@@ -11,8 +11,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String username;
     private String email;
+    private String username;
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
@@ -21,10 +21,10 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public User(UUID id, String username, String email, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+    public User(UUID id,  String email, String username, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.id = id;
-        this.username = username;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
@@ -32,9 +32,9 @@ public class User implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
-    public User(String username, String email, String password, Collection<? extends GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-        this.username = username;
+    public User( String email, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.email = email;
+        this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.isAccountNonExpired = isAccountNonExpired;
@@ -43,19 +43,19 @@ public class User implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
-    public User(String username, String email, String password) {
+    public User(String email, String username, String password) {
+        this.email = email;
         this.username = username;
-        this.email = email;
         this.password = password;
     }
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public static User createFromUser(String username, String email, String password) {
-        return new User(username, email, password);
+    public static User createFromUser(String email, String username, String password) {
+        return new User(email, username, password);
     }
 
     public static User createFull(UUID id, String username, String email, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
