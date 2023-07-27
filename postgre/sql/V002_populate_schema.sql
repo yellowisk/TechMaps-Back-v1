@@ -1,15 +1,15 @@
 --! User Queries --!
 
-insert into techmaps_platform.user(id, username, email, password, github,
-    is_account_non_expired, is_account_nonlocked, is_credentials_non_expired,
+insert into techmaps_platform.user(id, username, email, password,
+    is_account_non_expired, is_account_non_locked, is_credentials_non_expired,
         is_enabled) values ('cc171e74-5dc3-4a38-9c86-5844ed673b5f'::uuid,
-            'Hector', 'hector@gmail.com', 'senha', 'yellowisk', true, true,
+            'Hector', 'hector@gmail.com', 'senha', true, true,
                 true, true);
 
-insert into techmaps_platform.user(id, username, email, password, github,
-    is_account_non_expired, is_account_nonlocked, is_credentials_non_expired,
+insert into techmaps_platform.user(id, username, email, password,
+    is_account_non_expired, is_account_non_locked, is_credentials_non_expired,
         is_enabled) values ('1b185f9e-6c0f-4617-bd77-dd4620a41a0f'::uuid,
-            'Miguel', 'miguel@gmail.com', 'password', 'lordello', true, true,
+            'Miguel', 'miguel@gmail.com', 'lordello', true, true,
                 true, true);
 
 --! Dashboard Queries --!
