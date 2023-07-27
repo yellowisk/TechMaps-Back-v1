@@ -2,6 +2,8 @@ CREATE SCHEMA techmaps_platform;
 
 ALTER SCHEMA techmaps_platform OWNER TO "techmaps";
 
+DROP TABLE IF EXISTS techmaps_platform.user CASCADE;
+
 CREATE TABLE techmaps_platform.user(
     id uuid NOT NULL,
     username varchar NOT NULL UNIQUE,

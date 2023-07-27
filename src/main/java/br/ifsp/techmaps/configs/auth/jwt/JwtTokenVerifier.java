@@ -29,13 +29,20 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         if(isFromPermittedPath(request)) {
             filterChain.doFilter(request, response);
+            System.out.println("Permitted path" + request.getHeaderNames());
+            System.out.println("Permitted path" + request.getServletPath());
+            System.out.println("Permitted path" + request.getHeader("Authorization"));
             return;
         }
 
         final String authorizationHeader = request.getHeader(jwtProperties.getAuthorizationHeader());
+        System.out.println("Authorization header: " + authorizationHeader);
         if (jwtTokenHelper.hasInvalidAuthorization(authorizationHeader)) {
             final String error = "Authorization header is missing or invalid.";
             log.error("Token verification error: {}", error);
+            System.out.println("Permitted path" + request.getHeaderNames());
+            System.out.println("Permitted path" + request.getServletPath());
+            System.out.println("request.getHeader" + request.getHeader("Authorization"));
             response.addHeader(jwtProperties.getAuthorizationHeader(), error);
             filterChain.doFilter(request, response);
             return;

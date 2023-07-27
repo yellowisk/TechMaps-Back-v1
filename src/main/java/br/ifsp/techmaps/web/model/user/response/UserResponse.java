@@ -16,6 +16,8 @@ public class UserResponse {
     }
 
     public static UserResponse createFromUser(User user) {
+        System.out.println(user.getEmail());
+        System.out.println(user.getUsername());
         return new UserResponse(
                 user.getId(),
                 user.getEmail(),

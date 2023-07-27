@@ -103,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
 
     private User mapperUserFromRs(ResultSet rs, int rowNum) throws SQLException {
         UUID id = (UUID) rs.getObject("id");
-        String username = rs.getString("name");
+        String username = rs.getString("username");
         String email = rs.getString("email");
         String password = rs.getString("password");
         boolean isAccountNonExpired = rs.getBoolean("is_account_non_expired");

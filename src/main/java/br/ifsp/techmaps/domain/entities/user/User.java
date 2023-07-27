@@ -11,8 +11,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String email;
     private String username;
+    private String email;
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
@@ -21,20 +21,24 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public User(UUID id,  String email, String username, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+    public User(UUID id, String username, String email,
+                String password, Collection<? extends GrantedAuthority> authorities,
+                boolean isAccountNonExpired, boolean isAccountNonLocked,
+                boolean isCredentialsNonExpired, boolean isEnabled) {
         this.id = id;
-        this.email = email;
         this.username = username;
+        this.email = email;
         this.password = password;
+        this.authorities = authorities;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
 
-    public User( String email, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-        this.email = email;
+    public User(String username, String email, String password, Collection<? extends GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.isAccountNonExpired = isAccountNonExpired;
@@ -59,11 +63,11 @@ public class User implements UserDetails {
     }
 
     public static User createFull(UUID id, String username, String email, String password, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-        return new User(id, username, email, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+        return new User(id, username, email, password, Collections.emptyList(), isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
     }
 
     public User createWithId(UUID id) {
-        return new User(id, username, email, password, true, true, true, true);
+        return new User(id, username, email, password, authorities, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
     }
 
     public User() {}
@@ -105,6 +109,10 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override

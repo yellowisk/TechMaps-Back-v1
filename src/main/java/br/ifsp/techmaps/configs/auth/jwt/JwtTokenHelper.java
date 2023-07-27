@@ -34,6 +34,7 @@ public class JwtTokenHelper {
     }
 
     public String createAccessToken(User user, String issuer) {
+        System.out.println("jwt *** "+user.getUsername());
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .claim("userId", user.getId())
