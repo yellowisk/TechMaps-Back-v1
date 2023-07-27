@@ -2,7 +2,7 @@ package br.ifsp.techmaps.domain.entities.roadmap;
 
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 
 import java.sql.Timestamp;

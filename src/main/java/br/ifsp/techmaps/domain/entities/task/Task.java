@@ -3,7 +3,7 @@ package br.ifsp.techmaps.domain.entities.task;
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;

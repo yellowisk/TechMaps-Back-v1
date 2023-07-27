@@ -1,6 +1,6 @@
 package br.ifsp.techmaps.domain.entities.task;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.*;
 

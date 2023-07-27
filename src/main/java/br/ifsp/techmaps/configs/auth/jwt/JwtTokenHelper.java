@@ -10,8 +10,8 @@ import io.jsonwebtoken.Jws;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;

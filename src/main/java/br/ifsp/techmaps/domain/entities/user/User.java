@@ -1,6 +1,6 @@
 package br.ifsp.techmaps.domain.entities.user;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
