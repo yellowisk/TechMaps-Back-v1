@@ -9,9 +9,11 @@ import java.util.*;
 
 public interface DashboardDAO {
 
-    Dashboard saveNewDashboard(UUID dashboardId);
+    Dashboard saveNewDashboard(UUID dashboardId, UUID userId);
 
     Optional<Dashboard> findDashboardById(UUID dashboardId);
+
+    Optional<Dashboard> findDashboardByUserId(UUID userId);
 
     Dashboard updateTotalTasks(UUID dashboardId, List<Task> tasks);
 

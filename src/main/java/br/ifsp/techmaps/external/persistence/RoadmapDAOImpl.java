@@ -134,7 +134,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
     public Roadmap mapperRoadmapFromRs(ResultSet rs, int rowNum) throws SQLException {
         UUID id = (UUID) rs.getObject("id");
-        String description = rs.getString("title");
+        String title = rs.getString("title");
         RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
         RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
         RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
@@ -144,7 +144,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         int commit_counter = rs.getInt("commit_counter");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        return Roadmap.createWithoutStages(id, description, type, status, language,
+        return Roadmap.createWithoutStages(id, title, type, status, language,
                 startTime, finishTime, total_time, commit_counter, dashboardId);
     }
 

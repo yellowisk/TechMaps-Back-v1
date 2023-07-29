@@ -2,6 +2,9 @@ package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
@@ -30,6 +33,8 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String insertDashboardQuery;
     @Value("${queries.sql.dashboard-dao.select.dashboard-by-id}")
     private String selectDashboardByIdQuery;
+    @Value("${queries.sql.dashboard-dao.select.dashboard-by-user-id}")
+    private String selectDashboardByUserIdQuery;
     @Value("${queries.sql.dashboard-dao.select.count-complete-roadmaps-by-dashboard-id}")
     private String selectCountCompleteRoadmapsByDashboardIdQuery;
     @Value("${queries.sql.dashboard-dao.select.count-tasks-with-date-finished-by-dashboard-id}")
@@ -46,9 +51,9 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String updateTotalRoadmapsAndTotalTimeQuery;
 
     @Override
-    public Dashboard saveNewDashboard(UUID dashboardId) {
-        jdbcTemplate.update(insertDashboardQuery, dashboardId, 0, 0, 0, null);
-        return Dashboard.createWithAllFields(dashboardId, 0, 0, 0, null);
+    public Dashboard saveNewDashboard(UUID dashboardId, UUID userId) {
+        jdbcTemplate.update(insertDashboardQuery, dashboardId, 0, 0, 0, null, userId);
+        return Dashboard.createWithAllFields(dashboardId, 0, 0, 0, null, userId);
     }
 
     @Override
@@ -67,7 +72,12 @@ public class DashboardDAOImpl implements DashboardDAO {
             jdbcTemplate.update(updateTotalCommitsQuery, countCommits, dashboardId);
             jdbcTemplate.update(updateTotalRoadmapsAndTotalTimeQuery, countRoadmaps, totalTime, dashboardId);
 
-            return Dashboard.createWithAllFields(dashboardId, 0, countTasks, countCommits, totalTime);
+            Dashboard dashboard = jdbcTemplate.queryForObject(
+                    selectDashboardByIdQuery, this::mapperDashboardFromRs,
+                    dashboardId);
+
+            return Dashboard.createWithAllFields(dashboardId, 0, countTasks,
+                    countCommits, totalTime, dashboard.getUserId());
         } catch (EmptyResultDataAccessException e) {
             return Dashboard.createWithOnlyId(dashboardId);
         }
@@ -76,7 +86,6 @@ public class DashboardDAOImpl implements DashboardDAO {
     @Override
     public Optional<Dashboard> findDashboardById(UUID dashboardId) {
         try {
-
             List <Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
             roadmaps.forEach(roadmap -> {
                 roadmapDAO.refreshRoadmap(roadmap);
@@ -84,6 +93,28 @@ public class DashboardDAOImpl implements DashboardDAO {
 
             Dashboard dashboard = jdbcTemplate.queryForObject(selectDashboardByIdQuery, this::mapperDashboardFromRs,
                     dashboardId);
+
+            if (Objects.isNull(dashboard)) {
+                throw new IllegalStateException("Dashboard not found");
+            }
+
+            return Optional.of(dashboard);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Dashboard> findDashboardByUserId(UUID userId) {
+        try {
+            UUID dashboardId = jdbcTemplate.queryForObject(selectDashboardByUserIdQuery, this::mapperDashboardFromRs,
+                    userId).getDashboardId();
+
+            List<Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
+            roadmaps.forEach(roadmap -> {roadmapDAO.refreshRoadmap(roadmap);});
+
+            Dashboard dashboard = jdbcTemplate.queryForObject(selectDashboardByUserIdQuery, this::mapperDashboardFromRs,
+                    userId);
 
             if (Objects.isNull(dashboard)) {
                 throw new IllegalStateException("Dashboard not found");
@@ -124,8 +155,9 @@ public class DashboardDAOImpl implements DashboardDAO {
         int totalCommits = rs.getInt("total_commits");
         int totalTasks = rs.getInt("total_tasks");
         Long totalTime = rs.getLong("total_time");
+        UUID userId = (UUID) rs.getObject("user_id");
         return Dashboard.createWithAllFields(dashboardId, totalRoadmaps, totalCommits,
-                totalTasks, totalTime);
+                totalTasks, totalTime, userId);
     }
 
 }

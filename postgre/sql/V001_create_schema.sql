@@ -20,18 +20,25 @@ ALTER TABLE techmaps_platform.user OWNER TO "techmaps";
 ALTER TABLE techmaps_platform.user
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
+DROP TABLE IF EXISTS techmaps_platform.dashboard CASCADE;
+
 CREATE TABLE techmaps_platform.dashboard(
     id uuid NOT NULL,
     total_roadmaps int NOT NULL,
     total_tasks int NOT NULL,
     total_commits int NOT NULL,
-    total_time interval
+    total_time interval,
+    user_id uuid NOT NULL
 );
 
 ALTER TABLE techmaps_platform.dashboard OWNER TO "techmaps";
 
 ALTER TABLE techmaps_platform.dashboard
     ADD CONSTRAINT dashboard_pkey PRIMARY KEY (id);
+
+ALTER TABLE techmaps_platform.dashboard
+    ADD CONSTRAINT dashboard_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES techmaps_platform.user(id) ON DELETE CASCADE;
 
 CREATE TYPE techmaps_platform.roadmap_type AS ENUM (
     'FRONTEND',

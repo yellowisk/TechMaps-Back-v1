@@ -16,21 +16,26 @@ public class DashboardResponse {
 
     private Long totalTime;
 
+    private UUID userId;
+
     public DashboardResponse() {
     }
 
-    public DashboardResponse(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
+    public DashboardResponse(UUID dashboardId, int totalRoadmaps, int totalCommits,
+                             int totalTasks, Long totalTime, UUID userId) {
         this.dashboardId = dashboardId;
         this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
         this.totalTasks = totalTasks;
         this.totalTime = totalTime;
+        this.userId = userId;
     }
 
     public static DashboardResponse createFromDashboard(Dashboard dashboard) {
         return new DashboardResponse(dashboard.getDashboardId(),
                 dashboard.getTotalRoadmaps(), dashboard.getTotalCommits(),
-                dashboard.getTotalTasks(), dashboard.getTotalTime());
+                dashboard.getTotalTasks(), dashboard.getTotalTime(),
+                dashboard.getUserId());
     }
 
     public UUID getDashboardId() {
@@ -71,5 +76,13 @@ public class DashboardResponse {
 
     public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

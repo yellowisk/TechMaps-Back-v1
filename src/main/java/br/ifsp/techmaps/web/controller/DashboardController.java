@@ -25,9 +25,16 @@ public class DashboardController {
         return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
     }
 
-    @PostMapping
-    public ResponseEntity<DashboardResponse> saveNewDashboard() {
-        Dashboard dashboard = dashboardCRUD.saveNewDashboard();
+    @GetMapping("user/{userId}")
+    public ResponseEntity<DashboardResponse> getDashboardByUserId(
+            @PathVariable UUID userId) {
+        Dashboard dashboard = dashboardCRUD.getDashboardByUserId(userId);
+        return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
+    }
+
+    @PostMapping("{userId}")
+    public ResponseEntity<DashboardResponse> saveNewDashboard(@PathVariable UUID userId) {
+        Dashboard dashboard = dashboardCRUD.saveNewDashboard(userId);
         return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
     }
 

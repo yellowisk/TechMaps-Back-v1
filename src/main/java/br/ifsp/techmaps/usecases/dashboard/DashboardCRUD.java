@@ -5,8 +5,10 @@ import java.util.*;
 
 public interface DashboardCRUD {
 
-    Dashboard saveNewDashboard();
+    Dashboard saveNewDashboard(UUID userId);
 
     Dashboard getDashboardById (UUID dashboardId);
+
+    Dashboard getDashboardByUserId (UUID userId);
 
 }

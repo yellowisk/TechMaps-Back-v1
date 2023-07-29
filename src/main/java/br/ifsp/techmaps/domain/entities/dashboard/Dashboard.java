@@ -19,12 +19,16 @@ public class Dashboard {
 
     private Long totalTime;
 
-    public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
+    private UUID userId;
+
+    public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits,
+                     int totalTasks, Long totalTime, UUID userId) {
         this.dashboardId = dashboardId;
         this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
         this.totalTasks = totalTasks;
         this.totalTime = totalTime;
+        this.userId = userId;
     }
 
     public Dashboard(UUID dashboardId, Long totalTime) {
@@ -39,8 +43,9 @@ public class Dashboard {
     public Dashboard() {
     }
 
-    public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits, int totalTasks, Long totalTime) {
-        return new Dashboard(dashboardId, totalRoadmaps, totalCommits, totalTasks, totalTime);
+    public static Dashboard createWithAllFields(UUID dashboardId, int totalRoadmaps, int totalCommits,
+                                                int totalTasks, Long totalTime, UUID userId) {
+        return new Dashboard(dashboardId, totalRoadmaps, totalCommits, totalTasks, totalTime, userId);
     }
 
     public static Dashboard createWithOnlyId(UUID dashboardId) {
@@ -87,4 +92,11 @@ public class Dashboard {
         this.totalTime = totalTime;
     }
 
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 }
