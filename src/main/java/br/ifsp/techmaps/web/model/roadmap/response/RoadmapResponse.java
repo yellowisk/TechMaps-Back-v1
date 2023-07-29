@@ -1,9 +1,6 @@
 package br.ifsp.techmaps.web.model.roadmap.response;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
+import br.ifsp.techmaps.domain.entities.roadmap.*;
 
 import java.sql.*;
 import java.util.*;
@@ -15,6 +12,7 @@ public class RoadmapResponse {
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
     private RoadmapLanguage roadmapLanguage;
+    private RoadmapColor roadmapColor;
     private Timestamp startTime;
     private Timestamp finishTime;
     private Long totalTime;
@@ -27,13 +25,14 @@ public class RoadmapResponse {
 
     public RoadmapResponse(UUID id, String title, RoadmapType type,
                            RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
-                           Timestamp startTime, Timestamp finishTime, Long totalTime,
-                           Integer roadmapCommits, UUID dashboardId) {
+                           RoadmapColor roadmapColor, Timestamp startTime, Timestamp finishTime,
+                           Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.id = id;
         this.title = title;
         this.type = type;
         this.roadmapStatus = roadmapStatus;
         this.roadmapLanguage = roadmapLanguage;
+        this.roadmapColor = roadmapColor;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.totalTime = totalTime;
@@ -49,9 +48,9 @@ public class RoadmapResponse {
 
     public static RoadmapResponse create(Roadmap roadmap) {
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
-                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
-                roadmap.getFinishTime(), roadmap.getTotalTime(), roadmap.getRoadmapCommits(),
-                roadmap.getDashboardId());
+                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getRoadmapColor(),
+                roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
+                roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
 
     public UUID getId() {
@@ -93,6 +92,10 @@ public class RoadmapResponse {
     public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
         this.roadmapLanguage = roadmapLanguage;
     }
+
+    public RoadmapColor getRoadmapColor() {return roadmapColor;}
+
+    public void setRoadmapColor(RoadmapColor roadmapColor) {this.roadmapColor = roadmapColor;}
 
     public Timestamp getStartTime() {
         return startTime;

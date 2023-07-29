@@ -64,12 +64,31 @@ CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
 
 ALTER TYPE techmaps_platform.roadmap_lang OWNER TO "techmaps";
 
+CREATE TYPE techmaps_platform.roadmap_color AS ENUM (
+    'RED',
+    'ORANGE',
+    'BROWN',
+    'YELLOW',
+    'GREEN',
+    'BLUE',
+    'PURPLE',
+    'PINK',
+    'BLACK',
+    'WHITE',
+    'GRAY'
+);
+
+ALTER TYPE techmaps_platform.roadmap_color OWNER TO "techmaps";
+
+DROP TABLE IF EXISTS techmaps_platform.roadmap CASCADE;
+
 CREATE TABLE techmaps_platform.roadmap(
     id uuid NOT NULL,
     title varchar NOT NULL,
     type techmaps_platform.roadmap_type,
     status techmaps_platform.roadmap_status,
     lang techmaps_platform.roadmap_lang,
+    color techmaps_platform.roadmap_color,
     start_time timestamp NOT NULL,
     finish_time timestamp,
     total_time interval,

@@ -1,5 +1,6 @@
 package br.ifsp.techmaps.web.model.roadmap.request;
 
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapColor;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 
@@ -9,12 +10,16 @@ public class CreateRoadmapRequest {
     private String title;
     private RoadmapType type;
     private RoadmapLanguage roadmapLanguage;
+    private RoadmapColor roadmapColor;
     private UUID dashboardId;
 
-    public CreateRoadmapRequest(String title, RoadmapType type, RoadmapLanguage roadmapLanguage, UUID dashboardId) {
+    public CreateRoadmapRequest(String title, RoadmapType type,
+                                RoadmapLanguage roadmapLanguage,
+                                RoadmapColor roadmapColor, UUID dashboardId) {
         this.title = title;
         this.type = type;
         this.roadmapLanguage = roadmapLanguage;
+        this.roadmapColor = roadmapColor;
         this.dashboardId = dashboardId;
     }
 
@@ -40,6 +45,14 @@ public class CreateRoadmapRequest {
 
     public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
         this.roadmapLanguage = roadmapLanguage;
+    }
+
+    public RoadmapColor getRoadmapColor() {
+        return roadmapColor;
+    }
+
+    public void setRoadmapColor(RoadmapColor roadmapColor) {
+        this.roadmapColor = roadmapColor;
     }
 
     public UUID getDashboardId() {

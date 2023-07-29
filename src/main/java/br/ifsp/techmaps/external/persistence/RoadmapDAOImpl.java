@@ -1,9 +1,6 @@
 package br.ifsp.techmaps.external.persistence;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
+import br.ifsp.techmaps.domain.entities.roadmap.*;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,13 +54,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
                 roadmap.getRoadmapStatus().name(), roadmap.getRoadmapLanguage().name(),
-                roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
-                roadmap.getRoadmapCommits(), roadmap.getDashboardId());
+                roadmap.getRoadmapColor().name(), roadmap.getStartTime(), roadmap.getFinishTime(),
+                roadmap.getTotalTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
         return Roadmap.createWithoutStages(roadmapId, roadmap.getTitle(), roadmap.getType(),
-                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getStartTime(),
-                roadmap.getFinishTime(), roadmap.getTotalTime(), roadmap.getRoadmapCommits(),
-                roadmap.getDashboardId());
+                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getRoadmapColor(),
+                roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
+                roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
 
     @Override
@@ -138,13 +135,14 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
         RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
         RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
+        RoadmapColor color = RoadmapColor.valueOf(rs.getString("color"));
         Timestamp startTime = rs.getTimestamp("start_time");
         Timestamp finishTime = rs.getTimestamp("finish_time");
         Long total_time = rs.getLong("total_time");
         int commit_counter = rs.getInt("commit_counter");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        return Roadmap.createWithoutStages(id, title, type, status, language,
+        return Roadmap.createWithoutStages(id, title, type, status, language, color,
                 startTime, finishTime, total_time, commit_counter, dashboardId);
     }
 

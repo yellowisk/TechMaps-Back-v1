@@ -1,10 +1,8 @@
 package br.ifsp.techmaps.domain.entities.roadmap;
 
-
 import br.ifsp.techmaps.domain.entities.stage.Stage;
+
 import javax.persistence.*;
-
-
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -19,6 +17,7 @@ public class Roadmap {
     private RoadmapType type;
     private RoadmapStatus roadmapStatus;
     private RoadmapLanguage roadmapLanguage;
+    private RoadmapColor roadmapColor;
     private Timestamp startTime;
     private Timestamp finishTime;
     private Long totalTime;
@@ -30,12 +29,13 @@ public class Roadmap {
     public Roadmap() {
     }
 
-    public Roadmap(String title, RoadmapType type, RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage,
+    public Roadmap(String title, RoadmapType type, RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage, RoadmapColor roadmapColor,
                    Timestamp startTime, Timestamp finishTime, Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.title = title;
         this.type = type;
         this.roadmapStatus = roadmapStatus;
         this.roadmapLanguage = roadmapLanguage;
+        this.roadmapColor = roadmapColor;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.totalTime = totalTime;
@@ -44,13 +44,14 @@ public class Roadmap {
     }
 
     public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, Timestamp startTime, Timestamp finishTime,
-                   Long totalTime, Integer roadmapCommits, UUID dashboardId) {
+                   RoadmapLanguage roadmapLanguage, RoadmapColor roadmapColor, Timestamp startTime,
+                   Timestamp finishTime, Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.roadmapId = roadmapId;
         this.title = title;
         this.type = type;
         this.roadmapStatus = roadmapStatus;
         this.roadmapLanguage = roadmapLanguage;
+        this.roadmapColor = roadmapColor;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.totalTime = totalTime;
@@ -63,10 +64,11 @@ public class Roadmap {
     }
 
     public static Roadmap createWithoutStages(UUID roadmapId, String title, RoadmapType type,
-                                                          RoadmapStatus status, RoadmapLanguage language,
-                                                          Timestamp startTime, Timestamp finishTime, Long totalTime,
-                                                          int commitCounter, UUID dashboardId) {
-        return new Roadmap(roadmapId, title, type, status, language, startTime, finishTime, totalTime, commitCounter, dashboardId);
+                                              RoadmapStatus status, RoadmapLanguage language, RoadmapColor roadmapColor,
+                                              Timestamp startTime, Timestamp finishTime, Long totalTime,
+                                              int commitCounter, UUID dashboardId) {
+        return new Roadmap(roadmapId, title, type, status, language,
+                roadmapColor, startTime, finishTime, totalTime, commitCounter, dashboardId);
 
     }
 
@@ -75,11 +77,11 @@ public class Roadmap {
     }
 
     public static Roadmap createWithoutId(String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                                          RoadmapLanguage roadmapLanguage, Timestamp startTime,
-                                          Timestamp finishTime, Long totalTime, Integer roadmapCommits,
-                                          UUID dashboardId) {
-        return new Roadmap(title, type, roadmapStatus, roadmapLanguage, startTime,
-                finishTime, totalTime, roadmapCommits, dashboardId);
+                                          RoadmapLanguage roadmapLanguage, RoadmapColor roadmapColor,
+                                          Timestamp startTime, Timestamp finishTime, Long totalTime,
+                                          Integer roadmapCommits, UUID dashboardId) {
+        return new Roadmap(title, type, roadmapStatus, roadmapLanguage, roadmapColor,
+                startTime, finishTime, totalTime, roadmapCommits, dashboardId);
     }
 
     public UUID getRoadmapId() {
@@ -122,6 +124,10 @@ public class Roadmap {
     public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
         this.roadmapLanguage = roadmapLanguage;
     }
+
+    public RoadmapColor getRoadmapColor() {return roadmapColor;}
+
+    public void setRoadmapColor(RoadmapColor roadmapColor) {this.roadmapColor = roadmapColor;}
 
     public Timestamp getStartTime() {
         return startTime;

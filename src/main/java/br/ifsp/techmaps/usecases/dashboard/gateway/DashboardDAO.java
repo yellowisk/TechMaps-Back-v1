@@ -19,9 +19,10 @@ public interface DashboardDAO {
 
     Dashboard updateTotalCommits(UUID dashboardId, List<TaskCommit> commits);
 
-    Dashboard updateTotalRoadmapsAndTotalTime(UUID dashboardId, List<Roadmap> roadmaps,
-                                              Long totalTime);
+    Dashboard updateTotalRoadmapsAndTotalTime(UUID dashboardId, List<Roadmap> roadmaps, Long totalTime);
 
     Dashboard refreshDashboard(UUID dashboardId);
+
+    Boolean dashboardExists(UUID dashboardId);
 
 }

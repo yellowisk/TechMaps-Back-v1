@@ -26,10 +26,13 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
     @Override
     public Roadmap addNewRoadmap(UUID dashboardId, CreateRoadmapRequest request) {
-        Optional<Dashboard> optionalDashboard = dashboardDAO.findDashboardById(dashboardId);
+
+        if(!dashboardDAO.dashboardExists(dashboardId)) {
+            throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
+        }
 
         Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), request.getType(), RoadmapStatus.UNCOMPLETE,
-                request.getRoadmapLanguage(), Timestamp.valueOf(LocalDateTime.now()), null, null,
+                request.getRoadmapLanguage(), request.getRoadmapColor(), Timestamp.valueOf(LocalDateTime.now()), null, null,
                 0,
                 dashboardId);
 

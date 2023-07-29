@@ -49,6 +49,8 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String updateTotalCommitsQuery;
     @Value("${queries.sql.dashboard-dao.update.dashboard-total-roadmaps-and-total_time}")
     private String updateTotalRoadmapsAndTotalTimeQuery;
+    @Value("${queries.sql.dashboard-dao.exists.dashboard-by-id}")
+    private String existsDashboardByIdQuery;
 
     @Override
     public Dashboard saveNewDashboard(UUID dashboardId, UUID userId) {
@@ -147,6 +149,11 @@ public class DashboardDAOImpl implements DashboardDAO {
                                                      Long totalTime) {
         jdbcTemplate.update(updateTotalRoadmapsAndTotalTimeQuery, roadmaps.size(), totalTime, dashboardId);
         return Dashboard.createWithOnlyId(dashboardId);
+    }
+
+    @Override
+    public Boolean dashboardExists(UUID dashboardId) {
+        return jdbcTemplate.queryForObject(existsDashboardByIdQuery, Boolean.class, dashboardId);
     }
 
     public Dashboard mapperDashboardFromRs(ResultSet rs, int rowNum) throws SQLException {

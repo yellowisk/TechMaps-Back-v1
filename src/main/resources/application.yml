@@ -69,17 +69,20 @@ queries:
             UPDATE techmaps_platform.dashboard SET total_tasks = ? WHERE id = ?
         dashboard-total-commits: >
             UPDATE techmaps_platform.dashboard SET total_commits = ? WHERE id = ?
+      exists:
+        dashboard-by-id: >
+          SELECT EXISTS(SELECT 1 FROM techmaps_platform.dashboard WHERE id = ?)
     roadmap-dao:
       insert:
         roadmap: >
-          INSERT INTO techmaps_platform.roadmap (id, title, type, status, lang, start_time, finish_time, total_time, commit_counter, dashboard_id) VALUES (?, ?, ?::techmaps_platform.roadmap_type, ?::techmaps_platform.roadmap_status, ?::techmaps_platform.roadmap_lang, ?, ?, ?, ?, ?)
+          INSERT INTO techmaps_platform.roadmap (id, title, type, status, lang, color, start_time, finish_time, total_time, commit_counter, dashboard_id) VALUES (?, ?, ?::techmaps_platform.roadmap_type, ?::techmaps_platform.roadmap_status, ?::techmaps_platform.roadmap_lang, ?::techmaps_platform.roadmap_color, ?, ?, ?, ?, ?)
       select:
         roadmap-by-id: >
-          SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE id = ?
+          SELECT id, title, type, status, lang, color, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE id = ?
         all-complete-roadmaps-by-dashboard-id: >
-          SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
+          SELECT id, title, type, status, lang, color, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND status = 'COMPLETE'
         all-roadmaps-by-dashboard-id: >
-          SELECT id, title, type, status, lang, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ?
+          SELECT id, title, type, status, lang, color, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ?
         count-commits-by-task-with-stage-from-roadmap-by-id: >
           SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id IN (SELECT id FROM techmaps_platform.stage WHERE roadmap_id = ?)) AND state = 'STAGED'
       update:
