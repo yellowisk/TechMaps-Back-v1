@@ -9,4 +9,6 @@ public interface UserDAO {
     Optional<User> findById(UUID id);
     Optional<User> findByEmail(String email);
     Optional<User> findByUsername(String username);
+    User update(User user);
+    Boolean userExists(UUID userId);
 }

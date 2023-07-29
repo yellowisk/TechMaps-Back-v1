@@ -33,6 +33,10 @@ public class UserDAOImpl implements UserDAO {
     private String selectUserByEmailQuery;
     @Value("${queries.sql.user-dao.select.user-by-username}")
     private String selectUserByUsernameQuery;
+    @Value("${queries.sql.user-dao.update.user}")
+    private String updateUserQuery;
+    @Value("${queries.sql.user-dao.exists.user-by-id}")
+    private String existsUserIdQuery;
 
     @Override
     public User addNewUser(User user) {
@@ -99,6 +103,20 @@ public class UserDAOImpl implements UserDAO {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public User update(User user) {
+        jdbcTemplate.update(updateUserQuery, user.getEmail(), user.getUsername(),
+                passwordEncoder.encode(user.getPassword()), user.getId());
+
+        return user;
+    }
+
+    @Override
+    public Boolean userExists(UUID userId) {
+        Boolean exists = jdbcTemplate.queryForObject(existsUserIdQuery, Boolean.class, userId);
+        return Objects.nonNull(exists) && exists;
     }
 
     private User mapperUserFromRs(ResultSet rs, int rowNum) throws SQLException {

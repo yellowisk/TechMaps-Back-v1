@@ -2,7 +2,7 @@ application:
   jwt:
     secretKey: '30D23120F64952244FF49AE84EA967EBF2E6B114162EA798CEF0D98B59FB153A'
     tokenPrefix: 'Bearer '
-    tokenExpirationAfterMinutes: 5
+    tokenExpirationAfterMinutes: 30
     refreshTokenExpirationAfterDays: 14
 
 spring:
@@ -39,6 +39,12 @@ queries:
             SELECT * FROM techmaps_platform.user WHERE username = ?
         user-by-id: >
           SELECT * FROM techmaps_platform.user WHERE id = ?
+      update:
+        user: >
+          UPDATE techmaps_platform.user SET email = ?, username = ?, password = ? WHERE id = ?
+      exists:
+        user-by-id: >
+          SELECT EXISTS(SELECT 1 FROM techmaps_platform.user WHERE id = ?)
     dashboard-dao:
       insert:
         dashboard: >
