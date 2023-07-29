@@ -1,6 +1,6 @@
 package br.ifsp.techmaps.domain.entities.user;
 
-import javax.persistence.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,8 +8,6 @@ import java.util.*;
 
 
 public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String username;
     private String email;
@@ -70,8 +68,6 @@ public class User implements UserDetails {
         return new User(id, username, email, password, authorities, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
     }
 
-    public User() {}
-
     public UUID getId() {
         return id;
     }
@@ -97,7 +93,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
@@ -106,7 +101,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -115,7 +109,6 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
@@ -124,7 +117,6 @@ public class User implements UserDetails {
         isAccountNonExpired = accountNonExpired;
     }
 
-    @Override
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
@@ -133,7 +125,6 @@ public class User implements UserDetails {
         isAccountNonLocked = accountNonLocked;
     }
 
-    @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
@@ -142,7 +133,6 @@ public class User implements UserDetails {
         isCredentialsNonExpired = credentialsNonExpired;
     }
 
-    @Override
     public boolean isEnabled() {
         return isEnabled;
     }

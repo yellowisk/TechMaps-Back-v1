@@ -38,7 +38,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .cors().and()
                 .csrf().disable()
@@ -49,7 +48,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JwtTokenVerifier(jwtProperties, jwtTokenHelper), JwtAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login").permitAll() // This line allows unauthenticated access to /login
                 .antMatchers("/refresh-token").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
