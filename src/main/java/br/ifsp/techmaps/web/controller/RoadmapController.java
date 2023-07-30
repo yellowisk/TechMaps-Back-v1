@@ -3,6 +3,7 @@ package br.ifsp.techmaps.web.controller;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.usecases.roadmap.RoadmapCRUD;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
+import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
 import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
 //import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +59,15 @@ public class RoadmapController {
                         .map(RoadmapResponse::create)
                         .collect(java.util.stream.Collectors.toList())
         );
+    }
+
+    @PatchMapping("roadmaps/{roadmapId}")
+    public ResponseEntity<RoadmapResponse> updateRoadmap(
+            @PathVariable UUID roadmapId,
+            @RequestBody UpdateColorRequest request) {
+        Roadmap roadmap = roadmapCRUD.updateRoadmap(roadmapId, request);
+
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
 
     @DeleteMapping("roadmaps/{roadmapId}")

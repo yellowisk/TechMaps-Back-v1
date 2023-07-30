@@ -7,6 +7,7 @@ import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
+import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -64,6 +65,22 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
         List<Roadmap> roadmaps = roadmapDAO.findAllCompletedByDashboardId(dashboardId);
         roadmaps.forEach(roadmapDAO::refreshRoadmap);
         return roadmaps;
+    }
+
+    @Override
+    public Roadmap updateRoadmap(UUID roadmapId, UpdateColorRequest request) {
+
+        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+
+        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+            throw new RuntimeException("Couldn't update because the roadmap '"
+                    + roadmap.getTitle() + "' is complete");
+        }
+
+        roadmap.setRoadmapColor(request.getColor());
+        roadmap.setTitle(request.getTitle());
+
+        return roadmapDAO.updateRoadmapTitleAndColor(roadmap);
     }
 
     @Override

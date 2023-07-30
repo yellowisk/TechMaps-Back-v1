@@ -92,6 +92,8 @@ queries:
           UPDATE techmaps_platform.roadmap SET commit_counter = ? WHERE id = ?
         roadmap-total-time: >
           UPDATE techmaps_platform.roadmap SET total_time = make_interval(secs => ?) WHERE id = ?
+        roadmap-title-and-color: >
+          UPDATE techmaps_platform.roadmap SET title=?, color = ?::techmaps_platform.roadmap_color WHERE id = ?
       delete:
         roadmap-by-id: >
           DELETE FROM techmaps_platform.roadmap WHERE id = ?;

@@ -163,7 +163,7 @@ public class StageDAOImpl implements StageDAO {
         if (stageDoneCounter == stages.size()) {
             roadmap.setRoadmapStatus(RoadmapStatus.COMPLETE);
             roadmap.setRoadmapCommits(commitStagedCounter);
-            roadmapDAO.updateRoadmap(roadmap);
+            roadmapDAO.updateRoadmapTime(roadmap);
         }
 
         return stage;

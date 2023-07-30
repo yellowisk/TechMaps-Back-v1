@@ -37,6 +37,8 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     private String updateRoadmapCommitCounterQuery;
     @Value("${queries.sql.roadmap-dao.update.roadmap-total-time}")
     private String updateRoadmapTotalTimeQuery;
+    @Value("${queries.sql.roadmap-dao.update.roadmap-title-and-color}")
+    private String updateRoadmapTitleAndColorQuery;
     @Value("${queries.sql.roadmap-dao.delete.roadmap-by-id}")
     private String deleteRoadmapByIdQuery;
     @Value("${queries.sql.roadmap-dao.delete.task-by-roadmap-id}")
@@ -105,7 +107,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     }
 
     @Override
-    public Roadmap updateRoadmap(Roadmap roadmap) {
+    public Roadmap updateRoadmapTime(Roadmap roadmap) {
 
         Timestamp startTime = roadmap.getStartTime();
         Timestamp finishTime = Timestamp.valueOf(LocalDateTime.now());
@@ -113,6 +115,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
         jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getRoadmapStatus().name(),
                 roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
+        return roadmap;
+    }
+
+    @Override
+    public Roadmap updateRoadmapTitleAndColor(Roadmap roadmap) {
+        jdbcTemplate.update(updateRoadmapTitleAndColorQuery, roadmap.getTitle(),
+                roadmap.getRoadmapColor().name(), roadmap.getRoadmapId());
         return roadmap;
     }
 
