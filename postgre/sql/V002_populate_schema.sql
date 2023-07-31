@@ -16,24 +16,24 @@ insert into techmaps_platform.user(id, username, email, password,
 
 --! Dashboard Queries --!
 
-insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time) values
-    ('582c710f-849c-4a9f-a10f-0b68c784f240'::uuid, 0, 0, 0, null);
+insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time, user_id) values
+    ('582c710f-849c-4a9f-a10f-0b68c784f240'::uuid, 0, 0, 0, null, 'cc171e74-5dc3-4a38-9c86-5844ed673b5f'::uuid);
 
-insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time) values
-    ('436ee536-93a3-4c20-9271-18a19c01efdb'::uuid, 0, 0, 0, null);
+insert into techmaps_platform.dashboard(id, total_roadmaps, total_tasks, total_commits, total_time, user_id) values
+    ('436ee536-93a3-4c20-9271-18a19c01efdb'::uuid, 0, 0, 0, null, '1b185f9e-6c0f-4617-bd77-dd4620a41a0f'::uuid);
 
 --! Roadmap Queries --!
 
-insert into techmaps_platform.roadmap(id, title, type, status, lang,
+insert into techmaps_platform.roadmap(id, title, type, status, lang, color,
     start_time, finish_time, total_time, commit_counter, dashboard_id) values
     ('3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'Java Roadmap',
-    'BACKEND', 'UNCOMPLETE', 'JAVA', '2023-06-09 08:00:00',
-    '2023-06-19 18:00:00', '10 days 10:00:00'::interval, 0, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
+    'BACKEND', 'UNCOMPLETE', 'JAVA', 'ORANGE', '2023-06-09 08:00:00',
+    null, '10 days 10:00:00'::interval, 0, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.roadmap(id, title, type, status, lang,
+insert into techmaps_platform.roadmap(id, title, type, status, lang, color,
     start_time, finish_time, total_time, commit_counter, dashboard_id) values
         ('50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'JS Roadmap',
-        'FRONTEND', 'COMPLETE', 'JAVASCRIPT', '2023-02-19 08:00:00',
+        'FRONTEND', 'COMPLETE', 'JAVASCRIPT', 'YELLOW', '2023-02-19 08:00:00',
          '2023-06-28 16:00:00', '129 days 08:00:00'::interval ,5,
         '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 

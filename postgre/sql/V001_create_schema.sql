@@ -40,6 +40,8 @@ ALTER TABLE techmaps_platform.dashboard
     ADD CONSTRAINT dashboard_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES techmaps_platform.user(id) ON DELETE CASCADE;
 
+DROP TYPE IF EXISTS techmaps_platform.roadmap_type CASCADE;
+
 CREATE TYPE techmaps_platform.roadmap_type AS ENUM (
     'FRONTEND',
     'BACKEND',
@@ -48,12 +50,16 @@ CREATE TYPE techmaps_platform.roadmap_type AS ENUM (
 
 ALTER TYPE techmaps_platform.roadmap_type OWNER TO "techmaps";
 
+DROP TYPE IF EXISTS techmaps_platform.roadmap_status CASCADE;
+
 CREATE TYPE techmaps_platform.roadmap_status AS ENUM (
     'COMPLETE',
     'UNCOMPLETE'
 );
 
 ALTER TYPE techmaps_platform.roadmap_status OWNER TO "techmaps";
+
+DROP TYPE IF EXISTS techmaps_platform.roadmap_lang CASCADE;
 
 CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
     'JAVA',
@@ -63,6 +69,8 @@ CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
 );
 
 ALTER TYPE techmaps_platform.roadmap_lang OWNER TO "techmaps";
+
+DROP TYPE IF EXISTS techmaps_platform.roadmap_color CASCADE;
 
 CREATE TYPE techmaps_platform.roadmap_color AS ENUM (
     'RED',
@@ -105,6 +113,8 @@ ALTER TABLE techmaps_platform.roadmap
     ADD CONSTRAINT roadmap_dashboard_id_fkey FOREIGN KEY (dashboard_id)
         REFERENCES techmaps_platform.dashboard(id) ON DELETE CASCADE;
 
+DROP TYPE IF EXISTS techmaps_platform.stage_theme CASCADE;
+
 CREATE TYPE techmaps_platform.stage_theme AS ENUM (
     'LEARN_PYTHON',
     'LEARN_JAVA',
@@ -142,12 +152,16 @@ CREATE TYPE techmaps_platform.stage_theme AS ENUM (
 
 ALTER TYPE techmaps_platform.stage_theme OWNER TO "techmaps";
 
+DROP TYPE IF EXISTS techmaps_platform.stage_status CASCADE;
+
 CREATE TYPE techmaps_platform.stage_status AS ENUM (
     'DONE',
     'UNDONE'
 );
 
 ALTER TYPE techmaps_platform.stage_status OWNER TO "techmaps";
+
+DROP TABLE IF EXISTS techmaps_platform.stage CASCADE;
 
 CREATE TABLE techmaps_platform.stage(
     id uuid NOT NULL,
@@ -165,6 +179,8 @@ ALTER TABLE techmaps_platform.stage
 ALTER TABLE techmaps_platform.stage
     ADD CONSTRAINT stage_roadmap_id_fkey FOREIGN KEY (roadmap_id)
         REFERENCES techmaps_platform.roadmap(id) ON DELETE CASCADE;
+
+DROP TYPE IF EXISTS techmaps_platform.task_body CASCADE;
 
 CREATE TYPE techmaps_platform.task_body AS ENUM (
     'PY1', 'PY2', 'PY3',
@@ -203,6 +219,8 @@ CREATE TYPE techmaps_platform.task_body AS ENUM (
 
 ALTER TYPE techmaps_platform.task_body OWNER TO "techmaps";
 
+DROP TABLE IF EXISTS techmaps_platform.task CASCADE;
+
 CREATE TABLE techmaps_platform.task(
     id uuid NOT NULL,
     stage_id uuid NOT NULL,
@@ -226,6 +244,8 @@ ALTER TABLE techmaps_platform.task
 ALTER TABLE techmaps_platform.task
     ADD CONSTRAINT task_dashboard_id_fkey FOREIGN KEY (dashboard_id)
         REFERENCES techmaps_platform.dashboard(id) ON DELETE CASCADE;
+
+DROP TYPE IF EXISTS techmaps_platform.task_commit_status CASCADE;
 
 CREATE TYPE techmaps_platform.task_commit_status AS ENUM (
     'STAGED',
