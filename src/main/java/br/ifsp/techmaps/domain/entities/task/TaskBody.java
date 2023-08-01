@@ -113,6 +113,10 @@ public enum TaskBody {
     SPG2("Learn Spring", "Develop a Spring application", "Build a simple Spring Boot application with RESTful endpoints and database integration."),
     SPG3("Learn Spring", "Explore Spring features", "Dive deeper into Spring's capabilities, such as security, caching, and integration with other frameworks."),
 
+    DJ1("Learn Django", "Set up Django environment", "Install Django and set up a virtual environment for your Django project."),
+    DJ2("Learn Django", "Create a basic Django app", "Build a simple Django application with a few models and views."),
+    DJ3("Learn Django", "Implement user authentication", "Integrate Django's built-in authentication system to handle user registration and login."),
+
     MY1("Learn MySQL", "Install MySQL", "Set up MySQL database server on your machine."),
     MY2("Learn MySQL", "Learn SQL basics", "Understand SQL syntax, data manipulation (SELECT, INSERT, UPDATE, DELETE), and table creation."),
     MY3("Learn MySQL", "Build a database-driven application", "Develop a simple application that interacts with a MySQL database, performing CRUD operations and querying data."),

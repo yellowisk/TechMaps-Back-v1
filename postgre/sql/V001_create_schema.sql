@@ -144,6 +144,7 @@ CREATE TYPE techmaps_platform.stage_theme AS ENUM (
     'LEARN_ANGULAR',
     'LEARN_REACT',
     'LEARN_SPRING',
+    'LEARN_DJANGO',
     'LEARN_MYSQL',
     'LEARN_POSTGRES',
     'LEARN_DOCKER',
@@ -211,6 +212,7 @@ CREATE TYPE techmaps_platform.task_body AS ENUM (
     'AN1', 'AN2', 'AN3',
     'RE1', 'RE2', 'RE3',
     'SPG1', 'SPG2', 'SPG3',
+    'DJ1', 'DJ2', 'DJ3',
     'MY1', 'MY2', 'MY3',
     'PS1', 'PS2', 'PS3',
     'DC1', 'DC2', 'DC3',
@@ -296,3 +298,21 @@ ALTER TABLE techmaps_platform.task_step
 ALTER TABLE techmaps_platform.task_step
     ADD CONSTRAINT task_step_task_id_fkey FOREIGN KEY (task_id)
         REFERENCES techmaps_platform.task(id) ON DELETE CASCADE;
+
+DROP TABLE IF EXISTS techmaps_platform.task_step_data;
+
+CREATE TABLE techmaps_platform.task_step_description (
+    id uuid NOT NULL,
+    info techmaps_platform.task_body,
+    description varchar(255)
+);
+
+ALTER TABLE techmaps_platform.task_step_description OWNER TO "techmaps";
+
+ALTER TABLE techmaps_platform.task_step_description
+    ADD CONSTRAINT task_step_description_pkey PRIMARY KEY (id);
+
+ALTER TABLE techmaps_platform.task_step_description
+    ADD CONSTRAINT task_step_description_id_fkey FOREIGN KEY (id)
+        REFERENCES techmaps_platform.task_step(id) ON DELETE CASCADE;
+

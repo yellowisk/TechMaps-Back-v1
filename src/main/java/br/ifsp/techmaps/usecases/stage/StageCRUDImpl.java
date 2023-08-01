@@ -78,7 +78,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (StageEnum learn : StageEnum.values()) {
                 if (learn.getCondition().equals("Backend") && learn != StageEnum.LEARN_JAVA
-                && learn != StageEnum.LEARN_PYTHON) {
+                && learn != StageEnum.LEARN_PYTHON && learn != StageEnum.LEARN_DJANGO) {
                     backendThemes.add(learn);
                 }
             }

@@ -186,6 +186,8 @@ queries:
           SELECT * FROM techmaps_platform.task_step WHERE id = ?
         step-by-task-id: >
           SELECT * FROM techmaps_platform.task_step WHERE task_id = ?
+        step-description-by-task-info: >
+          SELECT description FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body
       update:
         step-is-finished: >
           UPDATE techmaps_platform.task_step SET is_finished = ? WHERE id = ?

@@ -38,6 +38,7 @@ public enum StageEnum {
         LEARN_ANGULAR("Learn Angular", "Frontend"),
         LEARN_REACT("Learn React", "Frontend"),
         LEARN_SPRING("Learn Spring", "Backend"),
+        LEARN_DJANGO("Learn Django", "Backend"),
 
     //Databases
         LEARN_MYSQL("Learn MySQL", "Backend"),
