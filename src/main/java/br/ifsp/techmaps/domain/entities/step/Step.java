@@ -4,17 +4,17 @@ import java.util.*;
 
 public class Step {
     private UUID id;
-    private UUID task_id;
-    private Integer order;
-    private String description;
+    private UUID taskId;
+    private int order;
+    private String text;
     private boolean isFinished;
     private boolean isPriority;
 
-    public Step(UUID id, UUID task_id, Integer order, String description, boolean isFinished, boolean isPriority) {
+    public Step(UUID id, UUID taskId, int order, String text, boolean isFinished, boolean isPriority) {
         this.id = id;
-        this.task_id = task_id;
+        this.taskId = taskId;
         this.order = order;
-        this.description = description;
+        this.text = text;
         this.isFinished = isFinished;
         this.isPriority = isPriority;
     }
@@ -22,9 +22,9 @@ public class Step {
     public Step() {
     }
 
-    public static Step createFull(UUID id, UUID task_id, Integer order,
-                                  String description, boolean isFinished, boolean isPriority) {
-        return new Step(id, task_id, order, description, isFinished, isPriority);
+    public static Step createFull(UUID id, UUID taskId, int order,
+                                  String text, boolean isFinished, boolean isPriority) {
+        return new Step(id, taskId, order, text, isFinished, isPriority);
     }
 
     public UUID getId() {
@@ -35,44 +35,35 @@ public class Step {
         this.id = id;
     }
 
-    public UUID getTask_id() {
-        return task_id;
+    public UUID getTaskId() {
+        return taskId;
     }
 
-    public void setTask_id(UUID task_id) {
-        this.task_id = task_id;
+    public void setTaskId(UUID taskId) {
+        this.taskId = taskId;
     }
-
-    public Integer getOrder() {
+    public int getOrder() {
         return order;
     }
-
-    public void setOrder(Integer order) {
+    public void setOrder(int order) {
         this.order = order;
     }
-
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
     }
-
     public boolean isFinished() {
         return isFinished;
     }
-
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
-
     public boolean isPriority() {
         return isPriority;
     }
-
     public void setPriority(boolean priority) {
         isPriority = priority;
     }
-
 }

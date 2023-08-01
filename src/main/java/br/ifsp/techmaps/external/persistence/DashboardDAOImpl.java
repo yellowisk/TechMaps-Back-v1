@@ -2,13 +2,9 @@ package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
-import br.ifsp.techmaps.external.persistence.util.JsonUtil;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -284,8 +284,8 @@ CREATE TABLE techmaps_platform.task_step (
     task_id uuid NOT NULL,
     order integer NOT NULL,
     text varchar(255) NOT NULL,
-    isFinished boolean NOT NULL,
-    isPriority boolean NOT NULL
+    is_finished boolean NOT NULL,
+    is_priority boolean NOT NULL
 );
 
 ALTER TABLE techmaps_platform.task_step OWNER TO "techmaps";

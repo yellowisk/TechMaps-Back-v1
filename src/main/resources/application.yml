@@ -179,7 +179,7 @@ queries:
     step-dao:
       insert:
         step: >
-          INSERT INTO techmaps_platform.task_step(id, task_id, order, text, isFinished, isPriority) 
+          INSERT INTO techmaps_platform.task_step(id, task_id, order, text, is_finished, is_priority) 
           VALUES (?, ?, ?, ?, ?, ?)
       select:
         step-by-id: >
@@ -187,13 +187,13 @@ queries:
         step-by-task-id: >
           SELECT * FROM techmaps_platform.task_step WHERE task_id = ?
       update:
-        step-isFinished: >
-          UPDATE techmaps_platform.task_step SET isFinished = ? WHERE id = ?
-        step-isPriority: >
-          UPDATE techmaps_platform.task_step SET isPriority = ? WHERE id = ?
+        step-is-finished: >
+          UPDATE techmaps_platform.task_step SET is_finished = ? WHERE id = ?
+        step-is-priority: >
+          UPDATE techmaps_platform.task_step SET is_priority = ? WHERE id = ?
       delete:
         step-by-id: >
           DELETE FROM techmaps_platform.task_step WHERE id = ?
       exists:
-        step-id: >
+        step-by-id: >
           SELECT EXISTS(SELECT 1 FROM techmaps_platform.task_step WHERE id = ?)
