@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS techmaps_platform.roadmap CASCADE;
 
 CREATE TABLE techmaps_platform.roadmap(
     id uuid NOT NULL,
-    title varchar NOT NULL,
+    title varchar(255) NOT NULL,
     type techmaps_platform.roadmap_type,
     status techmaps_platform.roadmap_status,
     lang techmaps_platform.roadmap_lang,
@@ -276,3 +276,23 @@ ALTER TABLE techmaps_platform.task_commit
 ALTER TABLE techmaps_platform.task_commit
     ADD CONSTRAINT task_commit_dashboard_id_fkey FOREIGN KEY (dashboard_id)
         REFERENCES techmaps_platform.dashboard(id) ON DELETE CASCADE;
+
+DROP TABLE IF EXISTS techmaps_platform.step;
+
+CREATE TABLE techmaps_platform.task_step (
+    id uuid NOT NULL,
+    task_id uuid NOT NULL,
+    order integer NOT NULL,
+    text varchar(255) NOT NULL,
+    isFinished boolean NOT NULL,
+    isPriority boolean NOT NULL
+);
+
+ALTER TABLE techmaps_platform.task_step OWNER TO "techmaps";
+
+ALTER TABLE techmaps_platform.task_step
+    ADD CONSTRAINT task_step_pkey PRIMARY KEY (id);
+
+ALTER TABLE techmaps_platform.task_step
+    ADD CONSTRAINT task_step_task_id_fkey FOREIGN KEY (task_id)
+        REFERENCES techmaps_platform.task(id) ON DELETE CASCADE;

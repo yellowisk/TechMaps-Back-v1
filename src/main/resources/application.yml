@@ -176,4 +176,24 @@ queries:
       update:
         task-commit-state: >
           UPDATE techmaps_platform.task_commit SET state = ?::techmaps_platform.task_commit_status WHERE id = ?
-          
+    step-dao:
+      insert:
+        step: >
+          INSERT INTO techmaps_platform.task_step(id, task_id, order, text, isFinished, isPriority) 
+          VALUES (?, ?, ?, ?, ?, ?)
+      select:
+        step-by-id: >
+          SELECT * FROM techmaps_platform.task_step WHERE id = ?
+        step-by-task-id: >
+          SELECT * FROM techmaps_platform.task_step WHERE task_id = ?
+      update:
+        step-isFinished: >
+          UPDATE techmaps_platform.task_step SET isFinished = ? WHERE id = ?
+        step-isPriority: >
+          UPDATE techmaps_platform.task_step SET isPriority = ? WHERE id = ?
+      delete:
+        step-by-id: >
+          DELETE FROM techmaps_platform.task_step WHERE id = ?
+      exists:
+        step-id: >
+          SELECT EXISTS(SELECT 1 FROM techmaps_platform.task_step WHERE id = ?)
