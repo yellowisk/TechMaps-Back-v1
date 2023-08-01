@@ -1,6 +1,7 @@
 package br.ifsp.techmaps.web.model.task.response;
 
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.domain.entities.task.TaskBody;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -8,6 +9,7 @@ import java.util.*;
 public class TaskResponse {
     private UUID taskId;
     private UUID stageId;
+    private String position;
     private String title;
     private String description;
     private String repository_link;
@@ -16,12 +18,13 @@ public class TaskResponse {
     private UUID dashboardId;
     private UUID commitId;
 
-    public TaskResponse(UUID taskId, UUID stageId, String title, String description,
+    public TaskResponse(UUID taskId, UUID stageId, String position, String title, String description,
                         String repository_link, Timestamp date_created, Timestamp date_finished,
                         UUID dashboardId, UUID commitId) {
         this.taskId = taskId;
         this.stageId = stageId;
         this.title = title;
+        this.position = position;
         this.description = description;
         this.repository_link = repository_link;
         this.date_created = date_created;
@@ -45,6 +48,7 @@ public class TaskResponse {
 
     public static TaskResponse createFromTask(Task task) {
         return new TaskResponse(task.getId(), task.getStage().getStageId(),
+                task.getTaskBody().name(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
                 task.getRepository(), task.getDate_created(), task.getDate_finished(),
                 task.getDashboard().getDashboardId(), task.getTaskCommit().getCommitId());
@@ -71,6 +75,14 @@ public class TaskResponse {
 
     public void setStageId(UUID stageId) {
         this.stageId = stageId;
+    }
+
+    public String getPosition() {
+        return position.substring(position.length() - 1);
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getTitle() {

@@ -34,7 +34,7 @@ insert into techmaps_platform.roadmap(id, title, type, status, lang, color,
     start_time, finish_time, total_time, commit_counter, dashboard_id) values
         ('50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'JS Roadmap',
         'FRONTEND', 'COMPLETE', 'JAVASCRIPT', 'YELLOW', '2023-02-19 08:00:00',
-         '2023-06-28 16:00:00', '129 days 08:00:00'::interval ,5,
+         '2023-06-28 16:00:00', '129 days 08:00:00'::interval, 18,
         '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
 --! Stage Queries --!

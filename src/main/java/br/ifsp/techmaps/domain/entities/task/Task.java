@@ -18,7 +18,6 @@ public class Task {
     @JsonIgnore
     private Stage stage;
     private TaskBody taskBody;
-
     private String repository_link;
     private Timestamp date_created;
     private Timestamp date_finished;
