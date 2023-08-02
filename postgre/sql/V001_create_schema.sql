@@ -184,7 +184,7 @@ ALTER TABLE techmaps_platform.stage
 DROP TYPE IF EXISTS techmaps_platform.task_body CASCADE;
 
 CREATE TYPE techmaps_platform.task_body AS ENUM (
-    'PY1', 'PY2', 'PY3',
+    'PY1', 'PY2', 'PY3', 'PY4', 'PY5', 'PY6',
     'JV1', 'JV2', 'JV3',
     'KT1', 'KT2', 'KT3',
     'HT1', 'HT2', 'HT3',
@@ -279,7 +279,7 @@ ALTER TABLE techmaps_platform.task_commit
     ADD CONSTRAINT task_commit_dashboard_id_fkey FOREIGN KEY (dashboard_id)
         REFERENCES techmaps_platform.dashboard(id) ON DELETE CASCADE;
 
-DROP TABLE IF EXISTS techmaps_platform.step;
+DROP TABLE IF EXISTS techmaps_platform.task_step CASCADE;
 
 CREATE TABLE techmaps_platform.task_step (
     id uuid NOT NULL,
@@ -299,20 +299,17 @@ ALTER TABLE techmaps_platform.task_step
     ADD CONSTRAINT task_step_task_id_fkey FOREIGN KEY (task_id)
         REFERENCES techmaps_platform.task(id) ON DELETE CASCADE;
 
-DROP TABLE IF EXISTS techmaps_platform.task_step_data;
+DROP TABLE IF EXISTS techmaps_platform.task_step_description;
 
 CREATE TABLE techmaps_platform.task_step_description (
     id uuid NOT NULL,
     info techmaps_platform.task_body,
-    description varchar(255)
+    description varchar(255),
+    desc_number integer NOT NULL
 );
 
 ALTER TABLE techmaps_platform.task_step_description OWNER TO "techmaps";
 
 ALTER TABLE techmaps_platform.task_step_description
     ADD CONSTRAINT task_step_description_pkey PRIMARY KEY (id);
-
-ALTER TABLE techmaps_platform.task_step_description
-    ADD CONSTRAINT task_step_description_id_fkey FOREIGN KEY (id)
-        REFERENCES techmaps_platform.task_step(id) ON DELETE CASCADE;
 
