@@ -5,15 +5,15 @@ import java.util.*;
 public class Step {
     private UUID id;
     private UUID taskId;
-    private int order;
+    private int number;
     private String text;
     private boolean isFinished;
     private boolean isPriority;
 
-    public Step(UUID id, UUID taskId, int order, String text, boolean isFinished, boolean isPriority) {
+    public Step(UUID id, UUID taskId, int number, String text, boolean isFinished, boolean isPriority) {
         this.id = id;
         this.taskId = taskId;
-        this.order = order;
+        this.number = number;
         this.text = text;
         this.isFinished = isFinished;
         this.isPriority = isPriority;
@@ -22,9 +22,9 @@ public class Step {
     public Step() {
     }
 
-    public static Step createFull(UUID id, UUID taskId, int order,
+    public static Step createFull(UUID id, UUID taskId, int number,
                                   String text, boolean isFinished, boolean isPriority) {
-        return new Step(id, taskId, order, text, isFinished, isPriority);
+        return new Step(id, taskId, number, text, isFinished, isPriority);
     }
 
     public UUID getId() {
@@ -42,12 +42,15 @@ public class Step {
     public void setTaskId(UUID taskId) {
         this.taskId = taskId;
     }
-    public int getOrder() {
-        return order;
+
+    public int getNumber() {
+        return number;
     }
-    public void setOrder(int order) {
-        this.order = order;
+
+    public void setNumber(int number) {
+        this.number = number;
     }
+
     public String getText() {
         return text;
     }

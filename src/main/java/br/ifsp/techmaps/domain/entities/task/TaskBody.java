@@ -1,10 +1,12 @@
 package br.ifsp.techmaps.domain.entities.task;
 
 public enum TaskBody {
-    PY1("Learn Python", "Install Python", "Download and install the latest version of Python on your computer."),
-    PY2("Learn Python", "Learn basic syntax", "Familiarize yourself with Python's syntax, variables, data types, and control flow statements."),
-    PY3("Learn Python", "Write a simple program", "Create a program that takes user input, performs basic calculations, and displays the result."),
-
+    PY1("Learn Python", "Learn basic syntax", "Familiarize yourself with Python's syntax, variables, data types, and control flow statements."),
+    PY2("Learn Python", "Data Structure", "Learn about Python's built-in data structures"),
+    PY3("Learn Python", "Algorithms", "Learn how to create algorithms in Python through sorting and recursions"),
+    PY4("Learn Python", "Advanced Topics", "Learn different advanced topics in Python such as decorators, RegEx and generators"),
+    PY5("Learn Python", "OOP", "Learn about object-oriented programming (OOP) in Python, including classes, inheritance, and encapsulation"),
+    PY6("Learn Python", "Package Managers", "Learn how to use Python package managers such as Pip, PYPi and Conda"),
     JV1("Learn Java", "Set up Java Development Kit (JDK)", "Install JDK and set up the environment variables on your system."),
     JV2("Learn Java", "Understand object-oriented programming", "Learn about classes, objects, inheritance, and polymorphism in Java."),
     JV3("Learn Java", "Build a command-line application", "Create a Java program that takes user input, processes it, and provides appropriate output."),

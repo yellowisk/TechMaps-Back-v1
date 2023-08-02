@@ -37,7 +37,7 @@ public class StepDAOImpl implements StepDAO {
         jdbcTemplate.update(insertStepQuery, stepId, step.getTaskId(), step.getOrder(),
                 step.getText(), false, false);
 
-        return Step.createFull(stepId, step.getTaskId(), step.getOrder(),
+        return Step.createFull(stepId, step.getTaskId(), step.getNumber(),
                 step.getText(), false, false);
     }
 

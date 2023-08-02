@@ -284,7 +284,7 @@ DROP TABLE IF EXISTS techmaps_platform.step;
 CREATE TABLE techmaps_platform.task_step (
     id uuid NOT NULL,
     task_id uuid NOT NULL,
-    order integer NOT NULL,
+    number integer NOT NULL,
     text varchar(255) NOT NULL,
     is_finished boolean NOT NULL,
     is_priority boolean NOT NULL
