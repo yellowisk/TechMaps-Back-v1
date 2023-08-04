@@ -1,12 +1,15 @@
 package br.ifsp.techmaps.usecases.step;
 
 import br.ifsp.techmaps.domain.entities.step.Step;
+import br.ifsp.techmaps.web.model.step.request.CreateStepRequest;
 
 import java.util.*;
 
 public interface StepCRUD {
 
-    Step addNewTaskSteps(UUID taskId);
+    List<Step> generateTaskSteps(UUID taskId);
+
+    Step addTask(UUID taskId, CreateStepRequest request);
 
     List<Step> getStepsByTaskId(UUID taskId);
 

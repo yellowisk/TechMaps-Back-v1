@@ -3,10 +3,13 @@ package br.ifsp.techmaps.usecases.step;
 import br.ifsp.techmaps.domain.entities.step.Step;
 import br.ifsp.techmaps.usecases.step.gateway.StepDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
+import br.ifsp.techmaps.web.model.step.request.CreateStepRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class StepCRUDImpl implements StepCRUD {
 
     private final StepDAO stepDAO;
@@ -18,8 +21,14 @@ public class StepCRUDImpl implements StepCRUD {
     }
 
     @Override
-    public Step addNewTaskSteps(UUID taskId) {
+    public List<Step> generateTaskSteps(UUID taskId) {
         return null;
+    }
+
+    @Override
+    public Step addTask(UUID taskId, CreateStepRequest request) {
+        Step step = request.convertToStep(taskId);
+        return stepDAO.saveStep(step);
     }
 
     @Override

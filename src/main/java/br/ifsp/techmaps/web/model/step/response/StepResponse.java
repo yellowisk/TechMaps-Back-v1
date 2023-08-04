@@ -1,8 +1,11 @@
-package br.ifsp.techmaps.domain.entities.step;
+package br.ifsp.techmaps.web.model.step.response;
 
-import java.util.*;
+import br.ifsp.techmaps.domain.entities.step.Step;
 
-public class Step {
+import java.util.UUID;
+
+public class StepResponse {
+
     private UUID id;
     private UUID taskId;
     private int number;
@@ -10,7 +13,8 @@ public class Step {
     private boolean isFinished;
     private boolean isPriority;
 
-    public Step(UUID id, UUID taskId, int number, String text, boolean isFinished, boolean isPriority) {
+    public StepResponse(UUID id, UUID taskId, int number, String text,
+                        boolean isFinished, boolean isPriority) {
         this.id = id;
         this.taskId = taskId;
         this.number = number;
@@ -19,22 +23,9 @@ public class Step {
         this.isPriority = isPriority;
     }
 
-    public Step(UUID taskId, int number, String text) {
-        this.taskId = taskId;
-        this.number = number;
-        this.text = text;
-    }
-
-    public Step() {
-    }
-
-    public static Step createFull(UUID id, UUID taskId, int number,
-                                  String text, boolean isFinished, boolean isPriority) {
-        return new Step(id, taskId, number, text, isFinished, isPriority);
-    }
-
-    public static Step createForRequest(UUID taskId, int number, String text) {
-        return new Step(taskId, number, text);
+    public static StepResponse createFromStep (Step step) {
+        return new StepResponse(step.getId(), step.getTaskId(), step.getNumber(),
+                step.getText(), step.isFinished(), step.isPriority());
     }
 
     public UUID getId() {
@@ -64,18 +55,23 @@ public class Step {
     public String getText() {
         return text;
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public boolean isFinished() {
         return isFinished;
     }
+
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
+
     public boolean isPriority() {
         return isPriority;
     }
+
     public void setPriority(boolean priority) {
         isPriority = priority;
     }

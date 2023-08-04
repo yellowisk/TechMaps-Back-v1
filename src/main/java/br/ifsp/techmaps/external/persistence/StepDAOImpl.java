@@ -4,10 +4,12 @@ import br.ifsp.techmaps.domain.entities.step.Step;
 import br.ifsp.techmaps.usecases.step.gateway.StepDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.*;
 
+@Repository
 public class StepDAOImpl implements StepDAO {
     private final JdbcTemplate jdbcTemplate;
 
@@ -34,7 +36,7 @@ public class StepDAOImpl implements StepDAO {
     public Step saveStep(Step step) {
         UUID stepId = UUID.randomUUID();
 
-        jdbcTemplate.update(insertStepQuery, stepId, step.getTaskId(), step.getOrder(),
+        jdbcTemplate.update(insertStepQuery, stepId, step.getTaskId(), step.getNumber(),
                 step.getText(), false, false);
 
         return Step.createFull(stepId, step.getTaskId(), step.getNumber(),
