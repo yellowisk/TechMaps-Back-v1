@@ -12,7 +12,6 @@ public interface TaskDAO {
     Optional<Task> findTaskById(UUID taskId);
     Task updateRepository(Task task);
     Task updateDateFinished(Task task);
-
-    Boolean TaskExists(UUID taskId);
+    Boolean taskExists(UUID taskId);
 
 }

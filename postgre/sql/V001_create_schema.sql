@@ -169,6 +169,7 @@ CREATE TABLE techmaps_platform.stage(
     roadmap_id uuid NOT NULL,
     theme techmaps_platform.stage_theme,
     status techmaps_platform.stage_status,
+    stage_number int NOT NULL,
     commit_counter integer
 );
 
@@ -228,7 +229,7 @@ CREATE TABLE techmaps_platform.task(
     stage_id uuid NOT NULL,
     theme techmaps_platform.stage_theme,
     info techmaps_platform.task_body,
-    position int,
+    task_number int,
     repository_link varchar,
     date_created timestamp,
     date_finished timestamp,
@@ -285,7 +286,7 @@ DROP TABLE IF EXISTS techmaps_platform.task_step CASCADE;
 CREATE TABLE techmaps_platform.task_step (
     id uuid NOT NULL,
     task_id uuid NOT NULL,
-    number integer NOT NULL,
+    position integer NOT NULL,
     text varchar(255) NOT NULL,
     is_finished boolean NOT NULL,
     is_priority boolean NOT NULL

@@ -15,7 +15,6 @@ public interface TaskCRUD {
     Task getTaskById(UUID stageId, UUID taskId);
     List<Task> getTasksByStageId(UUID StageId);
     Task updateTaskRepository(UUID taskId, UpdateRepositoryRequest request);
-
     Task updateTaskDateFinished(UUID taskId, UpdateDateFinishedRequest request);
 
 }

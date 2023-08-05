@@ -45,9 +45,10 @@ public class StageCRUDImpl implements StageCRUD {
             throw new IllegalArgumentException("This Roadmap is already done!");
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
+        int stageNumber = stageDAO.findStagesByRoadmapId(roadmapId).size() + 1;
 
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
-                request.getTheme(), StageStatus.UNDONE, 0);
+                request.getTheme(), StageStatus.UNDONE, stageNumber,0);
 
         if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())
                 || request.getTheme().getCondition() == "General") {
@@ -70,7 +71,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVA)) {
             List<Stage> stages = new ArrayList<>(8);
-            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JAVA, StageStatus.UNDONE, 0);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JAVA, StageStatus.UNDONE, 1,0);
             stages.add(stage);
             stageDAO.saveStage(stage);
 
@@ -87,7 +88,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
-                        StageStatus.UNDONE, 0);
+                        StageStatus.UNDONE, stages.size() + 1, 0);
                 if (i < backendThemes.size()) {
                     StageEnum theme = backendThemes.get(i);
                     stageBack.setTheme(theme);
@@ -100,7 +101,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.JAVASCRIPT)) {
             List<Stage> stages = new ArrayList<>(5);
-            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JS, StageStatus.UNDONE, 0);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_JS, StageStatus.UNDONE, 1, 0);
             stages.add(stage);
             stageDAO.saveStage(stage);
 
@@ -116,7 +117,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (int i = 0; i < frontendThemes.size(); i++) {
                 Stage stageFront = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
-                        StageStatus.UNDONE, 0);
+                        StageStatus.UNDONE, stages.size() + 1, 0);
 
                 if (i < frontendThemes.size()) {
                     StageEnum theme = frontendThemes.get(i);
@@ -131,7 +132,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.PYTHON)) {
             List<Stage> stages = new ArrayList<>(8);
-            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_PYTHON, StageStatus.UNDONE, 0);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_PYTHON, StageStatus.UNDONE, 1,0);
             stages.add(stage);
             stageDAO.saveStage(stage);
 
@@ -148,7 +149,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
-                        StageStatus.UNDONE, 0);
+                        StageStatus.UNDONE, stages.size() + 1,0);
                 if (i < backendThemes.size()) {
                     StageEnum theme = backendThemes.get(i);
                     stageBack.setTheme(theme);
@@ -161,7 +162,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         if (roadmap.getRoadmapLanguage().equals(RoadmapLanguage.KOTLIN)) {
             List<Stage> stages = new ArrayList<>(10);
-            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_KOTLIN, StageStatus.UNDONE, 0);
+            Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, StageEnum.LEARN_KOTLIN, StageStatus.UNDONE, 1,0);
             stages.add(stage);
             stageDAO.saveStage(stage);
 
@@ -177,7 +178,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (int i = 0; i < backendThemes.size(); i++) {
                 Stage stageBack = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
-                        StageStatus.UNDONE, 0);
+                        StageStatus.UNDONE, stages.size() +1, 0);
                 if (i < backendThemes.size()) {
                     StageEnum theme = backendThemes.get(i);
                     stageBack.setTheme(theme);
@@ -198,7 +199,7 @@ public class StageCRUDImpl implements StageCRUD {
 
             for (int i = 0; i < androidThemes.size(); i++) {
                 Stage stageAndroid = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, null,
-                        StageStatus.UNDONE, 0);
+                        StageStatus.UNDONE, stages.size() + 1, 0);
                 if (i < androidThemes.size()) {
                     StageEnum theme = androidThemes.get(i);
                     stageAndroid.setTheme(theme);

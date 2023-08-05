@@ -19,10 +19,15 @@ public class Step {
         this.isPriority = isPriority;
     }
 
-    public Step(UUID taskId, int number, String text) {
+    public Step(UUID id, UUID taskId, int number, String text) {
+        this.id = id;
         this.taskId = taskId;
         this.number = number;
         this.text = text;
+    }
+
+    public Step(UUID id) {
+        this.id = id;
     }
 
     public Step() {
@@ -34,7 +39,11 @@ public class Step {
     }
 
     public static Step createForRequest(UUID taskId, int number, String text) {
-        return new Step(taskId, number, text);
+        return new Step(UUID.randomUUID(), taskId, number, text);
+    }
+
+    public static Step createWithOnlyId(UUID id) {
+        return new Step(id);
     }
 
     public UUID getId() {

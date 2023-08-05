@@ -9,15 +9,13 @@ public interface StepCRUD {
 
     List<Step> generateTaskSteps(UUID taskId);
 
-    Step addTask(UUID taskId, CreateStepRequest request);
+    Step addStep(UUID taskId, CreateStepRequest request);
 
     List<Step> getStepsByTaskId(UUID taskId);
 
-    Step updateStepNumber(Step step);
+    Step prioritizeTaskStep(UUID stepId);
 
-    Step prioritizeTaskStep(Step step);
-
-    Step finishTaskStep(Step step);
+    Step finishTaskStep(UUID stepId);
 
     Step deleteTaskStep(UUID stepId);
 

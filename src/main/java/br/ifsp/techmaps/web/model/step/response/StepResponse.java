@@ -28,6 +28,9 @@ public class StepResponse {
                 step.getText(), step.isFinished(), step.isPriority());
     }
 
+    public StepResponse() {
+    }
+
     public UUID getId() {
         return id;
     }

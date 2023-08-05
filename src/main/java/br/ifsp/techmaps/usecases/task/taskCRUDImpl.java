@@ -53,7 +53,7 @@ public class taskCRUDImpl implements TaskCRUD {
             if (taskBody.getTopic().equals(topic.getTopic())) {
                 Task task = createTaskRequest.convertToTask();
                 task.setTaskBody(taskBody);
-                task.setPosition(tasks.size() + 1);
+                task.setNumber(tasks.size() + 1);
                 task.setDashboard(dashboard);
                 task.setStage(stage);
                 tasks.add(task);
@@ -73,7 +73,7 @@ public class taskCRUDImpl implements TaskCRUD {
             throw new NullPointerException("Stage with id " + stageId + " does not exist");
         }
 
-        Boolean taskExists = taskDAO.TaskExists(taskId);
+        Boolean taskExists = taskDAO.taskExists(taskId);
         if(!taskExists) {
             throw new NullPointerException("Task with id " + taskId + " does not exist");
         }
@@ -100,7 +100,7 @@ public class taskCRUDImpl implements TaskCRUD {
 
     @Override
     public Task updateTaskRepository(UUID taskId, UpdateRepositoryRequest request) {
-        Boolean taskExists = taskDAO.TaskExists(taskId);
+        Boolean taskExists = taskDAO.taskExists(taskId);
         if(!taskExists) {
             throw new NullPointerException("Task with id " + taskId + " does not exist");
         }
@@ -108,14 +108,14 @@ public class taskCRUDImpl implements TaskCRUD {
         Task task = request.convertToTask();
         task.setTaskId(taskId);
 
-        taskDAO.updateTask(task);
+        taskDAO.updateRepository(task);
 
         return taskDAO.findTaskById(taskId).get();
     }
 
     @Override
     public Task updateTaskDateFinished(UUID taskId, UpdateDateFinishedRequest request) {
-        Boolean taskExists = taskDAO.TaskExists(taskId);
+        Boolean taskExists = taskDAO.taskExists(taskId);
         if(!taskExists) {
             throw new NullPointerException("Task with id " + taskId + " does not exist");
         }
@@ -153,5 +153,4 @@ public class taskCRUDImpl implements TaskCRUD {
 
         return taskDAO.findTaskById(taskId).get();
     }
-
 }

@@ -107,12 +107,12 @@ queries:
     stage-dao:
       insert:
         stage: >
-          INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, status, commit_counter) VALUES (?, ?, ?::techmaps_platform.stage_theme, ?::techmaps_platform.stage_status, ?)
+          INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, status, stage_number, commit_counter) VALUES (?, ?, ?::techmaps_platform.stage_theme, ?::techmaps_platform.stage_status, ?, ?)
       select:
         stage-by-id: >
-          SELECT * FROM techmaps_platform.stage WHERE id = ?
+          SELECT * FROM techmaps_platform.stage WHERE id = ? ORDER BY stage_number ASC
         stage-by-roadmap-id: >
-            SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ?
+            SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ? ORDER BY stage_number ASC
         commit-state-by-stage-id: >
             SELECT state FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
         date-finished-of-tasks-by-stage-id: >
@@ -136,26 +136,26 @@ queries:
       insert:
           task: >
             INSERT INTO techmaps_platform.task 
-            (id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
+            (id, stage_id, theme, info, task_number, repository_link, date_created, date_finished, 
             dashboard_id) VALUES (?, ?, ?::techmaps_platform.stage_theme, 
             ?::techmaps_platform.task_body, ?, ?, ?, ?, ?)
       select:
         task-by-id: >
-          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
-                    dashboard_id FROM techmaps_platform.task WHERE id = ? ORDER BY position ASC
+          SELECT id, stage_id, theme, info, task_number, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE id = ? ORDER BY task_number ASC
         task-by-stage-id: >
-          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
-                    dashboard_id FROM techmaps_platform.task WHERE stage_id = ? ORDER BY position ASC
+          SELECT id, stage_id, theme, info, task_number, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE stage_id = ? ORDER BY task_number ASC
         tasks-by-dashboard-id: >
-          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
-                    dashboard_id FROM techmaps_platform.task WHERE dashboard_id = ? ORDER BY position ASC
+          SELECT id, stage_id, theme, info, task_number, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE dashboard_id = ? ORDER BY task_number ASC
       update:
           task-repository: >
             UPDATE techmaps_platform.task SET repository_link = ? WHERE id = ?
           task-date-finished: >
             UPDATE techmaps_platform.task SET date_finished = ? WHERE id = ?
-          task-position: >
-            UPDATE techmaps_platform.task SET position = ? WHERE id = ?
+          task-number: >
+            UPDATE techmaps_platform.task SET task_number = ? WHERE id = ?
       exists:
           task-id: >
             SELECT EXISTS(SELECT 1 FROM techmaps_platform.task WHERE id = ?)
@@ -179,25 +179,27 @@ queries:
     step-dao:
       insert:
         step: >
-          INSERT INTO techmaps_platform.task_step(id, task_id, order, text, is_finished, is_priority) 
+          INSERT INTO techmaps_platform.task_step(id, task_id, position, text, is_finished, is_priority) 
           VALUES (?, ?, ?, ?, ?, ?)
       select:
         step-by-id: >
-          SELECT * FROM techmaps_platform.task_step WHERE id = ?
+          SELECT * FROM techmaps_platform.task_step WHERE id = ? ORDER BY position ASC
         step-by-task-id: >
-          SELECT * FROM techmaps_platform.task_step WHERE task_id = ?
-        step-description-by-task-info: >
-          SELECT description FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body
-        step-description-by-task-body-order-by-number-ascending: >
-          SELECT description FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body ORDER BY number ASC
+          SELECT * FROM techmaps_platform.task_step WHERE task_id = ? ORDER BY position ASC
       update:
         step-is-finished: >
           UPDATE techmaps_platform.task_step SET is_finished = ? WHERE id = ?
         step-is-priority: >
           UPDATE techmaps_platform.task_step SET is_priority = ? WHERE id = ?
+        step-number: >
+          UPDATE techmaps_platform.task_step SET number = ? WHERE id = ?
       delete:
         step-by-id: >
           DELETE FROM techmaps_platform.task_step WHERE id = ?
       exists:
         step-by-id: >
           SELECT EXISTS(SELECT 1 FROM techmaps_platform.task_step WHERE id = ?)
+    step-description-dao:
+      select:
+        step-description-by-task-info: >
+          SELECT id, info, description, desc_number FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body

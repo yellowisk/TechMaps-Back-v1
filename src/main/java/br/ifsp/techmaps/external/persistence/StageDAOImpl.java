@@ -67,10 +67,10 @@ public class StageDAOImpl implements StageDAO {
 
         jdbcTemplate.update(insertStageQuery, stageId,
                 stage.getRoadmap().getRoadmapId(), stage.getTheme().name(),
-                stage.getStageStatus().name(), stage.getStageCommit());
+                stage.getStageStatus().name(), stage.getNumber(), stage.getStageCommit());
 
         return Stage.createStageWithoutTasks(stageId, stage.getRoadmap(), stage.getTheme(),
-                stage.getStageStatus(), stage.getStageCommit());
+                stage.getStageStatus(), stage.getNumber(), stage.getStageCommit());
     }
 
     @Override
@@ -188,12 +188,13 @@ public class StageDAOImpl implements StageDAO {
         UUID roadmapId = (UUID) rs.getObject("roadmap_id");
         StageEnum theme = StageEnum.valueOf(rs.getString("theme"));
         StageStatus status = StageStatus.valueOf(rs.getString("status"));
+        int number = rs.getInt("stage_number");
         Integer stageCommit = Integer.valueOf(rs.getString("commit_counter"));
 
         Roadmap rm = roadmapDAO.findRoadmapById(roadmapId).get();
 
 
-        return Stage.createStageWithoutTasks(id, rm, theme, status, stageCommit);
+        return Stage.createStageWithoutTasks(id, rm, theme, status, number, stageCommit);
     }
 
 }

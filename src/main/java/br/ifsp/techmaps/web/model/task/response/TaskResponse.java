@@ -1,7 +1,6 @@
 package br.ifsp.techmaps.web.model.task.response;
 
 import br.ifsp.techmaps.domain.entities.task.Task;
-import br.ifsp.techmaps.domain.entities.task.TaskBody;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -50,7 +49,7 @@ public class TaskResponse {
     public static TaskResponse createFromTask(Task task) {
         return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getPosition(), task.getRepositoryLink(), task.getDate_created(),
+                task.getNumber(), task.getRepositoryLink(), task.getDate_created(),
                 task.getDate_finished(), task.getDashboard().getDashboardId(),
                 task.getTaskCommit().getCommitId());
     }
@@ -58,7 +57,7 @@ public class TaskResponse {
     public static TaskResponse createFromTaskWithoutCommit(Task task) {
         return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getPosition(), task.getRepositoryLink(), task.getDate_created(),
+                task.getNumber(), task.getRepositoryLink(), task.getDate_created(),
                 task.getDate_finished(), task.getDashboard().getDashboardId());
     }
 

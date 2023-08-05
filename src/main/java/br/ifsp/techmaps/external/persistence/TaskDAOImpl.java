@@ -7,7 +7,6 @@ import br.ifsp.techmaps.domain.entities.task.TaskBody;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
-import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.*;
-
-import static br.ifsp.techmaps.domain.entities.task.CommitState.*;
 
 @Repository
 public class TaskDAOImpl implements TaskDAO {
@@ -43,6 +40,9 @@ public class TaskDAOImpl implements TaskDAO {
     @Value("${queries.sql.task-dao.update.task-date-finished}")
     private String updateTaskDateFinishedQuery;
 
+    @Value("${queries.sql.task-dao.update.task-number}")
+    private String updateTaskNumberQuery;
+
     @Value("${queries.sql.task-dao.exists.task-id}")
     private String existsTaskIdQuery;
 
@@ -58,7 +58,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Task saveNewTask(Task task) {
         jdbcTemplate.update(insertTaskQuery, task.getTaskId(), task.getStage().getStageId(),
-                task.getStage().getTheme().name(), task.getTaskBody().name(), task.getPosition(),
+                task.getStage().getTheme().name(), task.getTaskBody().name(), task.getNumber(),
                 task.getRepositoryLink(), task.getDate_created(), task.getDate_finished(), task.getDashboard().getDashboardId());
         return Task.createWithOnlyId(task.getTaskId());
     }
@@ -104,7 +104,7 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public Boolean TaskExists(UUID taskId) {
+    public Boolean taskExists(UUID taskId) {
         Boolean exists = jdbcTemplate.queryForObject(existsTaskIdQuery, Boolean.class, taskId);
         return Objects.nonNull(exists) && exists;
     }
@@ -113,7 +113,7 @@ public class TaskDAOImpl implements TaskDAO {
         UUID id = (UUID) rs.getObject("id");
         UUID stageId = (UUID) rs.getObject("stage_id");
         TaskBody taskBody = TaskBody.valueOf(rs.getString("info"));
-        int position = rs.getInt("position");
+        int number = rs.getInt("task_number");
         String repository = rs.getString("repository_link");
         Timestamp dateCreated = rs.getTimestamp("date_created");
         Timestamp dateFinished = rs.getTimestamp("date_finished");
@@ -124,7 +124,7 @@ public class TaskDAOImpl implements TaskDAO {
         TaskCommit taskCommit = commitDAO.findTaskCommitByTaskId(id).get();
 
         return Task.createFull
-                (id, stage, taskBody, position, repository, dateCreated, dateFinished, dashboard, taskCommit);
+                (id, stage, taskBody, number, repository, dateCreated, dateFinished, dashboard, taskCommit);
     }
 
 }

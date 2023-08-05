@@ -18,7 +18,17 @@ public class Stage {
     private StageStatus stageStatus;
     @OneToMany
     private List<Task> tasks;
+    private int number;
     private Integer stageCommit;
+
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommit) {
+        this.stageId = stageId;
+        this.roadmap = roadmap;
+        this.theme = theme;
+        this.stageStatus = stageStatus;
+        this.number = number;
+        this.stageCommit = stageCommit;
+    }
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, List<Task> tasks) {
         this.stageId = stageId;
@@ -72,7 +82,11 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommit) {
+        return new Stage(id, roadmap, theme, stageStatus, number, stageCommit);
+    }
+
+    public static Stage createStageWithoutTasksAndNumber(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
         return new Stage(id, roadmap, theme, stageStatus, stageCommit);
     }
 
@@ -115,6 +129,14 @@ public class Stage {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Integer getStageCommit() {

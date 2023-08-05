@@ -27,6 +27,8 @@ public class StepDAOImpl implements StepDAO {
     private String updateStepPrioritizeQuery;
     @Value("${queries.sql.step-dao.update.step-is-finished}")
     private String updateStepFinishQuery;
+    @Value("${queries.sql.step-dao.update.step-number}")
+    private String updateStepNumberQuery;
     @Value("${queries.sql.step-dao.delete.step-by-id}")
     private String deleteStepByIdQuery;
     @Value("${queries.sql.step-dao.exists.step-by-id}")
@@ -34,12 +36,11 @@ public class StepDAOImpl implements StepDAO {
 
     @Override
     public Step saveStep(Step step) {
-        UUID stepId = UUID.randomUUID();
 
-        jdbcTemplate.update(insertStepQuery, stepId, step.getTaskId(), step.getNumber(),
+        jdbcTemplate.update(insertStepQuery, step.getId(), step.getTaskId(), step.getNumber(),
                 step.getText(), false, false);
 
-        return Step.createFull(stepId, step.getTaskId(), step.getNumber(),
+        return Step.createFull(step.getId(), step.getTaskId(), step.getNumber(),
                 step.getText(), false, false);
     }
 
@@ -92,11 +93,11 @@ public class StepDAOImpl implements StepDAO {
     public Step mapperFromRs(ResultSet rs, int rowNum) throws SQLException {
         UUID stepId = (UUID) rs.getObject("id");
         UUID taskId = (UUID) rs.getObject("task_id");
-        int order = rs.getInt("order");
+        int number = rs.getInt("position");
         String text = rs.getString("text");
         Boolean isFinished = rs.getBoolean("is_finished");
         Boolean isPriority = rs.getBoolean("is_priority");
-        return Step.createFull(stepId, taskId, order, text, isFinished, isPriority);
+        return Step.createFull(stepId, taskId, number, text, isFinished, isPriority);
     }
 
 }

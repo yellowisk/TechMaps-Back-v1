@@ -1,12 +1,10 @@
 package br.ifsp.techmaps.web.controller;
 
 import br.ifsp.techmaps.domain.entities.task.Task;
+import br.ifsp.techmaps.usecases.step.StepCRUD;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
-import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
-import br.ifsp.techmaps.web.model.task.request.UpdateRepositoryRequest;
-import br.ifsp.techmaps.web.model.task.request.CreateTaskRequest;
+import br.ifsp.techmaps.web.model.task.request.*;
 import br.ifsp.techmaps.web.model.task.response.TaskResponse;
-//import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +15,11 @@ import java.util.*;
 public class TaskController {
 
     private final TaskCRUD taskCRUD;
+    private final StepCRUD stepCRUD;
 
-    public TaskController(TaskCRUD taskCRUD) {
+    public TaskController(TaskCRUD taskCRUD, StepCRUD stepCRUD) {
         this.taskCRUD = taskCRUD;
+        this.stepCRUD = stepCRUD;
     }
 
     @GetMapping("{taskId}")
@@ -36,28 +36,25 @@ public class TaskController {
             @PathVariable UUID stageId) {
         List<Task> tasks = taskCRUD.getTasksByStageId(stageId);
         List<TaskResponse> taskResponses = new ArrayList<>();
-        for (Task task : tasks) {
-            taskResponses.add(TaskResponse.createFromTask(task));
-        }
+        tasks.forEach(task -> taskResponses.add(TaskResponse.createFromTask(task)));
 
         return ResponseEntity.ok(taskResponses);
     }
 
     @PostMapping
-    public ResponseEntity<List<TaskResponse>> addNewTask(
+    public ResponseEntity<List<TaskResponse>> addTasks(
             @PathVariable UUID stageId,
             @RequestBody CreateTaskRequest request) {
 
         List<Task> tasks = taskCRUD.createNewTasks(stageId, request);
+        tasks.forEach(t -> stepCRUD.generateTaskSteps(t.getTaskId()));
         List<TaskResponse> taskResponses = new ArrayList<>();
-        for (Task task : tasks) {
-            taskResponses.add(TaskResponse.createFromTask(task));
-        }
+        tasks.forEach(task -> taskResponses.add(TaskResponse.createFromTask(task)));
 
         return ResponseEntity.ok(taskResponses);
     }
 
-    @PatchMapping("/{taskId}")
+    @PatchMapping("/{taskId}/repository")
     public ResponseEntity<TaskResponse> updateTaskRepository(
             @PathVariable UUID taskId,
             @RequestBody UpdateRepositoryRequest request) {
@@ -66,7 +63,7 @@ public class TaskController {
         return ResponseEntity.ok(TaskResponse.createFromTask(task));
     }
 
-    @PutMapping("/{taskId}")
+    @PatchMapping("/{taskId}/date-finished")
     public ResponseEntity<TaskResponse> updateTaskDateFinished(
             @PathVariable UUID taskId,
             @RequestBody UpdateDateFinishedRequest request) {

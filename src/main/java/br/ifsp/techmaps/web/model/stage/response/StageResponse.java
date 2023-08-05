@@ -14,6 +14,7 @@ public class StageResponse {
     private StageEnum theme;
     private StageStatus stageStatus;
     private List<TaskResponse> tasks;
+    private int number;
     private Integer stageCommit;
 
     public StageResponse(UUID stageId) {
@@ -24,26 +25,23 @@ public class StageResponse {
 
     public StageResponse(UUID stageId, UUID roadmapId,
                          StageEnum theme, StageStatus stageStatus,
-                         List<TaskResponse> tasks, Integer stageCommit) {
+                         List<TaskResponse> tasks, int number, Integer stageCommit) {
         this.stageId = stageId;
         this.roadmapId = roadmapId;
         this.theme = theme;
         this.stageStatus = stageStatus;
         this.tasks = tasks;
+        this.number = number;
         this.stageCommit = stageCommit;
     }
 
-    public StageResponse(UUID stageId, UUID roadmapId, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+    public StageResponse(UUID stageId, UUID roadmapId, StageEnum theme,
+                         StageStatus stageStatus, int number, Integer stageCommit) {
         this.stageId = stageId;
         this.roadmapId = roadmapId;
         this.theme = theme;
         this.stageStatus = stageStatus;
-        this.stageCommit = stageCommit;
-    }
-
-    public StageResponse(UUID stageId, StageStatus stageStatus, Integer stageCommit) {
-        this.stageId = stageId;
-        this.stageStatus = stageStatus;
+        this.number = number;
         this.stageCommit = stageCommit;
     }
 
@@ -57,6 +55,7 @@ public class StageResponse {
                 stage.getRoadmap().getRoadmapId(),
                 stage.getTheme(),
                 stage.getStageStatus(),
+                stage.getNumber(),
                 stage.getStageCommit()
         );
     }
@@ -71,6 +70,7 @@ public class StageResponse {
                 stage.getTheme(),
                 stage.getStageStatus(),
                 taskResponses,
+                stage.getNumber(),
                 stage.getStageCommit()
         );
     }
@@ -113,6 +113,14 @@ public class StageResponse {
 
     public void setTasks(List<TaskResponse> tasks) {
         this.tasks = tasks;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Integer getStageCommit() {
