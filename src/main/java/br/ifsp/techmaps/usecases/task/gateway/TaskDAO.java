@@ -8,10 +8,9 @@ import java.util.*;
 public interface TaskDAO {
 
     Task saveNewTask(Task task);
-
     List<Task> findAllTasksByStageId(UUID stageId);
     Optional<Task> findTaskById(UUID taskId);
-    Task updateTask(Task task);
+    Task updateRepository(Task task);
     Task updateDateFinished(Task task);
 
     Boolean TaskExists(UUID taskId);

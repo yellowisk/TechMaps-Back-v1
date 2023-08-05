@@ -38,7 +38,7 @@ public class TaskDAOImpl implements TaskDAO {
     private String selectTasksByStageIdQuery;
 
     @Value("${queries.sql.task-dao.update.task-repository}")
-    private String updateTaskRepositoryAndDateFinishedQuery;
+    private String updateTaskRepositoryQuery;
 
     @Value("${queries.sql.task-dao.update.task-date-finished}")
     private String updateTaskDateFinishedQuery;
@@ -88,8 +88,8 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public Task updateTask(Task task) {
-        jdbcTemplate.update(updateTaskRepositoryAndDateFinishedQuery, task.getRepositoryLink(),
+    public Task updateRepository(Task task) {
+        jdbcTemplate.update(updateTaskRepositoryQuery, task.getRepositoryLink(),
                 task.getTaskId());
 
         return Task.createWithOnlyId(task.getTaskId());
