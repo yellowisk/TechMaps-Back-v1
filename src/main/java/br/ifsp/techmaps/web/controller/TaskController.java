@@ -51,7 +51,7 @@ public class TaskController {
         List<Task> tasks = taskCRUD.createNewTasks(stageId, request);
         List<TaskResponse> taskResponses = new ArrayList<>();
         for (Task task : tasks) {
-            taskResponses.add(TaskResponse.createFromTaskWithoutCommit(task));
+            taskResponses.add(TaskResponse.createFromTask(task));
         }
 
         return ResponseEntity.ok(taskResponses);

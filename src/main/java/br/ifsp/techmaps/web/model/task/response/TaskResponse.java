@@ -9,23 +9,23 @@ import java.util.*;
 public class TaskResponse {
     private UUID taskId;
     private UUID stageId;
-    private String position;
     private String title;
     private String description;
+    private int position;
     private String repository_link;
     private Timestamp date_created;
     private Timestamp date_finished;
     private UUID dashboardId;
     private UUID commitId;
 
-    public TaskResponse(UUID taskId, UUID stageId, String position, String title, String description,
+    public TaskResponse(UUID taskId, UUID stageId, String title, String description, int position,
                         String repository_link, Timestamp date_created, Timestamp date_finished,
                         UUID dashboardId, UUID commitId) {
         this.taskId = taskId;
         this.stageId = stageId;
         this.title = title;
-        this.position = position;
         this.description = description;
+        this.position = position;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
@@ -33,13 +33,14 @@ public class TaskResponse {
         this.commitId = commitId;
     }
 
-    public TaskResponse(UUID taskId, UUID stageId, String title, String description,
+    public TaskResponse(UUID taskId, UUID stageId, String title, String description, int position,
                         String repository_link, Timestamp date_created, Timestamp date_finished,
                         UUID dashboardId) {
         this.taskId = taskId;
         this.stageId = stageId;
         this.title = title;
         this.description = description;
+        this.position = position;
         this.repository_link = repository_link;
         this.date_created = date_created;
         this.date_finished = date_finished;
@@ -47,18 +48,18 @@ public class TaskResponse {
     }
 
     public static TaskResponse createFromTask(Task task) {
-        return new TaskResponse(task.getId(), task.getStage().getStageId(),
-                task.getTaskBody().name(),
+        return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getRepository(), task.getDate_created(), task.getDate_finished(),
-                task.getDashboard().getDashboardId(), task.getTaskCommit().getCommitId());
+                task.getPosition(), task.getRepositoryLink(), task.getDate_created(),
+                task.getDate_finished(), task.getDashboard().getDashboardId(),
+                task.getTaskCommit().getCommitId());
     }
 
     public static TaskResponse createFromTaskWithoutCommit(Task task) {
-        return new TaskResponse(task.getId(), task.getStage().getStageId(),
+        return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getRepository(), task.getDate_created(), task.getDate_finished(),
-                task.getDashboard().getDashboardId());
+                task.getPosition(), task.getRepositoryLink(), task.getDate_created(),
+                task.getDate_finished(), task.getDashboard().getDashboardId());
     }
 
     public UUID getTaskId() {
@@ -77,11 +78,11 @@ public class TaskResponse {
         this.stageId = stageId;
     }
 
-    public String getPosition() {
-        return position.substring(position.length() - 1);
+    public int getPosition() {
+        return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
@@ -140,4 +141,7 @@ public class TaskResponse {
     public void setCommitId(UUID commitId) {
         this.commitId = commitId;
     }
+
+
+
 }

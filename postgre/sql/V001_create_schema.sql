@@ -228,6 +228,7 @@ CREATE TABLE techmaps_platform.task(
     stage_id uuid NOT NULL,
     theme techmaps_platform.stage_theme,
     info techmaps_platform.task_body,
+    position int,
     repository_link varchar,
     date_created timestamp,
     date_finished timestamp,

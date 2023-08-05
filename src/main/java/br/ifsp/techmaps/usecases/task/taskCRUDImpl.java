@@ -53,6 +53,7 @@ public class taskCRUDImpl implements TaskCRUD {
             if (taskBody.getTopic().equals(topic.getTopic())) {
                 Task task = createTaskRequest.convertToTask();
                 task.setTaskBody(taskBody);
+                task.setPosition(tasks.size() + 1);
                 task.setDashboard(dashboard);
                 task.setStage(stage);
                 tasks.add(task);
@@ -60,7 +61,7 @@ public class taskCRUDImpl implements TaskCRUD {
         }
 
         tasks.forEach(task -> taskDAO.saveNewTask(task));
-        tasks.forEach(task -> commitDAO.createTaskCommit(task));
+        tasks.forEach(task -> task.setTaskCommit(commitDAO.createTaskCommit(task)));
 
         return tasks;
     }
@@ -105,7 +106,7 @@ public class taskCRUDImpl implements TaskCRUD {
         }
 
         Task task = request.convertToTask();
-        task.setId(taskId);
+        task.setTaskId(taskId);
 
         taskDAO.updateTask(task);
 

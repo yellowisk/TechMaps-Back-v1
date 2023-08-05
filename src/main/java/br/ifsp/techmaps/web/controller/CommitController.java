@@ -61,7 +61,7 @@ public class CommitController {
             taskCRUD.updateTaskDateFinished(taskId,
                     UpdateDateFinishedRequest.create(true));
 
-        Task task = taskDAO.findTaskById(taskCommit.getTask().getId()).get();
+        Task task = taskDAO.findTaskById(taskCommit.getTask().getTaskId()).get();
 
         stageCRUD.updateStageCommit(task.getStage().getStageId());
 

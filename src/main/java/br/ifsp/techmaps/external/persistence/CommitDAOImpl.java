@@ -46,7 +46,7 @@ public class CommitDAOImpl implements CommitDAO {
     public TaskCommit createTaskCommit(Task task) {
         UUID taskCommitId = UUID.randomUUID();
         jdbcTemplate.update(insertTaskCommitQuery, taskCommitId,
-                task.getId(), TaskCommit.createCommitTag(task),
+                task.getTaskId(), TaskCommit.createCommitTag(task),
                 UNSTAGED.name(), task.getDashboard().getDashboardId());
         return TaskCommit.createWithOnlyId(taskCommitId);
     }

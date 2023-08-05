@@ -57,10 +57,10 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public Task saveNewTask(Task task) {
-        jdbcTemplate.update(insertTaskQuery, task.getId(), task.getStage().getStageId(),
-                task.getStage().getTheme().name(), task.getTaskBody().name(), task.getRepository(),
-                task.getDate_created(), task.getDate_finished(), task.getDashboard().getDashboardId());
-        return Task.createWithOnlyId(task.getId());
+        jdbcTemplate.update(insertTaskQuery, task.getTaskId(), task.getStage().getStageId(),
+                task.getStage().getTheme().name(), task.getTaskBody().name(), task.getPosition(),
+                task.getRepositoryLink(), task.getDate_created(), task.getDate_finished(), task.getDashboard().getDashboardId());
+        return Task.createWithOnlyId(task.getTaskId());
     }
 
     @Override
@@ -83,24 +83,24 @@ public class TaskDAOImpl implements TaskDAO {
     public List<Task> findAllTasksByStageId(UUID stageId) {
         List<Task> tasks = jdbcTemplate.query(selectTasksByStageIdQuery,
                 this::mapperTaskFromRs, stageId);
-        tasks.forEach(task -> task.setTaskCommit(commitDAO.findTaskCommitByTaskId(task.getId()).get()));
+        tasks.forEach(task -> task.setTaskCommit(commitDAO.findTaskCommitByTaskId(task.getTaskId()).get()));
         return tasks;
     }
 
     @Override
     public Task updateTask(Task task) {
-        jdbcTemplate.update(updateTaskRepositoryAndDateFinishedQuery, task.getRepository(),
-                task.getId());
+        jdbcTemplate.update(updateTaskRepositoryAndDateFinishedQuery, task.getRepositoryLink(),
+                task.getTaskId());
 
-        return Task.createWithOnlyId(task.getId());
+        return Task.createWithOnlyId(task.getTaskId());
     }
 
     @Override
     public Task updateDateFinished(Task task) {
         jdbcTemplate.update(updateTaskDateFinishedQuery,
-                task.getDate_finished(), task.getId());
+                task.getDate_finished(), task.getTaskId());
 
-        return Task.createWithOnlyId(task.getId());
+        return Task.createWithOnlyId(task.getTaskId());
     }
 
     @Override
@@ -113,6 +113,7 @@ public class TaskDAOImpl implements TaskDAO {
         UUID id = (UUID) rs.getObject("id");
         UUID stageId = (UUID) rs.getObject("stage_id");
         TaskBody taskBody = TaskBody.valueOf(rs.getString("info"));
+        int position = rs.getInt("position");
         String repository = rs.getString("repository_link");
         Timestamp dateCreated = rs.getTimestamp("date_created");
         Timestamp dateFinished = rs.getTimestamp("date_finished");
@@ -123,7 +124,7 @@ public class TaskDAOImpl implements TaskDAO {
         TaskCommit taskCommit = commitDAO.findTaskCommitByTaskId(id).get();
 
         return Task.createFull
-                (id, stage, taskBody, repository, dateCreated, dateFinished, dashboard, taskCommit);
+                (id, stage, taskBody, position, repository, dateCreated, dateFinished, dashboard, taskCommit);
     }
 
 }

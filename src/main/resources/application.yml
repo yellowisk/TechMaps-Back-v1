@@ -136,26 +136,26 @@ queries:
       insert:
           task: >
             INSERT INTO techmaps_platform.task 
-            (id, stage_id, theme, info, repository_link, date_created, date_finished, 
+            (id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
             dashboard_id) VALUES (?, ?, ?::techmaps_platform.stage_theme, 
-            ?::techmaps_platform.task_body, ?, ?, ?, ?)
+            ?::techmaps_platform.task_body, ?, ?, ?, ?, ?)
       select:
         task-by-id: >
-          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
-                             dashboard_id FROM techmaps_platform.task WHERE id = ?
+          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE id = ? ORDER BY position ASC
         task-by-stage-id: >
-          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
-                                              dashboard_id FROM techmaps_platform.task WHERE stage_id = ?
+          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE stage_id = ? ORDER BY position ASC
         tasks-by-dashboard-id: >
-          SELECT id, stage_id, theme, info, repository_link, date_created, date_finished, 
-                                              dashboard_id FROM techmaps_platform.task WHERE dashboard_id = ?
+          SELECT id, stage_id, theme, info, position, repository_link, date_created, date_finished, 
+                    dashboard_id FROM techmaps_platform.task WHERE dashboard_id = ? ORDER BY position ASC
       update:
           task-repository: >
             UPDATE techmaps_platform.task SET repository_link = ? WHERE id = ?
           task-date-finished: >
             UPDATE techmaps_platform.task SET date_finished = ? WHERE id = ?
-      delete:
-          task: >
+          task-position: >
+            UPDATE techmaps_platform.task SET position = ? WHERE id = ?
       exists:
           task-id: >
             SELECT EXISTS(SELECT 1 FROM techmaps_platform.task WHERE id = ?)

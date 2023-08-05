@@ -22,7 +22,7 @@ public class CommitResponse {
     }
 
     public static CommitResponse convertFromTaskCommit(TaskCommit taskCommit) {
-        return new CommitResponse(taskCommit.getCommitId(), taskCommit.getTask().getId(),
+        return new CommitResponse(taskCommit.getCommitId(), taskCommit.getTask().getTaskId(),
                 taskCommit.getCommitTag(), taskCommit.getState());
     }
 
