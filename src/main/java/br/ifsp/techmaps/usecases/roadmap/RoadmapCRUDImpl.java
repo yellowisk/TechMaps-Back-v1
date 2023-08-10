@@ -71,6 +71,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     public Roadmap updateRoadmap(UUID roadmapId, UpdateColorRequest request) {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+        roadmapDAO.refreshRoadmap(roadmap);
 
         if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
             throw new RuntimeException("Couldn't update because the roadmap '"

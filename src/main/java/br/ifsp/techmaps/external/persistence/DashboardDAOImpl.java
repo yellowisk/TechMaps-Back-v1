@@ -85,9 +85,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     public Optional<Dashboard> findDashboardById(UUID dashboardId) {
         try {
             List <Roadmap> roadmaps = roadmapDAO.findAllByDashboardId(dashboardId);
-            roadmaps.forEach(roadmap -> {
-                roadmapDAO.refreshRoadmap(roadmap);
-            });
+            roadmaps.forEach(roadmapDAO::refreshRoadmap);
 
             Dashboard dashboard = jdbcTemplate.queryForObject(selectDashboardByIdQuery, this::mapperDashboardFromRs,
                     dashboardId);

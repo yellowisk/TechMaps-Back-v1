@@ -97,6 +97,7 @@ public class CommitDAOImpl implements CommitDAO {
     public TaskCommit updateTaskCommmit(TaskCommit taskCommit) {
         jdbcTemplate.update(updateTaskCommitStatusQuery, taskCommit.getState().name(),
                 taskCommit.getCommitId());
+        dashboardDAO.refreshDashboard(taskCommit.getTask().getDashboard().getDashboardId());
         return TaskCommit.createWithOnlyId(taskCommit.getCommitId());
     }
 
@@ -107,8 +108,8 @@ public class CommitDAOImpl implements CommitDAO {
         CommitState commitState = CommitState.valueOf(rs.getString("state"));
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        Task task = Task.createWithOnlyId(taskId);
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
+        Task task = Task.createWithIdAndDashboard(taskId, dashboard);
 
         return new TaskCommit(id, task, commitTag, commitState);
     }

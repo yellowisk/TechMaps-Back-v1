@@ -84,6 +84,11 @@ public class Task {
         this.date_finished = date_finished;
     }
 
+    public Task(UUID taskId, Dashboard dashboard) {
+        this.taskId = taskId;
+        this.dashboard = dashboard;
+    }
+
     public Task(String repositoryLink) {
         this.repositoryLink = repositoryLink;
     }
@@ -101,6 +106,10 @@ public class Task {
     }
 
     public Task() {}
+
+    public static Task createWithIdAndDashboard(UUID taskId, Dashboard dashboard) {
+        return new Task(taskId, dashboard);
+    }
 
     public static Task createWithOnlyId(UUID taskId) {
         return new Task(taskId);

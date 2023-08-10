@@ -25,9 +25,9 @@ public class StepDescriptionDAOImpl implements StepDescriptionDAO {
 
     @Override
     public List<StepDescription> getStepDescriptions(TaskBody info) {
-        List<StepDescription> descs = jdbcTemplate.query(selectStepDescriptionByTaskInfoQuery,
+        List<StepDescription> descriptions = jdbcTemplate.query(selectStepDescriptionByTaskInfoQuery,
                 this::mapperFromRs, info.name());
-        return descs;
+        return descriptions;
     }
 
     public StepDescription mapperFromRs(ResultSet rs, int rowNUm) throws SQLException {

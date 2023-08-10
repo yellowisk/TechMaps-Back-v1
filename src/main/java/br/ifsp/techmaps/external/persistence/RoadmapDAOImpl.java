@@ -69,8 +69,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     public Roadmap refreshRoadmap(Roadmap roadmap) {
 
         if(!roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)){
-            Long totalTime;
-            totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
+            Long totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
             roadmap.setTotalTime(totalTime/1000);
             jdbcTemplate.update(updateRoadmapTotalTimeQuery, roadmap.getTotalTime(), roadmap.getRoadmapId());
             int counterCommitsStaged = jdbcTemplate.queryForObject(selectCountCommitsByTaskWithStageFromRoadmapByIdQuery, Integer.class, roadmap.getRoadmapId());

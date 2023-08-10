@@ -219,8 +219,8 @@ public class StageCRUDImpl implements StageCRUD {
         if(!stageDAO.StageExists(stageId))
             throw new ResourceNotFoundException("Couldn't find stage with id:" + stageId);
 
-        List<Task> tasks = taskDAO.findAllTasksByStageId(stageId);
         Stage stage = stageDAO.findStageById(stageId).get();
+        List<Task> tasks = taskDAO.findAllTasksByStageId(stageId);
         stage.setTasks(tasks);
 
         return stage;

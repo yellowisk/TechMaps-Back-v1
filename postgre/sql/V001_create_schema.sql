@@ -314,4 +314,3 @@ ALTER TABLE techmaps_platform.task_step_description OWNER TO "techmaps";
 
 ALTER TABLE techmaps_platform.task_step_description
     ADD CONSTRAINT task_step_description_pkey PRIMARY KEY (id);
-
