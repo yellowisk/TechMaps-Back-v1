@@ -11,11 +11,9 @@ import java.util.*;
 @Service
 public class CommitCRUDImpl implements CommitCRUD {
     private final CommitDAO commitDAO;
-    private final RoadmapDAO roadmapDAO;
 
-    public CommitCRUDImpl(CommitDAO commitDAO, RoadmapDAO roadmapDAO) {
+    public CommitCRUDImpl(CommitDAO commitDAO) {
         this.commitDAO = commitDAO;
-        this.roadmapDAO = roadmapDAO;
     }
 
     @Override

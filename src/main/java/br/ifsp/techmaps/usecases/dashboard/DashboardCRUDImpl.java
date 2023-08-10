@@ -28,7 +28,7 @@ public class DashboardCRUDImpl implements DashboardCRUD {
     }
 
     @Override
-    public Dashboard getDashboardById(UUID dashboardId) {;
+    public Dashboard getDashboardById(UUID dashboardId) {
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).get();
         dashboard.setTotalTime(dashboardDAO.refreshDashboard(dashboardId).getTotalTime());
         return dashboard;
