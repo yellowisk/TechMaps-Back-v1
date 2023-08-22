@@ -14,6 +14,15 @@ public enum RoadmapLanguage {
         this.condition = condition;
     }
 
+    public static boolean validateLanguage(RoadmapLanguage roadmapLanguage) {
+        for (RoadmapLanguage language : RoadmapLanguage.values()) {
+            if (language.equals(roadmapLanguage)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getSkill() {
         return skill;
     }

@@ -34,11 +34,15 @@ public enum StageEnum {
         LEARN_VSCODE("Learn Visual Studio Code", "General"),
         LEARN_INTELLIJ("Learn IntelliJ IDEA", "General"),
         LEARN_ANDROID("Learn Android Studio", "Android"),
+    // Runtime Environments
+        LEARN_NODEJS("Learn NodeJS", "Backend"),
     //Frameworks
         LEARN_ANGULAR("Learn Angular", "Frontend"),
-        LEARN_REACT("Learn React", "Frontend"),
         LEARN_SPRING("Learn Spring", "Backend"),
         LEARN_DJANGO("Learn Django", "Backend"),
+    //Library
+        LEARN_REACT("Learn React", "Frontend"),
+        LEARN_BOOTSTRAP("Learn Bootstrap", "Frontend"),
 
     //Databases
         LEARN_MYSQL("Learn MySQL", "Backend"),

@@ -39,21 +39,21 @@ insert into techmaps_platform.roadmap(id, title, type, status, lang, color,
 
 --! Stage Queries --!
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status,
+insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
     commit_counter) values ('962542e7-6813-48b6-8e20-7bfc181146bf'::uuid,
-    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_JAVA', 'UNDONE', 0);
+    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_JAVA', 'UNDONE', 1, 0);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status,
+insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
     commit_counter) values ('4c391609-5082-4dff-9994-a500f83e2419'::uuid,
-    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_SPRING', 'UNDONE', 2);
+    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_SPRING', 'UNDONE', 2, 2);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status,
+insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
     commit_counter) values ('38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid,
-    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_JS', 'DONE', 2);
+    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_JS', 'DONE', 1, 2);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status,
+insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
     commit_counter) values ('e25ce4ef-6b92-4f4b-961e-56e00d55278c'::uuid,
-    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', 'DONE', 0);
+    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', 2, 'DONE', 0);
 
 --! Task Queries --!
 
@@ -64,21 +64,21 @@ insert into techmaps_platform.task(id, stage_id, theme, info,
     'SPG1', 'https://github.com/yellowisk/TechMaps-API', '2023-06-09 07:45:00',
     '2023-06-13 08:00:00', '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, theme, info, position,
+insert into techmaps_platform.task(id, stage_id, theme, info, task_number,
     repository_link, date_created, date_finished, dashboard_id)
     values ('b061df33-90c7-4b8e-b976-7909528f0dc0'::uuid,
     '4c391609-5082-4dff-9994-a500f83e2419'::uuid, 'LEARN_SPRING',
     'SPG2', 1, 'https://github.com/yellowisk/TechMaps-API', '2023-06-09 07:45:00',
     null, '582c710f-849c-4a9f-a10f-0b68c784f240'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, theme, info, position,
+insert into techmaps_platform.task(id, stage_id, theme, info, task_number,
     repository_link, date_created, date_finished, dashboard_id)
     values ('beefb09f-1c66-4d82-9e97-dfe5cad7d580'::uuid,
     '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'LEARN_JS',
     'JS1', 1, 'https://github.com/yellowisk/TechMaps-API', '2023-04-09 07:45:00',
     '2023-04-13 08:00:00', '436ee536-93a3-4c20-9271-18a19c01efdb'::uuid);
 
-insert into techmaps_platform.task(id, stage_id, theme, info, position,
+insert into techmaps_platform.task(id, stage_id, theme, info, task_number,
     repository_link, date_created, date_finished, dashboard_id)
     values ('c8001af2-e2b8-4c22-bee3-92036902edf9'::uuid,
     '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid, 'LEARN_JS',

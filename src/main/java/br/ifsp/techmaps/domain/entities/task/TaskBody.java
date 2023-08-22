@@ -103,6 +103,10 @@ public enum TaskBody {
     AD2("Learn Android Studio", "Learn Android app structure", "Understand the components (activities, services, layouts) and lifecycle of an Android app."),
     AD3("Learn Android Studio", "Develop a basic Android app", "Create a simple Android application with multiple activities, layouts, and basic functionality."),
 
+    ND1("Learn Node.js", "Install Node.js", "Download and set up Node.js, a JavaScript runtime environment."),
+    ND2("Learn Node.js", "Learn Node.js basics", "Understand Node.js modules, asynchronous programming, and the Node.js event loop."),
+    ND3("Learn Node.js", "Build a Node.js application", "Develop a Node.js application that interacts with a database and exposes RESTful endpoints."),
+
     AN1("Learn Angular", "Install Angular CLI", "Set up Angular development environment using the Angular CLI."),
     AN2("Learn Angular", "Learn Angular basics", "Understand components, modules, data binding, and routing in the Angular framework."),
     AN3("Learn Angular", "Build a simple Angular app", "Develop an Angular application that fetches data from an API and displays it using components and routing."),
@@ -118,6 +122,10 @@ public enum TaskBody {
     DJ1("Learn Django", "Set up Django environment", "Install Django and set up a virtual environment for your Django project."),
     DJ2("Learn Django", "Create a basic Django app", "Build a simple Django application with a few models and views."),
     DJ3("Learn Django", "Implement user authentication", "Integrate Django's built-in authentication system to handle user registration and login."),
+
+    BT1("Learn Bootstrap", "Install Bootstrap", "Download Bootstrap and set up a project with Bootstrap's CSS and JavaScript files."),
+    BT2("Learn Bootstrap", "Learn Bootstrap basics", "Understand Bootstrap's grid system, components, and utilities."),
+    BT3("Learn Bootstrap", "Build a simple website", "Develop a basic website using Bootstrap's grid system and components."),
 
     MY1("Learn MySQL", "Install MySQL", "Set up MySQL database server on your machine."),
     MY2("Learn MySQL", "Learn SQL basics", "Understand SQL syntax, data manipulation (SELECT, INSERT, UPDATE, DELETE), and table creation."),

@@ -65,15 +65,6 @@ public class StageController {
         return ResponseEntity.ok(stageResponses);
     }
 
-    //Sorta useless
-    @PatchMapping("/{stageId}")
-    public ResponseEntity<UpdateStagingResponse> updateNumOfCommits(
-            @PathVariable UUID stageId) {
-        Stage stage = stageCRUD.updateStageCommit(stageId);
-
-        return ResponseEntity.ok(UpdateStagingResponse.createForUpdate(stage));
-    }
-
     @PutMapping("/{stageId}")
     public ResponseEntity<UpdateStatusResponse> updateStageStatus(
             @PathVariable UUID roadmapId,

@@ -1,6 +1,7 @@
 package br.ifsp.techmaps.web.controller;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.usecases.roadmap.RoadmapCRUD;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
@@ -32,6 +33,7 @@ public class RoadmapController {
     public ResponseEntity<RoadmapResponse> addNewRoadmap(
             @PathVariable UUID dashboardId,
             @RequestBody CreateRoadmapRequest createRoadmapRequest) {
+
         Roadmap roadmap = roadmapCRUD.addNewRoadmap(dashboardId, createRoadmapRequest);
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
