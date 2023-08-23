@@ -1,2 +1,2 @@
 # TechMaps - Spring Boot API
-Roadmap Generator and Progress Tracker for Developers
+TechMaps is a mobile application which strives towards providing students roadmaps that cover topics of the software development world.
