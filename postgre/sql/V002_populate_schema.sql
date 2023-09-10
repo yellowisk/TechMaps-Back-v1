@@ -53,7 +53,7 @@ insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
 
 insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
     commit_counter) values ('e25ce4ef-6b92-4f4b-961e-56e00d55278c'::uuid,
-    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', 2, 'DONE', 0);
+    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', 'DONE', 2, 0);
 
 --! Task Queries --!
 
