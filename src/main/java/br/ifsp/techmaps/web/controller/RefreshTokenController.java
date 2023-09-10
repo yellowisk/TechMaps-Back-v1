@@ -63,6 +63,7 @@ public class RefreshTokenController {
             final Map<String, String> body = new HashMap<>();
             body.put("uuid", user.getId().toString());
             body.put("username", user.getUsername());
+            body.put("email", user.getEmail());
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), body);
 
