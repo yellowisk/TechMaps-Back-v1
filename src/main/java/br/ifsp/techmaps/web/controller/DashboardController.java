@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
-@RequestMapping("api/v1/dashboard/")
+@RequestMapping("api/v1/dashboards/")
 @RestController
 public class DashboardController {
 
@@ -25,7 +25,7 @@ public class DashboardController {
         return ResponseEntity.ok(DashboardResponse.createFromDashboard(dashboard));
     }
 
-    @GetMapping("user/{userId}")
+    @GetMapping("users/{userId}")
     public ResponseEntity<DashboardResponse> getDashboardByUserId(
             @PathVariable UUID userId) {
         Dashboard dashboard = dashboardCRUD.getDashboardByUserId(userId);

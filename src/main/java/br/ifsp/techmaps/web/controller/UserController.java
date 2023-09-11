@@ -25,13 +25,13 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.createFromUser(user));
     }
 
-    @GetMapping("api/v1/user/id/{userId}")
+    @GetMapping("api/v1/users/id/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable UUID userId) {
         User user = userCRUD.getById(userId);
         return ResponseEntity.ok(UserResponse.createFromUser(user));
     }
 
-    @PatchMapping("api/v1/user/{userId}")
+    @PatchMapping("api/v1/users/{userId}")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest, @PathVariable UUID userId) {
         User user = userCRUD.update(userRequest, userId);
         return ResponseEntity.ok(UserResponse.createFromUser(user));

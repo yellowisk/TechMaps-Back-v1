@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
-@RequestMapping("api/v1/dashboard/{dashboardId}/")
+@RequestMapping("api/v1/dashboards/{dashboardId}/")
 @RestController
 public class RoadmapController {
     private final RoadmapCRUD roadmapCRUD;
