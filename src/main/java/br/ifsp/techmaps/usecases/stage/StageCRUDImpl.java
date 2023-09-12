@@ -41,7 +41,7 @@ public class StageCRUDImpl implements StageCRUD {
         if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
 
-        if(roadmapDAO.findRoadmapById(roadmapId).get().getRoadmapStatus().equals(RoadmapStatus.COMPLETE))
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getStatus().equals(RoadmapStatus.COMPLETE))
             throw new IllegalArgumentException("This Roadmap is already done!");
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
@@ -50,7 +50,7 @@ public class StageCRUDImpl implements StageCRUD {
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
                 request.getTheme(), StageStatus.UNDONE, stageNumber,0);
 
-        if (request.getTheme().getCondition().equals(roadmap.get().getRoadmapLanguage().getCondition())
+        if (request.getTheme().getCondition().equals(roadmap.get().getLanguage().getCondition())
                 || request.getTheme().getCondition() == "General") {
             return stageDAO.saveStage(stage);
         } else {
@@ -64,7 +64,7 @@ public class StageCRUDImpl implements StageCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).orElseThrow(() ->
                 new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId));
 
-        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
             throw new IllegalArgumentException("This Roadmap is already done!");
         }
 
@@ -82,8 +82,8 @@ public class StageCRUDImpl implements StageCRUD {
         languageToThemesMap.put(RoadmapLanguage.KOTLIN, Arrays.asList(StageEnum.LEARN_INTERNET, StageEnum.LEARN_OOP, StageEnum.LEARN_KOTLIN, StageEnum.LEARN_MYSQL,
                 StageEnum.LEARN_ANDROID, StageEnum.LEARN_FIREBASE, StageEnum.LEARN_WEBSERVERS));
 
-        if (languageToThemesMap.containsKey(roadmap.getRoadmapLanguage())) {
-            themes = languageToThemesMap.get(roadmap.getRoadmapLanguage());
+        if (languageToThemesMap.containsKey(roadmap.getLanguage())) {
+            themes = languageToThemesMap.get(roadmap.getLanguage());
         }
 
         for (StageEnum theme : themes) {
@@ -140,7 +140,7 @@ public class StageCRUDImpl implements StageCRUD {
             if(commit.equals(CommitState.STAGED))
                 counter++;
 
-        stage.setStageCommit(counter);
+        stage.setStageCommits(counter);
 
         Stage response = stageDAO.updateStage(stage);
 
@@ -193,7 +193,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
-        if (roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
             throw new RuntimeException("Couldn't delete '" + opt.get().getTheme().name() + "' because its Roadmap is complete");
         }
 

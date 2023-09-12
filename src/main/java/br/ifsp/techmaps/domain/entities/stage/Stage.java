@@ -19,15 +19,15 @@ public class Stage {
     @OneToMany
     private List<Task> tasks;
     private int number;
-    private Integer stageCommit;
+    private Integer stageCommits;
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommit) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
         this.stageStatus = stageStatus;
         this.number = number;
-        this.stageCommit = stageCommit;
+        this.stageCommits = stageCommits;
     }
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, List<Task> tasks) {
@@ -38,12 +38,12 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
         this.stageStatus = stageStatus;
-        this.stageCommit = stageCommit;
+        this.stageCommits = stageCommits;
     }
 
     public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
@@ -59,23 +59,23 @@ public class Stage {
         this.stageStatus = stageStatus;
     }
 
-    public Stage(UUID stageId, StageStatus stageStatus, Integer stageCommit) {
+    public Stage(UUID stageId, StageStatus stageStatus, Integer stageCommits) {
         this.stageId = stageId;
         this.stageStatus = stageStatus;
-        this.stageCommit = stageCommit;
+        this.stageCommits = stageCommits;
     }
 
-    public Stage(StageStatus stageStatus, Integer stageCommit) {
+    public Stage(StageStatus stageStatus, Integer stageCommits) {
         this.stageStatus = stageStatus;
-        this.stageCommit = stageCommit;
+        this.stageCommits = stageCommits;
     }
 
     public Stage(UUID stageId) {
         this.stageId = stageId;
     }
 
-    public Stage(Integer stageCommit) {
-        this.stageCommit = stageCommit;
+    public Stage(Integer stageCommits) {
+        this.stageCommits = stageCommits;
     }
 
     public Stage(StageStatus stageStatus) {
@@ -139,11 +139,11 @@ public class Stage {
         this.number = number;
     }
 
-    public Integer getStageCommit() {
-        return stageCommit;
+    public Integer getStageCommits() {
+        return stageCommits;
     }
 
-    public void setStageCommit(Integer stageCommit) {
-        this.stageCommit = stageCommit;
+    public void setStageCommits(Integer stageCommits) {
+        this.stageCommits = stageCommits;
     }
 }

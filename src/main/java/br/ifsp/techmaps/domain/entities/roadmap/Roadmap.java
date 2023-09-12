@@ -15,9 +15,9 @@ public class Roadmap {
     private UUID roadmapId;
     private String title;
     private RoadmapType type;
-    private RoadmapStatus roadmapStatus;
-    private RoadmapLanguage roadmapLanguage;
-    private RoadmapColor roadmapColor;
+    private RoadmapStatus status;
+    private RoadmapLanguage language;
+    private RoadmapColor color;
     private Timestamp startTime;
     private Timestamp finishTime;
     private Long totalTime;
@@ -29,13 +29,13 @@ public class Roadmap {
     public Roadmap() {
     }
 
-    public Roadmap(String title, RoadmapType type, RoadmapStatus roadmapStatus, RoadmapLanguage roadmapLanguage, RoadmapColor roadmapColor,
+    public Roadmap(String title, RoadmapType type, RoadmapStatus status, RoadmapLanguage language, RoadmapColor color,
                    Timestamp startTime, Timestamp finishTime, Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.title = title;
         this.type = type;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.roadmapColor = roadmapColor;
+        this.status = status;
+        this.language = language;
+        this.color = color;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.totalTime = totalTime;
@@ -43,15 +43,15 @@ public class Roadmap {
         this.dashboardId = dashboardId;
     }
 
-    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus roadmapStatus,
-                   RoadmapLanguage roadmapLanguage, RoadmapColor roadmapColor, Timestamp startTime,
+    public Roadmap(UUID roadmapId, String title, RoadmapType type, RoadmapStatus status,
+                   RoadmapLanguage language, RoadmapColor color, Timestamp startTime,
                    Timestamp finishTime, Long totalTime, Integer roadmapCommits, UUID dashboardId) {
         this.roadmapId = roadmapId;
         this.title = title;
         this.type = type;
-        this.roadmapStatus = roadmapStatus;
-        this.roadmapLanguage = roadmapLanguage;
-        this.roadmapColor = roadmapColor;
+        this.status = status;
+        this.language = language;
+        this.color = color;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.totalTime = totalTime;
@@ -108,26 +108,26 @@ public class Roadmap {
         this.type = type;
     }
 
-    public RoadmapStatus getRoadmapStatus() {
-        return roadmapStatus;
+    public RoadmapStatus getStatus() {
+        return status;
     }
 
-    public void setRoadmapStatus(RoadmapStatus roadmapStatus) {
-        this.roadmapStatus = roadmapStatus;
+    public void setStatus(RoadmapStatus status) {
+        this.status = status;
     }
 
 
-    public RoadmapLanguage getRoadmapLanguage() {
-        return roadmapLanguage;
+    public RoadmapLanguage getLanguage() {
+        return language;
     }
 
-    public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
-        this.roadmapLanguage = roadmapLanguage;
+    public void setLanguage(RoadmapLanguage language) {
+        this.language = language;
     }
 
-    public RoadmapColor getRoadmapColor() {return roadmapColor;}
+    public RoadmapColor getColor() {return color;}
 
-    public void setRoadmapColor(RoadmapColor roadmapColor) {this.roadmapColor = roadmapColor;}
+    public void setColor(RoadmapColor color) {this.color = color;}
 
     public Timestamp getStartTime() {
         return startTime;

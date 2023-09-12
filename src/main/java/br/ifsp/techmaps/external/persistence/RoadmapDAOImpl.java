@@ -55,12 +55,12 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID roadmapId = UUID.randomUUID();
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
-                roadmap.getRoadmapStatus().name(), roadmap.getRoadmapLanguage().name(),
-                roadmap.getRoadmapColor().name(), roadmap.getStartTime(), roadmap.getFinishTime(),
+                roadmap.getStatus().name(), roadmap.getLanguage().name(),
+                roadmap.getColor().name(), roadmap.getStartTime(), roadmap.getFinishTime(),
                 roadmap.getTotalTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
         return Roadmap.createWithoutStages(roadmapId, roadmap.getTitle(), roadmap.getType(),
-                roadmap.getRoadmapStatus(), roadmap.getRoadmapLanguage(), roadmap.getRoadmapColor(),
+                roadmap.getStatus(), roadmap.getLanguage(), roadmap.getColor(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
@@ -68,7 +68,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Override
     public Roadmap refreshRoadmap(Roadmap roadmap) {
 
-        if(!roadmap.getRoadmapStatus().equals(RoadmapStatus.COMPLETE)){
+        if(!roadmap.getStatus().equals(RoadmapStatus.COMPLETE)){
             Long totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
             roadmap.setTotalTime(totalTime/1000);
             jdbcTemplate.update(updateRoadmapTotalTimeQuery, roadmap.getTotalTime(), roadmap.getRoadmapId());
@@ -112,7 +112,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         Timestamp finishTime = Timestamp.valueOf(LocalDateTime.now());
         Long totalTime = (finishTime.getTime() - startTime.getTime())/1000;
 
-        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getRoadmapStatus().name(),
+        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getStatus().name(),
                 roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
         return roadmap;
     }
@@ -120,7 +120,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Override
     public Roadmap updateRoadmapTitleAndColor(Roadmap roadmap) {
         jdbcTemplate.update(updateRoadmapTitleAndColorQuery, roadmap.getTitle(),
-                roadmap.getRoadmapColor().name(), roadmap.getRoadmapId());
+                roadmap.getColor().name(), roadmap.getRoadmapId());
         return roadmap;
     }
 

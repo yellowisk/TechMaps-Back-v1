@@ -9,44 +9,44 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class StageResponse {
-    private UUID stageId;
+    private UUID id;
     private UUID roadmapId;
     private StageEnum theme;
-    private StageStatus stageStatus;
+    private StageStatus status;
     private List<TaskResponse> tasks;
     private int number;
-    private Integer stageCommit;
+    private Integer commits;
 
-    public StageResponse(UUID stageId) {
-        this.stageId = stageId;
+    public StageResponse(UUID id) {
+        this.id = id;
     }
 
 
 
-    public StageResponse(UUID stageId, UUID roadmapId,
-                         StageEnum theme, StageStatus stageStatus,
-                         List<TaskResponse> tasks, int number, Integer stageCommit) {
-        this.stageId = stageId;
+    public StageResponse(UUID id, UUID roadmapId,
+                         StageEnum theme, StageStatus status,
+                         List<TaskResponse> tasks, int number, Integer commits) {
+        this.id = id;
         this.roadmapId = roadmapId;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.status = status;
         this.tasks = tasks;
         this.number = number;
-        this.stageCommit = stageCommit;
+        this.commits = commits;
     }
 
-    public StageResponse(UUID stageId, UUID roadmapId, StageEnum theme,
-                         StageStatus stageStatus, int number, Integer stageCommit) {
-        this.stageId = stageId;
+    public StageResponse(UUID id, UUID roadmapId, StageEnum theme,
+                         StageStatus status, int number, Integer commits) {
+        this.id = id;
         this.roadmapId = roadmapId;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.status = status;
         this.number = number;
-        this.stageCommit = stageCommit;
+        this.commits = commits;
     }
 
-    public static StageResponse createJustId(UUID stageId) {
-        return new StageResponse(stageId);
+    public static StageResponse createJustId(UUID id) {
+        return new StageResponse(id);
     }
 
     public static StageResponse createFromStage(Stage stage) {
@@ -56,7 +56,7 @@ public class StageResponse {
                 stage.getTheme(),
                 stage.getStageStatus(),
                 stage.getNumber(),
-                stage.getStageCommit()
+                stage.getStageCommits()
         );
     }
 
@@ -71,16 +71,16 @@ public class StageResponse {
                 stage.getStageStatus(),
                 taskResponses,
                 stage.getNumber(),
-                stage.getStageCommit()
+                stage.getStageCommits()
         );
     }
 
     public UUID getStageId() {
-        return stageId;
+        return id;
     }
 
     public void setStageId(UUID stageId) {
-        this.stageId = stageId;
+        this.id = id;
     }
 
     public UUID getRoadmapId() {
@@ -99,12 +99,12 @@ public class StageResponse {
         this.theme = theme;
     }
 
-    public StageStatus getStageStatus() {
-        return stageStatus;
+    public StageStatus getStatus() {
+        return status;
     }
 
-    public void setStageStatus(StageStatus stageStatus) {
-        this.stageStatus = stageStatus;
+    public void setStatus(StageStatus status) {
+        this.status = status;
     }
 
     public List<TaskResponse> getTasks() {
@@ -123,11 +123,11 @@ public class StageResponse {
         this.number = number;
     }
 
-    public Integer getStageCommit() {
-        return stageCommit;
+    public Integer getCommits() {
+        return commits;
     }
 
-    public void setStageCommit(Integer stageCommit) {
-        this.stageCommit = stageCommit;
+    public void setCommits(Integer commits) {
+        this.commits = commits;
     }
 }

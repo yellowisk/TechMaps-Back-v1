@@ -83,7 +83,7 @@ public class TaskDAOImpl implements TaskDAO {
     public List<Task> findAllTasksByStageId(UUID stageId) {
         List<Task> tasks = jdbcTemplate.query(selectTasksByStageIdQuery,
                 this::mapperTaskFromRs, stageId);
-        tasks.forEach(task -> task.setTaskCommit(commitDAO.findTaskCommitByTaskId(task.getTaskId()).get()));
+        tasks.forEach(task -> task.setTaskCommits(commitDAO.findTaskCommitByTaskId(task.getTaskId()).get()));
         return tasks;
     }
 

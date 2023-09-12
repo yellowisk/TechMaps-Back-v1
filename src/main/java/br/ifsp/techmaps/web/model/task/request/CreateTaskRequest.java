@@ -9,21 +9,21 @@ import java.util.*;
 
 public class CreateTaskRequest {
     @NotNull
-    private String link;
+    private String repository;
 
     public CreateTaskRequest() {
     }
 
     public Task convertToTask() {
-        return Task.createForStage(UUID.randomUUID(), link, Timestamp.valueOf(LocalDateTime.now()));
+        return Task.createForStage(UUID.randomUUID(), repository, Timestamp.valueOf(LocalDateTime.now()));
     }
 
-    public String getLink() {
-        return link;
+    public String getRepository() {
+        return repository;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setRepository(String repository) {
+        this.repository = repository;
     }
 
 }

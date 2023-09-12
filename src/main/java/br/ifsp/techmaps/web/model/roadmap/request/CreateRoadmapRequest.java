@@ -9,17 +9,17 @@ import java.util.*;
 public class CreateRoadmapRequest {
     private String title;
     private RoadmapType type;
-    private RoadmapLanguage roadmapLanguage;
-    private RoadmapColor roadmapColor;
+    private RoadmapLanguage language;
+    private RoadmapColor color;
     private UUID dashboardId;
 
     public CreateRoadmapRequest(String title, RoadmapType type,
-                                RoadmapLanguage roadmapLanguage,
-                                RoadmapColor roadmapColor, UUID dashboardId) {
+                                RoadmapLanguage language,
+                                RoadmapColor color, UUID dashboardId) {
         this.title = title;
         this.type = type;
-        this.roadmapLanguage = roadmapLanguage;
-        this.roadmapColor = roadmapColor;
+        this.language = language;
+        this.color = color;
         this.dashboardId = dashboardId;
     }
 
@@ -40,19 +40,19 @@ public class CreateRoadmapRequest {
     }
 
     public RoadmapLanguage getRoadmapLanguage() {
-        return roadmapLanguage;
+        return language;
     }
 
-    public void setRoadmapLanguage(RoadmapLanguage roadmapLanguage) {
-        this.roadmapLanguage = roadmapLanguage;
+    public void setRoadmapLanguage(RoadmapLanguage language) {
+        this.language = language;
     }
 
     public RoadmapColor getRoadmapColor() {
-        return roadmapColor;
+        return color;
     }
 
-    public void setRoadmapColor(RoadmapColor roadmapColor) {
-        this.roadmapColor = roadmapColor;
+    public void setRoadmapColor(RoadmapColor color) {
+        this.color = color;
     }
 
     public UUID getDashboardId() {

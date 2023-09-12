@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addCookie(refreshToken);
 
         final Map<String, String> body = new HashMap<>();
-        body.put("uuid", user.getId().toString());
+        body.put("id", user.getId().toString());
         body.put("username", user.getUsername());
         body.put("email", user.getEmail());
         response.setContentType(APPLICATION_JSON_VALUE);

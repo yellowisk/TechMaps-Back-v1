@@ -11,7 +11,6 @@ import br.ifsp.techmaps.web.model.comit.request.UpdateCommitStatus;
 import br.ifsp.techmaps.web.model.comit.response.CommitResponse;
 import br.ifsp.techmaps.web.model.comit.response.UpdateCommitResponse;
 import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
-//import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

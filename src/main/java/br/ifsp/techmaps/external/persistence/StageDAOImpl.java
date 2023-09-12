@@ -6,8 +6,6 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
-import br.ifsp.techmaps.external.persistence.util.JsonUtil;
-import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,16 +59,16 @@ public class StageDAOImpl implements StageDAO {
     public Stage saveStage(Stage stage) {
         UUID stageId = stage.getStageId();
 
-        if (stage.getRoadmap().getRoadmapStatus() == RoadmapStatus.COMPLETE) {
+        if (stage.getRoadmap().getStatus() == RoadmapStatus.COMPLETE) {
             throw new IllegalStateException("Roadmap is already done!");
         }
 
         jdbcTemplate.update(insertStageQuery, stageId,
                 stage.getRoadmap().getRoadmapId(), stage.getTheme().name(),
-                stage.getStageStatus().name(), stage.getNumber(), stage.getStageCommit());
+                stage.getStageStatus().name(), stage.getNumber(), stage.getStageCommits());
 
         return Stage.createStageWithoutTasks(stageId, stage.getRoadmap(), stage.getTheme(),
-                stage.getStageStatus(), stage.getNumber(), stage.getStageCommit());
+                stage.getStageStatus(), stage.getNumber(), stage.getStageCommits());
     }
 
     @Override
@@ -126,7 +124,7 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public Stage updateStage(Stage stage) {
         jdbcTemplate.update(updateStageCommitCounterQuery, ps -> {
-            ps.setObject(1, stage.getStageCommit());
+            ps.setObject(1, stage.getStageCommits());
             ps.setObject(2, stage.getStageId());
         });
         return stage;
@@ -137,7 +135,7 @@ public class StageDAOImpl implements StageDAO {
 
         UUID roadmapId = stage.getRoadmap().getRoadmapId();
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
-        if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
+        if (roadmap.getStatus() == RoadmapStatus.COMPLETE) {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 
@@ -155,13 +153,13 @@ public class StageDAOImpl implements StageDAO {
             for (Stage roadmapStage : stages) {
                 if (roadmapStage.getStageStatus().equals(StageStatus.DONE)) {
                     stageDoneCounter++;
-                    commitStagedCounter = commitStagedCounter + roadmapStage.getStageCommit();
+                    commitStagedCounter = commitStagedCounter + roadmapStage.getStageCommits();
                 }
             }
         }
 
         if (stageDoneCounter == stages.size()) {
-            roadmap.setRoadmapStatus(RoadmapStatus.COMPLETE);
+            roadmap.setStatus(RoadmapStatus.COMPLETE);
             roadmap.setRoadmapCommits(commitStagedCounter);
             roadmapDAO.updateRoadmapTime(roadmap);
         }

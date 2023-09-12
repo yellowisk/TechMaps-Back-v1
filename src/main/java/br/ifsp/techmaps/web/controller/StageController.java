@@ -5,9 +5,7 @@ import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.web.model.stage.request.CreateStageRequest;
 import br.ifsp.techmaps.web.model.stage.request.UpdateStatusRequest;
 import br.ifsp.techmaps.web.model.stage.response.StageResponse;
-import br.ifsp.techmaps.web.model.stage.response.UpdateStagingResponse;
 import br.ifsp.techmaps.web.model.stage.response.UpdateStatusResponse;
-//import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 

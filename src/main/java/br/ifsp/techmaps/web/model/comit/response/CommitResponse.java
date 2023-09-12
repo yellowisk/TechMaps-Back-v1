@@ -6,18 +6,18 @@ import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import java.util.UUID;
 
 public class CommitResponse {
-    private UUID commitId;
+    private UUID id;
 
     private UUID taskId;
 
-    private String CommitTag;
+    private String tag;
 
     private CommitState state;
 
-    public CommitResponse(UUID commitId, UUID taskId, String commitTag, CommitState state) {
-        this.commitId = commitId;
+    public CommitResponse(UUID id, UUID taskId, String tag, CommitState state) {
+        this.id = id;
         this.taskId = taskId;
-        CommitTag = commitTag;
+        this.tag = tag;
         this.state = state;
     }
 
@@ -27,11 +27,11 @@ public class CommitResponse {
     }
 
     public UUID getCommitId() {
-        return commitId;
+        return id;
     }
 
-    public void setCommitId(UUID commitId) {
-        this.commitId = commitId;
+    public void setCommitId(UUID id) {
+        this.id = id;
     }
 
     public UUID getTaskId() {
@@ -43,11 +43,11 @@ public class CommitResponse {
     }
 
     public String getCommitTag() {
-        return CommitTag;
+        return tag;
     }
 
-    public void setCommitTag(String commitTag) {
-        CommitTag = commitTag;
+    public void setCommitTag(String tag) {
+        this.tag = tag;
     }
 
     public CommitState getState() {

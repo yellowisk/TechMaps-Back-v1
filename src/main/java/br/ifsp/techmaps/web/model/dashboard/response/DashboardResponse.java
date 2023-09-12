@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public class DashboardResponse {
-    private UUID dashboardId;
+    private UUID id;
 
     private int totalRoadmaps;
 
@@ -21,9 +21,9 @@ public class DashboardResponse {
     public DashboardResponse() {
     }
 
-    public DashboardResponse(UUID dashboardId, int totalRoadmaps, int totalCommits,
+    public DashboardResponse(UUID id, int totalRoadmaps, int totalCommits,
                              int totalTasks, Long totalTime, UUID userId) {
-        this.dashboardId = dashboardId;
+        this.id = id;
         this.totalRoadmaps = totalRoadmaps;
         this.totalCommits = totalCommits;
         this.totalTasks = totalTasks;
@@ -38,12 +38,12 @@ public class DashboardResponse {
                 dashboard.getUserId());
     }
 
-    public UUID getDashboardId() {
-        return dashboardId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setDashboardId(UUID dashboardId) {
-        this.dashboardId = dashboardId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public int getTotalRoadmaps() {

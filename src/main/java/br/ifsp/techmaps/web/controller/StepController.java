@@ -2,7 +2,6 @@ package br.ifsp.techmaps.web.controller;
 
 import br.ifsp.techmaps.domain.entities.step.Step;
 import br.ifsp.techmaps.usecases.step.StepCRUD;
-import br.ifsp.techmaps.web.model.step.request.CreateStepRequest;
 import br.ifsp.techmaps.web.model.step.response.StepResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

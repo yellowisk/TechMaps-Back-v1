@@ -6,43 +6,43 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public class TaskResponse {
-    private UUID taskId;
+    private UUID id;
     private UUID stageId;
     private String title;
     private String description;
     private int position;
-    private String repository_link;
-    private Timestamp date_created;
-    private Timestamp date_finished;
+    private String repository;
+    private Timestamp dateCreated;
+    private Timestamp dateFinished;
     private UUID dashboardId;
     private UUID commitId;
 
-    public TaskResponse(UUID taskId, UUID stageId, String title, String description, int position,
-                        String repository_link, Timestamp date_created, Timestamp date_finished,
+    public TaskResponse(UUID id, UUID stageId, String title, String description, int position,
+                        String repository, Timestamp dateCreated, Timestamp dateFinished,
                         UUID dashboardId, UUID commitId) {
-        this.taskId = taskId;
+        this.id = id;
         this.stageId = stageId;
         this.title = title;
         this.description = description;
         this.position = position;
-        this.repository_link = repository_link;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.repository = repository;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboardId = dashboardId;
         this.commitId = commitId;
     }
 
-    public TaskResponse(UUID taskId, UUID stageId, String title, String description, int position,
-                        String repository_link, Timestamp date_created, Timestamp date_finished,
+    public TaskResponse(UUID id, UUID stageId, String title, String description, int position,
+                        String repository, Timestamp dateCreated, Timestamp dateFinished,
                         UUID dashboardId) {
-        this.taskId = taskId;
+        this.id = id;
         this.stageId = stageId;
         this.title = title;
         this.description = description;
         this.position = position;
-        this.repository_link = repository_link;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.repository = repository;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboardId = dashboardId;
     }
 
@@ -51,7 +51,7 @@ public class TaskResponse {
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
                 task.getNumber(), task.getRepositoryLink(), task.getDate_created(),
                 task.getDate_finished(), task.getDashboard().getDashboardId(),
-                task.getTaskCommit().getCommitId());
+                task.getTaskCommits().getCommitId());
     }
 
     public static TaskResponse createFromTaskWithoutCommit(Task task) {
@@ -62,11 +62,11 @@ public class TaskResponse {
     }
 
     public UUID getTaskId() {
-        return taskId;
+        return id;
     }
 
-    public void setTaskId(UUID taskId) {
-        this.taskId = taskId;
+    public void setTaskId(UUID id) {
+        this.id = id;
     }
 
     public UUID getStageId() {
@@ -101,28 +101,28 @@ public class TaskResponse {
         this.description = description;
     }
 
-    public String getRepository_link() {
-        return repository_link;
+    public String getRepository() {
+        return repository;
     }
 
-    public void setRepository_link(String repository_link) {
-        this.repository_link = repository_link;
+    public void setRepository(String repository) {
+        this.repository = repository;
     }
 
-    public Timestamp getDate_created() {
-        return date_created;
+    public Timestamp getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDate_created(Timestamp date_created) {
-        this.date_created = date_created;
+    public void setDateCreated(Timestamp dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public Timestamp getDate_finished() {
-        return date_finished;
+    public Timestamp getDateFinished() {
+        return dateFinished;
     }
 
-    public void setDate_finished(Timestamp date_finished) {
-        this.date_finished = date_finished;
+    public void setDateFinished(Timestamp dateFinished) {
+        this.dateFinished = dateFinished;
     }
 
     public UUID getDashboardId() {

@@ -61,7 +61,7 @@ public class taskCRUDImpl implements TaskCRUD {
         }
 
         tasks.forEach(task -> taskDAO.saveNewTask(task));
-        tasks.forEach(task -> task.setTaskCommit(commitDAO.createTaskCommit(task)));
+        tasks.forEach(task -> task.setTaskCommits(commitDAO.createTaskCommit(task)));
 
         return tasks;
     }
@@ -123,7 +123,7 @@ public class taskCRUDImpl implements TaskCRUD {
         Task taskToFinish = taskDAO.findTaskById(taskId).get();
         Roadmap roadmap = roadmapDAO.findRoadmapById(taskToFinish.getStage().getRoadmap().getRoadmapId()).get();
 
-        if (roadmap.getRoadmapStatus() == RoadmapStatus.COMPLETE) {
+        if (roadmap.getStatus() == RoadmapStatus.COMPLETE) {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 

@@ -26,11 +26,11 @@ public class Task {
     @JsonIgnore
     private Dashboard dashboard;
     @OneToOne
-    private TaskCommit taskCommit;
+    private TaskCommit taskCommits;
 
     public Task(UUID taskId, Stage stage, TaskBody taskBody, int number,
                 String repositoryLink, Timestamp date_created, Timestamp date_finished,
-                Dashboard dashboard, TaskCommit taskCommit) {
+                Dashboard dashboard, TaskCommit taskCommits) {
         this.taskId = taskId;
         this.stage = stage;
         this.taskBody = taskBody;
@@ -39,7 +39,7 @@ public class Task {
         this.date_created = date_created;
         this.date_finished = date_finished;
         this.dashboard = dashboard;
-        this.taskCommit = taskCommit;
+        this.taskCommits = taskCommits;
     }
 
     public Task(UUID taskId, Stage stage, TaskBody taskBody, int number,
@@ -179,12 +179,12 @@ public class Task {
         this.date_finished = date_finished;
     }
 
-    public TaskCommit getTaskCommit() {
-        return taskCommit;
+    public TaskCommit getTaskCommits() {
+        return taskCommits;
     }
 
-    public void setTaskCommit(TaskCommit taskCommit) {
-        this.taskCommit = taskCommit;
+    public void setTaskCommits(TaskCommit taskCommits) {
+        this.taskCommits = taskCommits;
     }
 
     public Dashboard getDashboard() {

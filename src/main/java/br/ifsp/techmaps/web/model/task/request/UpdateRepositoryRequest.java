@@ -5,24 +5,24 @@ import br.ifsp.techmaps.domain.entities.task.Task;
 import java.sql.Timestamp;
 
 public class UpdateRepositoryRequest {
-    private String repositoryUrl;
+    private String repository;
 
-    public UpdateRepositoryRequest(String repositoryUrl, Timestamp date_finished) {
-        this.repositoryUrl = repositoryUrl;
+    public UpdateRepositoryRequest(String repository, Timestamp date_finished) {
+        this.repository = repository;
     }
 
     public UpdateRepositoryRequest() {
     }
 
     public Task convertToTask() {
-        return new Task(repositoryUrl);
+        return new Task(repository);
     }
 
-    public String getRepositoryUrl() {
-        return repositoryUrl;
+    public String getRepository() {
+        return repository;
     }
 
-    public void setRepositoryUrl(String repositoryUrl) {
-        this.repositoryUrl = repositoryUrl;
+    public void setRepository(String repository) {
+        this.repository = repository;
     }
 }
