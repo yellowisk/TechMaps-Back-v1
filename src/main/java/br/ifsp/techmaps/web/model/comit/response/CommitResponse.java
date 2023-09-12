@@ -26,11 +26,11 @@ public class CommitResponse {
                 taskCommit.getCommitTag(), taskCommit.getState());
     }
 
-    public UUID getCommitId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setCommitId(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -42,11 +42,11 @@ public class CommitResponse {
         this.taskId = taskId;
     }
 
-    public String getCommitTag() {
+    public String getTag() {
         return tag;
     }
 
-    public void setCommitTag(String tag) {
+    public void setTag(String tag) {
         this.tag = tag;
     }
 

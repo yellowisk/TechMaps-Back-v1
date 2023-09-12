@@ -61,11 +61,11 @@ public class TaskResponse {
                 task.getDate_finished(), task.getDashboard().getDashboardId());
     }
 
-    public UUID getTaskId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setTaskId(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

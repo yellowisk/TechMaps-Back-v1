@@ -75,11 +75,11 @@ public class StageResponse {
         );
     }
 
-    public UUID getStageId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setStageId(UUID stageId) {
+    public void setId(UUID stageId) {
         this.id = id;
     }
 
