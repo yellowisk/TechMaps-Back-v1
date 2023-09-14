@@ -13,7 +13,7 @@ Then go to the directory postgre/sql where you'll execute the following files:
 
 Afterwards, select and run all the code in ``V000_setup.sql`` in a session in the DB connection you just made. After successfully running the code in this file you'll have created a database called "techmaps" with an owner "techmaps-app". You shoul be able to verify it in pgAdmin4. 
 
-Now connect to the "techmaps" database in the same way you connected to the postgresql one. Afterwards, select and run all the code in ``V001_create_schema.sql`` in a session in the DB connection you just made. Then repeat the same proccess with the ``V001_populate_schema.sql`` file.
+Now connect to the "techmaps" database in the same way you connected to the postgresql one. Afterwards, select and run all the code in ``V001_create_schema.sql`` in a session in the DB connection you just made. Then repeat the same proccess with the ``V002_populate_schema.sql`` file.
 
 ## Running the Application
 
