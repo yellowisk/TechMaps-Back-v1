@@ -62,7 +62,7 @@ public class StageCRUDImpl implements StageCRUD {
     public List<Stage> addStagesByRoadmapId(UUID roadmapId) {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).orElseThrow(() ->
-                new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId));
+                new ResourceNotFoundException("Couldn't find roadmap with id: " + roadmapId));
 
         if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
             throw new IllegalArgumentException("This Roadmap is already done!");

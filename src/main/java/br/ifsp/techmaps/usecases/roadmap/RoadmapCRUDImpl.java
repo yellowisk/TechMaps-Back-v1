@@ -1,9 +1,13 @@
 package br.ifsp.techmaps.usecases.roadmap;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
+import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
+import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
+import br.ifsp.techmaps.web.exception.BadRequestException;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,15 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
         if(!dashboardDAO.dashboardExists(dashboardId)) {
             throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
+        }
+
+        Map<RoadmapType, List<RoadmapLanguage>> typeToLangsMap = new HashMap<>();
+        typeToLangsMap.put(RoadmapType.BACKEND, Arrays.asList(RoadmapLanguage.JAVA, RoadmapLanguage.PYTHON));
+        typeToLangsMap.put(RoadmapType.FRONTEND, Arrays.asList(RoadmapLanguage.JAVASCRIPT));
+        typeToLangsMap.put(RoadmapType.ANDROID, Arrays.asList(RoadmapLanguage.KOTLIN));
+
+        if (!typeToLangsMap.get(request.getType()).contains(request.getRoadmapLanguage())) {
+            throw new RuntimeException("Roadmap type and language are incompatible.");
         }
 
         Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), request.getType(), RoadmapStatus.UNCOMPLETE,

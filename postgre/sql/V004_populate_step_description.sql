@@ -51,4 +51,77 @@ values (gen_random_uuid(), 'PY6', 'Conda', 2);
 --! JAVA !--
 
 insert into techmaps_platform.task_step_description (id, info, description, desc_number)
-values (gen_random_uuid(), 'JV1', 'Introduction', 0);
+values (gen_random_uuid(), 'JV1', 'Basic Syntax', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Variables and Data Types', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Conditionals and Loops', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Exception Handling', 3);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Functions and Built-in Functions', 4);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Data Structures', 5);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'OOP, Interfaces and Classes', 6);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV1', 'Packages', 7);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Memory Management', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Collections', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Serialization', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Networking & Sockets', 3);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Generics', 4);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Streams', 5);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'JVM Operation', 6);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Multithreading', 7);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV2', 'Garbage Collection', 8);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV3', 'Gradle', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV3', 'Maven', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV3', 'Ant', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV4', 'Spring', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV4', 'Spring Boot', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV4', 'Spark', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV4', 'Play', 3);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV5', 'Hibernate', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV5', 'JPA', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV5', 'Spring Data JPA', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV6', 'JDBI3', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV6', 'JDBC Template', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV7', 'SLF4J', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV7', 'Log4j', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV7', 'Logback', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV7', 'TinyLog', 3);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV8', 'JUnit', 0);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV8', 'TestNG', 1);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV8', 'Mockito', 2);
+insert into techmaps_platform.task_step_description (id, info, description, desc_number)
+values (gen_random_uuid(), 'JV8', 'REST Assured', 3);
+

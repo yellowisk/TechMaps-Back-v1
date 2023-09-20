@@ -7,9 +7,15 @@ public enum TaskBody {
     PY4("Learn Python", "Advanced Topics", "Learn different advanced topics in Python such as decorators, RegEx and generators"),
     PY5("Learn Python", "OOP", "Learn about object-oriented programming (OOP) in Python, including classes, inheritance, and encapsulation"),
     PY6("Learn Python", "Package Managers", "Learn how to use Python package managers such as Pip, PYPi and Conda"),
-    JV1("Learn Java", "Set up Java Development Kit (JDK)", "Install JDK and set up the environment variables on your system."),
-    JV2("Learn Java", "Understand object-oriented programming", "Learn about classes, objects, inheritance, and polymorphism in Java."),
-    JV3("Learn Java", "Build a command-line application", "Create a Java program that takes user input, processes it, and provides appropriate output."),
+
+    JV1("Learn Java", "Learn the Fundamentals", "Familiarize yourself with Java's syntax, data types, variables, conditionals and loops, functions data structures, packages, and more."),
+    JV2("Learn Java", "Getting Deeper", "Learn about memory management, collections, serialization, networking and sockets, streams, and more."),
+    JV3("Learn Java", "Build Tools", "Learn how to use build tools such as Maven, Gradle and Ant to automate the build process."),
+    JV4("Learn Java", "Web Frameworks", "Learn how to use Java web frameworks such as Spring, Spark, and Play."),
+    JV5("Learn Java", "ORM", "Learn how to use Java Object-Relational Mapping (ORM) frameworks such as Hibernate and JPA."),
+    JV6("Learn Java", "JDBC", "Learn how to use Java Database Connectivity (JDBC) to connect to databases."),
+    JV7("Learn Java", "Logging Frameworks", "Learn how to use Java logging frameworks such as Log4j, SLF4J and Logback."),
+    JV8("Learn Java", "Testing Frameworks", "Learn how to use Java testing frameworks such as JUnit, TestNG, and Mockito."),
 
     KT1("Learn Kotlin", "Install Kotlin", "Install Kotlin compiler and set up the development environment."),
     KT2("Learn Kotlin", "Learn Kotlin basics", "Understand Kotlin syntax, variables, functions, and control flow."),

@@ -188,7 +188,7 @@ DROP TYPE IF EXISTS techmaps_platform.task_body CASCADE;
 
 CREATE TYPE techmaps_platform.task_body AS ENUM (
     'PY1', 'PY2', 'PY3', 'PY4', 'PY5', 'PY6',
-    'JV1', 'JV2', 'JV3',
+    'JV1', 'JV2', 'JV3', 'JV4', 'JV5', 'JV6', 'JV7', 'JV8',
     'KT1', 'KT2', 'KT3',
     'HT1', 'HT2', 'HT3',
     'CS1', 'CS2', 'CS3',
