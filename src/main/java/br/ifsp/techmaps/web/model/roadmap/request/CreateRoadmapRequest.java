@@ -1,9 +1,5 @@
 package br.ifsp.techmaps.web.model.roadmap.request;
 
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapColor;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
-
 import java.util.*;
 
 public class CreateRoadmapRequest {
