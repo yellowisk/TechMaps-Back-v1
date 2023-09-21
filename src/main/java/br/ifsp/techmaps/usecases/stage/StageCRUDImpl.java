@@ -170,14 +170,16 @@ public class StageCRUDImpl implements StageCRUD {
             if (finishedDate != null)
                 counterDates++;
 
-        if (commitStates.size() == counterCommit && request.getStatus().equals(StageStatus.UNDONE))
+        StageStatus status = StageStatus.valueOf(request.getStatus());
+
+        if (commitStates.size() == counterCommit && status.equals(StageStatus.UNDONE))
             throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
 
-        if (finishedDates.size() == counterDates && request.getStatus().equals(StageStatus.UNDONE))
+        if (finishedDates.size() == counterDates && status.equals(StageStatus.UNDONE))
             throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
 
         Stage stage = stageDAO.findStageById(stageId).get();
-        stage.setStageStatus(request.getStatus());
+        stage.setStageStatus(status);
 
         return stageDAO.updateStageStatus(stage);
     }

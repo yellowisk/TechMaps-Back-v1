@@ -4,9 +4,9 @@ import br.ifsp.techmaps.domain.entities.roadmap.RoadmapColor;
 
 public class UpdateColorRequest {
     private String title;
-    private RoadmapColor color;
+    private int color;
 
-    public UpdateColorRequest(String title, RoadmapColor color) {
+    public UpdateColorRequest(String title, int color) {
         this.title = title;
         this.color = color;
     }
@@ -19,11 +19,11 @@ public class UpdateColorRequest {
         this.title = title;
     }
 
-    public RoadmapColor getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(RoadmapColor color) {
+    public void setColor(int color) {
         this.color = color;
     }
 }

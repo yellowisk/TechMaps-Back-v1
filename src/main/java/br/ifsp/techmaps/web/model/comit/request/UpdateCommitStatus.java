@@ -4,24 +4,20 @@ import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 
 public class UpdateCommitStatus {
-    private CommitState status;
+    private String status;
 
-    public UpdateCommitStatus(CommitState status) {
+    public UpdateCommitStatus(String status) {
         this.status = status;
     }
 
     public UpdateCommitStatus() {
     }
 
-    public TaskCommit convertToTaskCommit() {
-        return new TaskCommit(status);
-    }
-
-    public CommitState getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(CommitState status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

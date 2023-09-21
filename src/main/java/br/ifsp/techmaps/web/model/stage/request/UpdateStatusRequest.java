@@ -4,24 +4,20 @@ import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 
 public class UpdateStatusRequest {
-    private StageStatus status;
+    private String status;
 
-    public UpdateStatusRequest(StageStatus status) {
+    public UpdateStatusRequest(String status) {
         this.status = status;
     }
 
     public UpdateStatusRequest() {
     }
 
-    public Stage convertToStage() {
-        return new Stage(status);
-    }
-
-    public StageStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StageStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

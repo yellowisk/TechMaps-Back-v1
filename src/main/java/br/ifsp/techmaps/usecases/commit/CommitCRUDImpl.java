@@ -1,5 +1,6 @@
 package br.ifsp.techmaps.usecases.commit;
 
+import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
@@ -35,7 +36,7 @@ public class CommitCRUDImpl implements CommitCRUD {
                 .orElseThrow(() -> new NullPointerException("Couldn't find TaskCommit with id: "
                         + taskCommitId));
 
-        taskCommit.setState(request.getStatus());
+        taskCommit.setState(CommitState.valueOf(request.getStatus()));
 
         commitDAO.updateTaskCommmit(taskCommit);
 

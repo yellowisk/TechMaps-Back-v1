@@ -25,33 +25,25 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     @Override
     public Roadmap addNewRoadmap(UUID dashboardId, CreateRoadmapRequest request) {
 
-        if(!dashboardDAO.dashboardExists(dashboardId)) {
-            throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
-        }
-
         RoadmapType type = RoadmapType.valueOf(request.getType());
         RoadmapLanguage language = RoadmapLanguage.valueOf(request.getLanguage());
-        int requestColorCode = request.getColor();
-        RoadmapColor color = null;
-
-        if (requestColorCode < 0 || requestColorCode > 11) {
-            throw new RuntimeException("Invalid color code: " + requestColorCode);
-        }
-
-        for (RoadmapColor roadmapColor : RoadmapColor.values()) {
-            if (roadmapColor.getColorCode() == requestColorCode) {
-                color = roadmapColor;
-                break;
-            }
-        }
+        RoadmapColor color = RoadmapColor.getColor(request.getColor());
 
         Map<RoadmapType, List<RoadmapLanguage>> typeToLangsMap = new HashMap<>();
         typeToLangsMap.put(RoadmapType.BACKEND, Arrays.asList(RoadmapLanguage.JAVA, RoadmapLanguage.PYTHON));
         typeToLangsMap.put(RoadmapType.FRONTEND, Arrays.asList(RoadmapLanguage.JAVASCRIPT));
         typeToLangsMap.put(RoadmapType.ANDROID, Arrays.asList(RoadmapLanguage.KOTLIN));
 
+        if(!dashboardDAO.dashboardExists(dashboardId)) {
+            throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
+        }
+
         if (!typeToLangsMap.get(type).contains(language)) {
             throw new RuntimeException("Roadmap type and language are incompatible.");
+        }
+
+        if (request.getColor() < 0 || request.getColor() > 11) {
+            throw new RuntimeException("Invalid color code: " + request.getColor());
         }
 
         Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, RoadmapStatus.UNCOMPLETED,
@@ -100,8 +92,14 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
                     + roadmap.getTitle() + "' is complete");
         }
 
-        roadmap.setColor(request.getColor());
+        if (request.getColor() < 0 || request.getColor() > 11) {
+            throw new RuntimeException("Invalid color code: " + request.getColor());
+        }
+
+        RoadmapColor color = RoadmapColor.getColor(request.getColor());
+
         roadmap.setTitle(request.getTitle());
+        roadmap.setColor(color);
 
         return roadmapDAO.updateRoadmapTitleAndColor(roadmap);
     }

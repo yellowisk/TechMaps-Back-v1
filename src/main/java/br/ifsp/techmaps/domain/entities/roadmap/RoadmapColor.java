@@ -27,4 +27,14 @@ public enum RoadmapColor {
     public void setColorCode(int colorCode) {
         this.colorCode = colorCode;
     }
+
+    public static RoadmapColor getColor(int colorCode) {
+        for (RoadmapColor color : RoadmapColor.values()) {
+            if (color.getColorCode() == colorCode) {
+                return color;
+            }
+        }
+        return null;
+    }
+
 }
