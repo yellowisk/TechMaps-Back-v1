@@ -54,7 +54,7 @@ DROP TYPE IF EXISTS techmaps_platform.roadmap_status CASCADE;
 
 CREATE TYPE techmaps_platform.roadmap_status AS ENUM (
     'COMPLETE',
-    'UNCOMPLETE'
+    'UNCOMPLETED'
 );
 
 ALTER TYPE techmaps_platform.roadmap_status OWNER TO "techmaps";
