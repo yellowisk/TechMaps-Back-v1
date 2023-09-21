@@ -1,9 +1,6 @@
 package br.ifsp.techmaps.usecases.roadmap;
 
-import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapType;
+import br.ifsp.techmaps.domain.entities.roadmap.*;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
@@ -34,17 +31,70 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
         }
 
+        RoadmapType type = null;
+        RoadmapLanguage lang = null;
+        RoadmapColor color = null;
+
+        List<RoadmapType> typesInsert = new ArrayList<>();
+        List<RoadmapType> typesEquivalence = Arrays.asList(RoadmapType.BACKEND, RoadmapType.ANDROID, RoadmapType.FRONTEND);
+
+        List<RoadmapLanguage> langsInsert = new ArrayList<>();
+        List<RoadmapLanguage> langsEquivalence = Arrays.asList(RoadmapLanguage.JAVA, RoadmapLanguage.JAVASCRIPT,
+                RoadmapLanguage.PYTHON, RoadmapLanguage.KOTLIN);
+
+//        List<RoadmapColor> colorsInsert = new ArrayList<>();
+//        List<RoadmapColor> colorsEquivalence = Arrays.asList(RoadmapColor.GREEN);
+
+        Map<String, RoadmapType> typeEnums = new HashMap<>();
+        typeEnums.put("back-end", RoadmapType.BACKEND);
+        typeEnums.put("front-end", RoadmapType.FRONTEND);
+        typeEnums.put("android", RoadmapType.ANDROID);
+
+        for (Map.Entry<String, RoadmapType> entry : typeEnums.entrySet()) {
+            typesInsert.add(entry.getValue());
+        }
+
+        Map<String, RoadmapLanguage> langEnums = new HashMap<>();
+        langEnums.put("java", RoadmapLanguage.JAVA);
+        langEnums.put("python", RoadmapLanguage.PYTHON);
+        langEnums.put("javascript", RoadmapLanguage.JAVASCRIPT);
+        langEnums.put("kotlin", RoadmapLanguage.KOTLIN);
+
+        for (Map.Entry<String, RoadmapLanguage> entry : langEnums.entrySet()) {
+            langsInsert.add(entry.getValue());
+        }
+
         Map<RoadmapType, List<RoadmapLanguage>> typeToLangsMap = new HashMap<>();
         typeToLangsMap.put(RoadmapType.BACKEND, Arrays.asList(RoadmapLanguage.JAVA, RoadmapLanguage.PYTHON));
         typeToLangsMap.put(RoadmapType.FRONTEND, Arrays.asList(RoadmapLanguage.JAVASCRIPT));
         typeToLangsMap.put(RoadmapType.ANDROID, Arrays.asList(RoadmapLanguage.KOTLIN));
 
-        if (!typeToLangsMap.get(request.getType()).contains(request.getRoadmapLanguage())) {
+        if (!typeToLangsMap.get(request.getType()).contains(request.getLanguage())) {
             throw new RuntimeException("Roadmap type and language are incompatible.");
+        } else {
+            for (RoadmapType typeInsert : typesInsert) {
+                for (RoadmapType equivalence : typesEquivalence) {
+                    if (typeInsert == equivalence) {
+                        type = typeInsert;
+                    }
+                }
+            }
+
+            for (RoadmapLanguage langInsert : langsInsert) {
+                for (RoadmapLanguage equivalence : langsEquivalence) {
+                    if (langInsert == equivalence) {
+                        lang = langInsert;
+                    }
+                }
+            }
+
+            if(request.getColor() == 5) {
+                color = RoadmapColor.GREEN;
+            }
         }
 
-        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), request.getType(), RoadmapStatus.UNCOMPLETE,
-                request.getRoadmapLanguage(), request.getRoadmapColor(), Timestamp.valueOf(LocalDateTime.now()), null, null,
+        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, RoadmapStatus.UNCOMPLETE,
+                lang, color, Timestamp.valueOf(LocalDateTime.now()), null, null,
                 0,
                 dashboardId);
 
