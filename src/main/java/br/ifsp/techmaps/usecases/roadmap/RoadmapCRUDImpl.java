@@ -1,10 +1,8 @@
 package br.ifsp.techmaps.usecases.roadmap;
 
 import br.ifsp.techmaps.domain.entities.roadmap.*;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
-import br.ifsp.techmaps.web.exception.BadRequestException;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
 import org.springframework.stereotype.Service;
@@ -56,7 +54,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Roadmap type and language are incompatible.");
         }
 
-        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, RoadmapStatus.UNCOMPLETE,
+        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, RoadmapStatus.UNCOMPLETED,
                 language, color, Timestamp.valueOf(LocalDateTime.now()), null, null,
                 0,
                 dashboardId);
