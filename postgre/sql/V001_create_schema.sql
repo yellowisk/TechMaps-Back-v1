@@ -50,15 +50,6 @@ CREATE TYPE techmaps_platform.roadmap_type AS ENUM (
 
 ALTER TYPE techmaps_platform.roadmap_type OWNER TO "techmaps";
 
-DROP TYPE IF EXISTS techmaps_platform.roadmap_status CASCADE;
-
-CREATE TYPE techmaps_platform.roadmap_status AS ENUM (
-    'COMPLETE',
-    'UNCOMPLETED'
-);
-
-ALTER TYPE techmaps_platform.roadmap_status OWNER TO "techmaps";
-
 DROP TYPE IF EXISTS techmaps_platform.roadmap_lang CASCADE;
 
 CREATE TYPE techmaps_platform.roadmap_lang AS ENUM (
@@ -94,7 +85,7 @@ CREATE TABLE techmaps_platform.roadmap(
     id uuid NOT NULL,
     title varchar(255) NOT NULL,
     type techmaps_platform.roadmap_type,
-    status techmaps_platform.roadmap_status,
+    is_completed boolean NOT NULL,
     lang techmaps_platform.roadmap_lang,
     color techmaps_platform.roadmap_color,
     start_time timestamp NOT NULL,

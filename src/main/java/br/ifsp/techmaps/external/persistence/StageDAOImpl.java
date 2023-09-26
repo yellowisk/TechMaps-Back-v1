@@ -1,7 +1,6 @@
 package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
@@ -59,7 +58,7 @@ public class StageDAOImpl implements StageDAO {
     public Stage saveStage(Stage stage) {
         UUID stageId = stage.getStageId();
 
-        if (stage.getRoadmap().getStatus() == RoadmapStatus.COMPLETE) {
+        if (stage.getRoadmap().getIsCompleted()) {
             throw new IllegalStateException("Roadmap is already done!");
         }
 
@@ -135,7 +134,7 @@ public class StageDAOImpl implements StageDAO {
 
         UUID roadmapId = stage.getRoadmap().getRoadmapId();
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
-        if (roadmap.getStatus() == RoadmapStatus.COMPLETE) {
+        if (roadmap.getIsCompleted()) {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 
@@ -159,7 +158,7 @@ public class StageDAOImpl implements StageDAO {
         }
 
         if (stageDoneCounter == stages.size()) {
-            roadmap.setStatus(RoadmapStatus.COMPLETE);
+            roadmap.setIsCompleted(true);
             roadmap.setRoadmapCommits(commitStagedCounter);
             roadmapDAO.updateRoadmapTime(roadmap);
         }

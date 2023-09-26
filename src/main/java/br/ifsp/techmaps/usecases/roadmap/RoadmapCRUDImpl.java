@@ -46,7 +46,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Invalid color code: " + request.getColor());
         }
 
-        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, RoadmapStatus.UNCOMPLETED,
+        Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, false,
                 language, color, Timestamp.valueOf(LocalDateTime.now()), null, null,
                 0,
                 dashboardId);
@@ -87,7 +87,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
         roadmapDAO.refreshRoadmap(roadmap);
 
-        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getIsCompleted()) {
             throw new RuntimeException("Couldn't update because the roadmap '"
                     + roadmap.getTitle() + "' is complete");
         }
@@ -109,7 +109,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
-        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getIsCompleted()) {
             throw new RuntimeException("Couldn't delete because the roadmap '"
                     + roadmap.getTitle() + "' is complete");
         }

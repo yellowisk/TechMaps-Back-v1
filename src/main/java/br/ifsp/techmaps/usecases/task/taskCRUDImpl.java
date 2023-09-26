@@ -2,7 +2,6 @@ package br.ifsp.techmaps.usecases.task;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.Task;
@@ -123,7 +122,7 @@ public class taskCRUDImpl implements TaskCRUD {
         Task taskToFinish = taskDAO.findTaskById(taskId).get();
         Roadmap roadmap = roadmapDAO.findRoadmapById(taskToFinish.getStage().getRoadmap().getRoadmapId()).get();
 
-        if (roadmap.getStatus() == RoadmapStatus.COMPLETE) {
+        if (roadmap.getIsCompleted()) {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 

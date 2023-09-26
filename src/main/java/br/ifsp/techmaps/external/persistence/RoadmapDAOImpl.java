@@ -25,13 +25,13 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     private String insertRoadmapQuery;
     @Value("${queries.sql.roadmap-dao.select.roadmap-by-id}")
     private String selectRoadmapByIdQuery;
-    @Value("${queries.sql.roadmap-dao.select.all-complete-roadmaps-by-dashboard-id}")
+    @Value("${queries.sql.roadmap-dao.select.all-completed-roadmaps-by-dashboard-id}")
     private String selectAllCompleteRoadmapsByDashboardIdQuery;
     @Value("${queries.sql.roadmap-dao.select.all-roadmaps-by-dashboard-id}")
     private String selectAllRoadmapsByDashboardIdQuery;
     @Value("${queries.sql.roadmap-dao.select.count-commits-by-task-with-stage-from-roadmap-by-id}")
     private String selectCountCommitsByTaskWithStageFromRoadmapByIdQuery;
-    @Value("${queries.sql.roadmap-dao.update.complete-roadmap}")
+    @Value("${queries.sql.roadmap-dao.update.completed-roadmap}")
     private String updateRoadmapStatusAndCommitCounterQuery;
     @Value("${queries.sql.roadmap-dao.update.roadmap-commit-counter}")
     private String updateRoadmapCommitCounterQuery;
@@ -55,12 +55,12 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID roadmapId = UUID.randomUUID();
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
-                roadmap.getStatus().name(), roadmap.getLanguage().name(),
+                roadmap.getIsCompleted(), roadmap.getLanguage().name(),
                 roadmap.getColor().name(), roadmap.getStartTime(), roadmap.getFinishTime(),
                 roadmap.getTotalTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
         return Roadmap.createWithoutStages(roadmapId, roadmap.getTitle(), roadmap.getType(),
-                roadmap.getStatus(), roadmap.getLanguage(), roadmap.getColor(),
+                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
@@ -68,7 +68,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Override
     public Roadmap refreshRoadmap(Roadmap roadmap) {
 
-        if(!roadmap.getStatus().equals(RoadmapStatus.COMPLETE)){
+        if(!roadmap.getIsCompleted()) {
             Long totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
             roadmap.setTotalTime(totalTime/1000);
             jdbcTemplate.update(updateRoadmapTotalTimeQuery, roadmap.getTotalTime(), roadmap.getRoadmapId());
@@ -112,7 +112,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         Timestamp finishTime = Timestamp.valueOf(LocalDateTime.now());
         Long totalTime = (finishTime.getTime() - startTime.getTime())/1000;
 
-        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getStatus().name(),
+        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getIsCompleted(),
                 roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
         return roadmap;
     }
@@ -141,7 +141,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID id = (UUID) rs.getObject("id");
         String title = rs.getString("title");
         RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
-        RoadmapStatus status = RoadmapStatus.valueOf(rs.getString("status"));
+        Boolean isComplete = rs.getBoolean("is_completed");
         RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
         RoadmapColor color = RoadmapColor.valueOf(rs.getString("color"));
         Timestamp startTime = rs.getTimestamp("start_time");
@@ -150,7 +150,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         int commit_counter = rs.getInt("commit_counter");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        return Roadmap.createWithoutStages(id, title, type, status, language, color,
+        return Roadmap.createWithoutStages(id, title, type, isComplete, language, color,
                 startTime, finishTime, total_time, commit_counter, dashboardId);
     }
 

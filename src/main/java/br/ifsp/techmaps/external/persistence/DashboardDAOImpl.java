@@ -31,7 +31,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String selectDashboardByIdQuery;
     @Value("${queries.sql.dashboard-dao.select.dashboard-by-user-id}")
     private String selectDashboardByUserIdQuery;
-    @Value("${queries.sql.dashboard-dao.select.count-complete-roadmaps-by-dashboard-id}")
+    @Value("${queries.sql.dashboard-dao.select.count-completed-roadmaps-by-dashboard-id}")
     private String selectCountCompleteRoadmapsByDashboardIdQuery;
     @Value("${queries.sql.dashboard-dao.select.count-tasks-with-date-finished-by-dashboard-id}")
     private String selectCountFinishedTasksByDashboardIdQuery;

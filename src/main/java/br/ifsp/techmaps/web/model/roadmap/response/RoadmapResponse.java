@@ -10,7 +10,7 @@ public class RoadmapResponse {
     private UUID id;
     private String title;
     private RoadmapType type;
-    private RoadmapStatus status;
+    private boolean isCompleted;
     private RoadmapLanguage language;
     private RoadmapColor color;
     private Timestamp startTime;
@@ -24,13 +24,13 @@ public class RoadmapResponse {
     }
 
     public RoadmapResponse(UUID id, String title, RoadmapType type,
-                           RoadmapStatus status, RoadmapLanguage language,
+                           boolean isCompleted, RoadmapLanguage language,
                            RoadmapColor color, Timestamp startTime, Timestamp finishTime,
                            Long totalTime, Integer commits, UUID dashboardId) {
         this.id = id;
         this.title = title;
         this.type = type;
-        this.status = status;
+        this.isCompleted = isCompleted;
         this.language = language;
         this.color = color;
         this.startTime = startTime;
@@ -48,7 +48,7 @@ public class RoadmapResponse {
 
     public static RoadmapResponse create(Roadmap roadmap) {
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
-                roadmap.getStatus(), roadmap.getLanguage(), roadmap.getColor(),
+                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
@@ -77,12 +77,12 @@ public class RoadmapResponse {
         this.type = type;
     }
 
-    public RoadmapStatus getStatus() {
-        return status;
+    public boolean getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setStatus(RoadmapStatus status) {
-        this.status = status;
+    public void setIsCompleted(boolean isComplete) {
+        this.isCompleted = isCompleted;
     }
 
     public RoadmapLanguage getLanguage() {

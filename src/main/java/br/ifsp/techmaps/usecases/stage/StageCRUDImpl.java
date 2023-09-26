@@ -2,7 +2,6 @@ package br.ifsp.techmaps.usecases.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
-import br.ifsp.techmaps.domain.entities.roadmap.RoadmapStatus;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
 import br.ifsp.techmaps.domain.entities.stage.StageStatus;
@@ -41,7 +40,7 @@ public class StageCRUDImpl implements StageCRUD {
         if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
 
-        if(roadmapDAO.findRoadmapById(roadmapId).get().getStatus().equals(RoadmapStatus.COMPLETE))
+        if(roadmapDAO.findRoadmapById(roadmapId).get().getIsCompleted())
             throw new IllegalArgumentException("This Roadmap is already done!");
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
@@ -64,7 +63,7 @@ public class StageCRUDImpl implements StageCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).orElseThrow(() ->
                 new ResourceNotFoundException("Couldn't find roadmap with id: " + roadmapId));
 
-        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getIsCompleted()) {
             throw new IllegalArgumentException("This Roadmap is already done!");
         }
 
@@ -195,7 +194,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
-        if (roadmap.getStatus().equals(RoadmapStatus.COMPLETE)) {
+        if (roadmap.getIsCompleted()) {
             throw new RuntimeException("Couldn't delete '" + opt.get().getTheme().name() + "' because its Roadmap is complete");
         }
 
