@@ -37,8 +37,8 @@ SELECT * FROM techmaps_platform.roadmap WHERE type = 'BACKEND';
 SELECT * FROM techmaps_platform.roadmap WHERE type = 'FRONTEND';
 
 --Select Roadmap By Status
-SELECT * FROM techmaps_platform.roadmap WHERE status = 'UNCONCLUDED';
-SELECT * FROM techmaps_platform.roadmap WHERE status = 'DONE';
+SELECT * FROM techmaps_platform.roadmap WHERE is_completed = true;
+SELECT * FROM techmaps_platform.roadmap WHERE is_completed = false;
 
 --Select Roadmap By Language
 SELECT * FROM techmaps_platform.roadmap WHERE lang = 'JAVA';
