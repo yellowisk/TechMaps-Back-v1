@@ -8,6 +8,8 @@ import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 @RequestMapping("api/v1/dashboards/{dashboardId}/")
@@ -74,6 +76,15 @@ public class RoadmapController {
     public ResponseEntity<RoadmapResponse> deleteRoadmapById(
             @PathVariable UUID roadmapId) {
         Roadmap roadmap = roadmapCRUD.deleteRoadmapById(roadmapId);
+
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
+    }
+
+    @GetMapping("roadmaps/{roadmapId}/certificate")
+    public ResponseEntity<RoadmapResponse> createCertificate(
+            @PathVariable UUID dashboardId,
+            @PathVariable UUID roadmapId) throws IOException {
+        Roadmap roadmap = roadmapCRUD.createCertificate(dashboardId, roadmapId);
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }

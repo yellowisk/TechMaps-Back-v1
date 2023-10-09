@@ -4,16 +4,16 @@ insert into techmaps_platform.user(id, username, email, password,
     is_account_non_expired, is_account_non_locked, is_credentials_non_expired,
         is_enabled) values ('1b185f9e-6c0f-4617-bd77-dd4620a41a0f'::uuid,
             'miguel', 'miguel@gmail.com',
-                '$2a$10$6ntpsnNIXuFuPkIU08EiueXZh2qu4cUZQ0McdaujdfZUgWjZ0JPGq',
+                '$2a$10$6ntpsnNIXuFuPkIU08EiueXZh2qu4cUZQ0McdaujdfZUgWjZ0JPGq', --! password !--
                     true, true, true, true);
 
 
 insert into techmaps_platform.user(id, username, email, password,
-                                   is_account_non_expired, is_account_non_locked, is_credentials_non_expired,
-                                   is_enabled) values ('cc171e74-5dc3-4a38-9c86-5844ed673b5f'::uuid,
-                                                       'Hector', 'hector@gmail.com',
-                                                       '$2a$10$LzzhmD5vaUQEe2nXvarWsOqpzxkrON9u20dooYrMTesQLk4zzBV5S',
-                                                       true, true, true, true);
+    is_account_non_expired, is_account_non_locked, is_credentials_non_expired,
+        is_enabled) values ('cc171e74-5dc3-4a38-9c86-5844ed673b5f'::uuid,
+            'Hector', 'hector@gmail.com',
+                '$2a$10$LzzhmD5vaUQEe2nXvarWsOqpzxkrON9u20dooYrMTesQLk4zzBV5S', --! senha !--
+                    true, true, true, true);
 
 --! Dashboard Queries --!
 

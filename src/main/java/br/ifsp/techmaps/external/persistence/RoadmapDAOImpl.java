@@ -70,7 +70,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
 
         if(!roadmap.getIsCompleted()) {
             Long totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
-            roadmap.setTotalTime(totalTime/1000);
+            roadmap.setTotalTime(totalTime/1000); //divide totalTime/1000 by 60 to get minutes
             jdbcTemplate.update(updateRoadmapTotalTimeQuery, roadmap.getTotalTime(), roadmap.getRoadmapId());
             int counterCommitsStaged = jdbcTemplate.queryForObject(selectCountCommitsByTaskWithStageFromRoadmapByIdQuery, Integer.class, roadmap.getRoadmapId());
             jdbcTemplate.update(updateRoadmapCommitCounterQuery, counterCommitsStaged, roadmap.getRoadmapId());
@@ -141,7 +141,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID id = (UUID) rs.getObject("id");
         String title = rs.getString("title");
         RoadmapType type = RoadmapType.valueOf(rs.getString("type"));
-        Boolean isComplete = rs.getBoolean("is_completed");
+        Boolean isCompleted = rs.getBoolean("is_completed");
         RoadmapLanguage language = RoadmapLanguage.valueOf(rs.getString("lang"));
         RoadmapColor color = RoadmapColor.valueOf(rs.getString("color"));
         Timestamp startTime = rs.getTimestamp("start_time");
@@ -150,7 +150,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         int commit_counter = rs.getInt("commit_counter");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
-        return Roadmap.createWithoutStages(id, title, type, isComplete, language, color,
+        return Roadmap.createWithoutStages(id, title, type, isCompleted, language, color,
                 startTime, finishTime, total_time, commit_counter, dashboardId);
     }
 

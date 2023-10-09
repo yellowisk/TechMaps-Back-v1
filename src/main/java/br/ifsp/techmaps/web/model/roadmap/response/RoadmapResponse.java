@@ -15,7 +15,7 @@ public class RoadmapResponse {
     private RoadmapColor color;
     private Timestamp startTime;
     private Timestamp finishTime;
-    private Long totalTime;
+    private Long totalTime; //divide by 60 to get minutes
     private Integer commits;
     private UUID dashboardId;
 
@@ -47,6 +47,7 @@ public class RoadmapResponse {
     }
 
     public static RoadmapResponse create(Roadmap roadmap) {
+
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
                 roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
