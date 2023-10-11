@@ -2,6 +2,7 @@ package br.ifsp.techmaps.web.controller;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.usecases.roadmap.RoadmapCRUD;
+import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
 import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
 import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
@@ -16,9 +17,11 @@ import java.util.*;
 @RestController
 public class RoadmapController {
     private final RoadmapCRUD roadmapCRUD;
+    private final StageCRUD stageCRUD;
 
-    public RoadmapController(RoadmapCRUD roadmapCRUD) {
+    public RoadmapController(RoadmapCRUD roadmapCRUD, StageCRUD stageCRUD) {
         this.roadmapCRUD = roadmapCRUD;
+        this.stageCRUD = stageCRUD;
     }
 
     @GetMapping("roadmaps/{roadmapId}")
@@ -35,6 +38,7 @@ public class RoadmapController {
             @RequestBody CreateRoadmapRequest createRoadmapRequest) {
 
         Roadmap roadmap = roadmapCRUD.addNewRoadmap(dashboardId, createRoadmapRequest);
+        stageCRUD.addStagesByRoadmapId(roadmap.getRoadmapId());
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
