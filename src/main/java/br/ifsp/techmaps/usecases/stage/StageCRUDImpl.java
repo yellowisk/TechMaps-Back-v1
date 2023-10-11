@@ -92,9 +92,7 @@ public class StageCRUDImpl implements StageCRUD {
             stageDAO.saveStage(stage);
         }
 
-        roadmap.setStages(stages);
-
-        return roadmap.getStages();
+        return stages;
     }
 
     @Override
