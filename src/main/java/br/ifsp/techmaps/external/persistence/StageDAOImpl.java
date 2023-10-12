@@ -3,7 +3,6 @@ package br.ifsp.techmaps.external.persistence;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -64,10 +63,10 @@ public class StageDAOImpl implements StageDAO {
 
         jdbcTemplate.update(insertStageQuery, stageId,
                 stage.getRoadmap().getRoadmapId(), stage.getTheme().name(),
-                stage.getStageStatus().name(), stage.getNumber(), stage.getStageCommits());
+                stage.isDone(), stage.getNumber(), stage.getStageCommits());
 
         return Stage.createStageWithoutTasks(stageId, stage.getRoadmap(), stage.getTheme(),
-                stage.getStageStatus(), stage.getNumber(), stage.getStageCommits());
+                stage.isDone(), stage.getNumber(), stage.getStageCommits());
     }
 
     @Override
@@ -139,7 +138,7 @@ public class StageDAOImpl implements StageDAO {
         }
 
         jdbcTemplate.update(updateStageStatusQuery, ps -> {
-            ps.setObject(1, stage.getStageStatus().name());
+            ps.setObject(1, stage.isDone());
             ps.setObject(2, stage.getStageId());
         });
 
@@ -148,9 +147,9 @@ public class StageDAOImpl implements StageDAO {
         List<Stage> stages = jdbcTemplate.query(selectStageByRoadmapIdQuery,
                 this::mapperStageFromRs, roadmapId);
 
-        if (stage.getStageStatus().equals(StageStatus.DONE)) {
+        if (stage.isDone() == true) {
             for (Stage roadmapStage : stages) {
-                if (roadmapStage.getStageStatus().equals(StageStatus.DONE)) {
+                if (roadmapStage.isDone() == true) {
                     stageDoneCounter++;
                     commitStagedCounter = commitStagedCounter + roadmapStage.getStageCommits();
                 }
@@ -184,14 +183,14 @@ public class StageDAOImpl implements StageDAO {
         UUID id = (UUID) rs.getObject("id");
         UUID roadmapId = (UUID) rs.getObject("roadmap_id");
         StageEnum theme = StageEnum.valueOf(rs.getString("theme"));
-        StageStatus status = StageStatus.valueOf(rs.getString("status"));
+        Boolean isDone = rs.getBoolean("is_done");
         int number = rs.getInt("stage_number");
         Integer stageCommit = Integer.valueOf(rs.getString("commit_counter"));
 
         Roadmap rm = roadmapDAO.findRoadmapById(roadmapId).get();
 
 
-        return Stage.createStageWithoutTasks(id, rm, theme, status, number, stageCommit);
+        return Stage.createStageWithoutTasks(id, rm, theme, isDone, number, stageCommit);
     }
 
 }

@@ -107,7 +107,7 @@ queries:
     stage-dao:
       insert:
         stage: >
-          INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, status, stage_number, commit_counter) VALUES (?, ?, ?::techmaps_platform.stage_theme, ?::techmaps_platform.stage_status, ?, ?)
+          INSERT INTO techmaps_platform.stage (id, roadmap_id, theme, is_done, stage_number, commit_counter) VALUES (?, ?, ?::techmaps_platform.stage_theme, ?, ?, ?)
       select:
         stage-by-id: >
           SELECT * FROM techmaps_platform.stage WHERE id = ? ORDER BY stage_number ASC
@@ -123,7 +123,7 @@ queries:
         stage-commit-counter: >
           UPDATE techmaps_platform.stage SET commit_counter = ? WHERE id = ?
         stage-status: >
-          UPDATE techmaps_platform.stage SET status = ?::techmaps_platform.stage_status WHERE id = ?
+          UPDATE techmaps_platform.stage SET is_done = ? WHERE id = ?
       delete:
         stage-by-id: >
           DELETE FROM techmaps_platform.stage WHERE id = ?;

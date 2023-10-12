@@ -4,7 +4,6 @@ import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.roadmap.RoadmapLanguage;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
@@ -47,7 +46,7 @@ public class StageCRUDImpl implements StageCRUD {
         int stageNumber = stageDAO.findStagesByRoadmapId(roadmapId).size() + 1;
 
         Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap.get(),
-                request.getTheme(), StageStatus.UNDONE, stageNumber,0);
+                request.getTheme(), false, stageNumber,0);
 
         if (request.getTheme().getCondition().equals(roadmap.get().getLanguage().getCondition())
                 || request.getTheme().getCondition() == "General") {
@@ -87,7 +86,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         for (StageEnum theme : themes) {
             Stage stage = Stage.createStageWithoutTasks(UUID.randomUUID(), roadmap, theme,
-                    StageStatus.UNDONE, stageCounter++, 0);
+                    false, stageCounter++, 0);
             stages.add(stage);
             stageDAO.saveStage(stage);
         }
@@ -142,7 +141,7 @@ public class StageCRUDImpl implements StageCRUD {
         Stage response = stageDAO.updateStage(stage);
 
         if(commits.size() == counter)
-            stage.setStageStatus(StageStatus.DONE);
+            stage.setIsDone(true);
             stageDAO.updateStageStatus(stage);
 
         return response;
@@ -167,16 +166,16 @@ public class StageCRUDImpl implements StageCRUD {
             if (finishedDate != null)
                 counterDates++;
 
-        StageStatus status = StageStatus.valueOf(request.getStatus());
+        boolean isDone = request.isDone();
 
-        if (commitStates.size() == counterCommit && status.equals(StageStatus.UNDONE))
+        if (commitStates.size() == counterCommit && isDone == false)
             throw new BadRequestException("You can't change status to UNDONE, because all commits are staged");
 
-        if (finishedDates.size() == counterDates && status.equals(StageStatus.UNDONE))
+        if (finishedDates.size() == counterDates && isDone == false)
             throw new BadRequestException("You can't change status to UNDONE, because all tasks are finished");
 
         Stage stage = stageDAO.findStageById(stageId).get();
-        stage.setStageStatus(status);
+        stage.setIsDone(isDone);
 
         return stageDAO.updateStageStatus(stage);
     }

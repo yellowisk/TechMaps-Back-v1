@@ -3,7 +3,6 @@ package br.ifsp.techmaps.usecases.task;
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.task.TaskBody;
@@ -145,8 +144,8 @@ public class taskCRUDImpl implements TaskCRUD {
             }
         }
 
-        if(tasksFinished.size() == allTasksFromStage.size()) {
-            stage.setStageStatus(StageStatus.DONE);
+        if (tasksFinished.size() == allTasksFromStage.size()) {
+            stage.setIsDone(true);
             stageDAO.updateStageStatus(stage);
         }
 

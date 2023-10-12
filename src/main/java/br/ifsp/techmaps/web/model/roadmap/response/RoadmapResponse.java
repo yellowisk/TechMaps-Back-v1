@@ -82,7 +82,7 @@ public class RoadmapResponse {
         return isCompleted;
     }
 
-    public void setIsCompleted(boolean isComplete) {
+    public void setIsCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
 

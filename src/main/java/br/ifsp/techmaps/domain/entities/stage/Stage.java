@@ -15,58 +15,58 @@ public class Stage {
     @ManyToOne
     private Roadmap roadmap;
     private StageEnum theme;
-    private StageStatus stageStatus;
+    private boolean isDone;
     @OneToMany
     private List<Task> tasks;
     private int number;
     private Integer stageCommits;
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommits) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, int number, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
         this.number = number;
         this.stageCommits = stageCommits;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, List<Task> tasks) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, List<Task> tasks) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
         this.tasks = tasks;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommits) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
         this.stageCommits = stageCommits;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
+    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
     }
 
-    public Stage(Roadmap roadmap, StageEnum theme, StageStatus stageStatus) {
+    public Stage(Roadmap roadmap, StageEnum theme, boolean isDone) {
         this.roadmap = roadmap;
         this.theme = theme;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
     }
 
-    public Stage(UUID stageId, StageStatus stageStatus, Integer stageCommits) {
+    public Stage(UUID stageId, boolean isDone, Integer stageCommits) {
         this.stageId = stageId;
-        this.stageStatus = stageStatus;
+        this.isDone = isDone;
         this.stageCommits = stageCommits;
     }
 
-    public Stage(StageStatus stageStatus, Integer stageCommits) {
-        this.stageStatus = stageStatus;
+    public Stage(boolean isDone, Integer stageCommits) {
+        this.isDone = isDone;
         this.stageCommits = stageCommits;
     }
 
@@ -78,16 +78,16 @@ public class Stage {
         this.stageCommits = stageCommits;
     }
 
-    public Stage(StageStatus stageStatus) {
-        this.stageStatus = stageStatus;
+    public Stage(boolean isDone) {
+        this.isDone = isDone;
     }
 
-    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, int number, Integer stageCommit) {
-        return new Stage(id, roadmap, theme, stageStatus, number, stageCommit);
+    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, boolean isDone, int number, Integer stageCommit) {
+        return new Stage(id, roadmap, theme, isDone, number, stageCommit);
     }
 
-    public static Stage createStageWithoutTasksAndNumber(UUID id, Roadmap roadmap, StageEnum theme, StageStatus stageStatus, Integer stageCommit) {
-        return new Stage(id, roadmap, theme, stageStatus, stageCommit);
+    public static Stage createStageWithoutTasksAndNumber(UUID id, Roadmap roadmap, StageEnum theme, boolean isDone, Integer stageCommit) {
+        return new Stage(id, roadmap, theme, isDone, stageCommit);
     }
 
     public Stage() {}
@@ -115,12 +115,12 @@ public class Stage {
         this.theme = theme;
     }
 
-    public StageStatus getStageStatus() {
-        return stageStatus;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setStageStatus(StageStatus stageStatus) {
-        this.stageStatus = stageStatus;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public List<Task> getTasks() {

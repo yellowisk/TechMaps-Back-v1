@@ -146,22 +146,13 @@ CREATE TYPE techmaps_platform.stage_theme AS ENUM (
 
 ALTER TYPE techmaps_platform.stage_theme OWNER TO "techmaps";
 
-DROP TYPE IF EXISTS techmaps_platform.stage_status CASCADE;
-
-CREATE TYPE techmaps_platform.stage_status AS ENUM (
-    'DONE',
-    'UNDONE'
-);
-
-ALTER TYPE techmaps_platform.stage_status OWNER TO "techmaps";
-
 DROP TABLE IF EXISTS techmaps_platform.stage CASCADE;
 
 CREATE TABLE techmaps_platform.stage(
     id uuid NOT NULL,
     roadmap_id uuid NOT NULL,
     theme techmaps_platform.stage_theme,
-    status techmaps_platform.stage_status,
+    is_done boolean NOT NULL,
     stage_number int NOT NULL,
     commit_counter integer
 );

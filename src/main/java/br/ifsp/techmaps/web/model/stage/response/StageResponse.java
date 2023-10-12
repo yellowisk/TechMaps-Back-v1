@@ -2,7 +2,6 @@ package br.ifsp.techmaps.web.model.stage.response;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageEnum;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 import br.ifsp.techmaps.web.model.task.response.TaskResponse;
 
 import java.util.*;
@@ -12,7 +11,7 @@ public class StageResponse {
     private UUID id;
     private UUID roadmapId;
     private StageEnum theme;
-    private StageStatus status;
+    private boolean isDone;
     private List<TaskResponse> tasks;
     private int number;
     private Integer commits;
@@ -24,23 +23,23 @@ public class StageResponse {
 
 
     public StageResponse(UUID id, UUID roadmapId,
-                         StageEnum theme, StageStatus status,
+                         StageEnum theme, boolean isDone,
                          List<TaskResponse> tasks, int number, Integer commits) {
         this.id = id;
         this.roadmapId = roadmapId;
         this.theme = theme;
-        this.status = status;
+        this.isDone = isDone;
         this.tasks = tasks;
         this.number = number;
         this.commits = commits;
     }
 
     public StageResponse(UUID id, UUID roadmapId, StageEnum theme,
-                         StageStatus status, int number, Integer commits) {
+                         boolean isDone, int number, Integer commits) {
         this.id = id;
         this.roadmapId = roadmapId;
         this.theme = theme;
-        this.status = status;
+        this.isDone = isDone;
         this.number = number;
         this.commits = commits;
     }
@@ -54,7 +53,7 @@ public class StageResponse {
                 stage.getStageId(),
                 stage.getRoadmap().getRoadmapId(),
                 stage.getTheme(),
-                stage.getStageStatus(),
+                stage.isDone(),
                 stage.getNumber(),
                 stage.getStageCommits()
         );
@@ -68,7 +67,7 @@ public class StageResponse {
                 stage.getStageId(),
                 stage.getRoadmap().getRoadmapId(),
                 stage.getTheme(),
-                stage.getStageStatus(),
+                stage.isDone(),
                 taskResponses,
                 stage.getNumber(),
                 stage.getStageCommits()
@@ -99,12 +98,12 @@ public class StageResponse {
         this.theme = theme;
     }
 
-    public StageStatus getStatus() {
-        return status;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setStatus(StageStatus status) {
-        this.status = status;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public List<TaskResponse> getTasks() {

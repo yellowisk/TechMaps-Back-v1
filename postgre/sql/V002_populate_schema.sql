@@ -40,21 +40,21 @@ insert into techmaps_platform.roadmap(id, title, type, is_completed, lang, color
 
 --! Stage Queries --!
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
+insert into techmaps_platform.stage(id, roadmap_id, theme, is_done, stage_number,
     commit_counter) values ('962542e7-6813-48b6-8e20-7bfc181146bf'::uuid,
-    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_JAVA', 'UNDONE', 1, 0);
+    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_JAVA', false, 1, 0);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
+insert into techmaps_platform.stage(id, roadmap_id, theme, is_done, stage_number,
     commit_counter) values ('4c391609-5082-4dff-9994-a500f83e2419'::uuid,
-    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_SPRING', 'UNDONE', 2, 2);
+    '3c7b7683-bfeb-4a49-80b8-4080abb49dac'::uuid, 'LEARN_SPRING', false, 2, 2);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
+insert into techmaps_platform.stage(id, roadmap_id, theme, is_done, stage_number,
     commit_counter) values ('38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid,
-    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_JS', 'DONE', 1, 2);
+    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_JS', true, 1, 2);
 
-insert into techmaps_platform.stage(id, roadmap_id, theme, status, stage_number,
+insert into techmaps_platform.stage(id, roadmap_id, theme, is_done, stage_number,
     commit_counter) values ('e25ce4ef-6b92-4f4b-961e-56e00d55278c'::uuid,
-    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', 'DONE', 2, 0);
+    '50241d67-68b6-4db5-977b-91dda87750bd'::uuid, 'LEARN_REACT', true, 2, 0);
 
 --! Task Queries --!
 

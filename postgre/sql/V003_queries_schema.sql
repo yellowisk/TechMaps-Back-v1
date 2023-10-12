@@ -59,8 +59,8 @@ SELECT * FROM techmaps_platform.stage WHERE theme = 'LEARN_JAVA';
 SELECT * FROM techmaps_platform.stage WHERE theme = 'LEARN_JS';
 
 --Select Stage By Status
-SELECT * FROM techmaps_platform.stage WHERE status = 'UNDONE';
-SELECT * FROM techmaps_platform.stage WHERE status = 'DONE';
+SELECT * FROM techmaps_platform.stage WHERE is_done = false;
+SELECT * FROM techmaps_platform.stage WHERE is_done = true;
 
 --Select commit_counter By Stage Id
 SELECT commit_counter FROM techmaps_platform.stage WHERE id = '4c391609-5082-4dff-9994-a500f83e2419'::uuid;

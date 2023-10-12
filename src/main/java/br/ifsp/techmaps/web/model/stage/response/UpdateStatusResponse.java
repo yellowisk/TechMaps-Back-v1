@@ -1,24 +1,23 @@
 package br.ifsp.techmaps.web.model.stage.response;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
 
 public class UpdateStatusResponse {
-    private StageStatus status;
+    private boolean isDone;
 
-    public UpdateStatusResponse(StageStatus status) {
-        this.status = status;
+    public UpdateStatusResponse(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public static UpdateStatusResponse convertFromStage(Stage stage) {
-        return new UpdateStatusResponse(stage.getStageStatus());
+        return new UpdateStatusResponse(stage.isDone());
     }
 
-    public StageStatus getStatus() {
-        return status;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setStatus(StageStatus status) {
-        this.status = status;
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 }

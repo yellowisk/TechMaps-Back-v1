@@ -56,7 +56,7 @@ public class StageController {
         List<Stage> stages = stageCRUD.addStagesByRoadmapId(roadmapId);
         List<StageResponse> stageResponses = new ArrayList<>();
 
-        stages.forEach(stage -> stageResponses.add(StageResponse.createForStage(stage)));
+        stages.forEach(stage -> stageResponses.add(StageResponse.createFromStage(stage)));
 
         return ResponseEntity.ok(stageResponses);
     }

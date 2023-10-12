@@ -1,23 +1,20 @@
 package br.ifsp.techmaps.web.model.stage.request;
 
-import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageStatus;
-
 public class UpdateStatusRequest {
-    private String status;
+    private boolean isDone;
 
-    public UpdateStatusRequest(String status) {
-        this.status = status;
+    public UpdateStatusRequest(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public UpdateStatusRequest() {
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 }

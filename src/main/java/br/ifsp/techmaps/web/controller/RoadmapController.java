@@ -9,7 +9,6 @@ import br.ifsp.techmaps.web.model.roadmap.response.RoadmapResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
