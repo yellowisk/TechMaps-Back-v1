@@ -175,7 +175,7 @@ CREATE TYPE techmaps_platform.task_body AS ENUM (
     'HT1', 'HT2', 'HT3', 'HT4', 'HT5',
     'CS1', 'CS2', 'CS3', 'CS4', 'CS5',
     'JS1', 'JS2', 'JS3', 'JS4', 'JS5', 'JS6', 'JS7', 'JS8', 'JS9', 'JS10', 'JS11', 'JS12', 'JS13',
-    'INT1', 'IN2', 'IN3', 'IN4', 'IN5',
+    'IN1', 'IN2', 'IN3', 'IN4', 'IN5',
     'DG1', 'DG2', 'DG3',
     'WS1', 'WS2', 'WS3', 'WS4', 'WS5',
     'CD1', 'CD2', 'CD3', 'CD4', 'CD5',
