@@ -72,12 +72,12 @@ public class StageCRUDImpl implements StageCRUD {
 
         Map<RoadmapLanguage, List<StageEnum>> languageToThemesMap = new HashMap<>();
         languageToThemesMap.put(RoadmapLanguage.JAVA, Arrays.asList(StageEnum.LEARN_INTELLIJ, StageEnum.LEARN_OOP, StageEnum.LEARN_JAVA, StageEnum.LEARN_INTERNET,
-                StageEnum.LEARN_MYSQL, StageEnum.LEARN_SPRING, StageEnum.LEARN_WEBSERVERS));
+                StageEnum.LEARN_SQL, StageEnum.LEARN_SPRING, StageEnum.LEARN_WEBSERVERS));
         languageToThemesMap.put(RoadmapLanguage.JAVASCRIPT, Arrays.asList(StageEnum.LEARN_INTERNET, StageEnum.LEARN_VSCODE, StageEnum.LEARN_HTML, StageEnum.LEARN_CSS,
                 StageEnum.LEARN_JS, StageEnum.LEARN_NODEJS, StageEnum.LEARN_WEBSERVERS, StageEnum.LEARN_ANGULAR, StageEnum.LEARN_REACT));
-        languageToThemesMap.put(RoadmapLanguage.PYTHON, Arrays.asList(StageEnum.LEARN_PYTHON, StageEnum.LEARN_INTERNET, StageEnum.LEARN_MYSQL, StageEnum.LEARN_DJANGO,
+        languageToThemesMap.put(RoadmapLanguage.PYTHON, Arrays.asList(StageEnum.LEARN_PYTHON, StageEnum.LEARN_INTERNET, StageEnum.LEARN_SQL, StageEnum.LEARN_DJANGO,
                 StageEnum.LEARN_WEBSERVERS, StageEnum.LEARN_CLOUD));
-        languageToThemesMap.put(RoadmapLanguage.KOTLIN, Arrays.asList(StageEnum.LEARN_INTERNET, StageEnum.LEARN_OOP, StageEnum.LEARN_KOTLIN, StageEnum.LEARN_MYSQL,
+        languageToThemesMap.put(RoadmapLanguage.KOTLIN, Arrays.asList(StageEnum.LEARN_INTERNET, StageEnum.LEARN_OOP, StageEnum.LEARN_KOTLIN, StageEnum.LEARN_SQL,
                 StageEnum.LEARN_ANDROID, StageEnum.LEARN_FIREBASE, StageEnum.LEARN_WEBSERVERS));
 
         if (languageToThemesMap.containsKey(roadmap.getLanguage())) {

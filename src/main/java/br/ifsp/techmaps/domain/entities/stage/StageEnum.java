@@ -13,9 +13,10 @@ public enum StageEnum {
         LEARN_DIAGRAMS("Learn Diagrams", "General"),
         LEARN_WEBSERVERS("Learn WebServers", "Backend"),
         LEARN_CLOUD("Learn Cloud Systems", "Backend"),
-    //VERSION CONTROL
+    //TECHNOLOGIES
         LEARN_GIT("Learn Git", "General"),
         LEARN_GITHUB("Learn GitHub", "General"),
+        LEARN_DOCKER("Learn Docker", "Backend"),
     //APIs
         LEARN_API("Learn API", "General"),
         LEARN_REST("Learn REST", "General"),
@@ -45,9 +46,8 @@ public enum StageEnum {
         LEARN_BOOTSTRAP("Learn Bootstrap", "Frontend"),
 
     //Databases
-        LEARN_MYSQL("Learn MySQL", "Backend"),
+        LEARN_SQL("Learn SQL", "Backend"),
         LEARN_POSTGRES("Learn PostgreSQL", "Backend"),
-        LEARN_DOCKER("Learn Docker", "Backend"),
         LEARN_FIREBASE("Learn Firebase", "Backend");
 
     private String topic;

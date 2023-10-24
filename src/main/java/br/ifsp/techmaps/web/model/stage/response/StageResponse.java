@@ -20,8 +20,6 @@ public class StageResponse {
         this.id = id;
     }
 
-
-
     public StageResponse(UUID id, UUID roadmapId,
                          StageEnum theme, boolean isDone,
                          List<TaskResponse> tasks, int number, Integer commits) {
@@ -42,6 +40,9 @@ public class StageResponse {
         this.isDone = isDone;
         this.number = number;
         this.commits = commits;
+    }
+
+    public StageResponse() {
     }
 
     public static StageResponse createJustId(UUID id) {
