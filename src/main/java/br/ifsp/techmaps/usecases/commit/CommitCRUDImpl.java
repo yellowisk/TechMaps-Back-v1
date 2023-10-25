@@ -3,8 +3,7 @@ package br.ifsp.techmaps.usecases.commit;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
-import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
-import br.ifsp.techmaps.web.model.comit.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.commit.request.UpdateCommitStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

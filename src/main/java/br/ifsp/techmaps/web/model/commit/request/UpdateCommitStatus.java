@@ -1,7 +1,4 @@
-package br.ifsp.techmaps.web.model.comit.request;
-
-import br.ifsp.techmaps.domain.entities.task.CommitState;
-import br.ifsp.techmaps.domain.entities.task.TaskCommit;
+package br.ifsp.techmaps.web.model.commit.request;
 
 public class UpdateCommitStatus {
     private String status;
