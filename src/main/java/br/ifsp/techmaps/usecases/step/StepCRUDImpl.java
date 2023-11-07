@@ -60,13 +60,13 @@ public class StepCRUDImpl implements StepCRUD {
     public Step prioritizeTaskStep(UUID stepId) {
         Optional<Step> stepVerify = stepDAO.findStepById(stepId);
 
-        if(stepVerify.isEmpty())
+        if (stepVerify.isEmpty())
             throw new IllegalStateException("Couldn't find step with id: " + stepId);
 
         Step step = stepVerify.get();
 
-        if (step.isPriority()) {step.setPriority(false);}
-        else {step.setPriority(true);}
+        step.setPriority(!step.isPriority());
+
         return stepDAO.prioritizeStep(step);
     }
 
@@ -79,8 +79,8 @@ public class StepCRUDImpl implements StepCRUD {
 
         Step step = stepVerify.get();
 
-        if (step.isFinished()) {step.setFinished(false);}
-        else {step.setFinished(true);}
+        step.setFinished(!step.isFinished());
+
         return stepDAO.finishStep(step);
     }
 

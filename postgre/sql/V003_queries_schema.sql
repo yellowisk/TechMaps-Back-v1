@@ -77,7 +77,7 @@ SELECT * FROM techmaps_platform.task WHERE stage_id = '4c391609-5082-4dff-9994-a
 SELECT * FROM techmaps_platform.task WHERE stage_id = '38fe1240-c5d8-44ed-a73d-432c52b1076b'::uuid;
 
 --Select Task By Info
-SELECT * FROM techmaps_platform.task WHERE info = 'JV7';
+SELECT * FROM techmaps_platform.task WHERE info = 'SPG2';
 SELECT * FROM techmaps_platform.task WHERE info = 'JS1';
 
 --Select Task By Dashboard Id

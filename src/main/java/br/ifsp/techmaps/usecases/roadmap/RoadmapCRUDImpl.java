@@ -60,8 +60,8 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Roadmap type and language are incompatible.");
         }
 
-        if (request.getColor() < 0 || request.getColor() > 11) {
-            throw new RuntimeException("Invalid color code: " + request.getColor());
+        if (color.getColorCode() < 0 || color.getColorCode() > 11) {
+            throw new RuntimeException("Invalid color code: " + color.getColorCode());
         }
 
         Roadmap roadmap = Roadmap.createWithoutId(request.getTitle(), type, false,
@@ -146,11 +146,11 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
                     + roadmap.getTitle() + "' is complete");
         }
 
-        if (request.getColor() < 0 || request.getColor() > 11) {
+        RoadmapColor color = RoadmapColor.getColor(request.getColor());
+
+        if (color.getColorCode() < 0 || color.getColorCode() > 11) {
             throw new RuntimeException("Invalid color code: " + request.getColor());
         }
-
-        RoadmapColor color = RoadmapColor.getColor(request.getColor());
 
         roadmap.setTitle(request.getTitle());
         roadmap.setColor(color);

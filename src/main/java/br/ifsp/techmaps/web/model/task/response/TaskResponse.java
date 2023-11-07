@@ -49,16 +49,16 @@ public class TaskResponse {
     public static TaskResponse createFromTask(Task task) {
         return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getNumber(), task.getRepositoryLink(), task.getDate_created(),
-                task.getDate_finished(), task.getDashboard().getDashboardId(),
+                task.getNumber(), task.getRepositoryLink(), task.getDateCreated(),
+                task.getDateFinished(), task.getDashboard().getDashboardId(),
                 task.getTaskCommits().getCommitId());
     }
 
     public static TaskResponse createFromTaskWithoutCommit(Task task) {
         return new TaskResponse(task.getTaskId(), task.getStage().getStageId(),
                 task.getTaskBody().getTitle(), task.getTaskBody().getDescription(),
-                task.getNumber(), task.getRepositoryLink(), task.getDate_created(),
-                task.getDate_finished(), task.getDashboard().getDashboardId());
+                task.getNumber(), task.getRepositoryLink(), task.getDateCreated(),
+                task.getDateFinished(), task.getDashboard().getDashboardId());
     }
 
     public UUID getId() {

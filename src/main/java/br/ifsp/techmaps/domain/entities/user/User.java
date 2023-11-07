@@ -1,11 +1,9 @@
 package br.ifsp.techmaps.domain.entities.user;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
-
 
 public class User implements UserDetails {
     private UUID id;

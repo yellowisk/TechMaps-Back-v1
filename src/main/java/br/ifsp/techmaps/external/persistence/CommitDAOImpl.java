@@ -55,7 +55,8 @@ public class CommitDAOImpl implements CommitDAO {
     public Optional<TaskCommit> findTaskCommitById(UUID taskCommitId) {
         TaskCommit taskCommit;
         try {
-            taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByIdQuery, this::mapperTaskCommitFromRs, taskCommitId);
+            taskCommit = jdbcTemplate.queryForObject(selectTaskCommitByIdQuery,
+                    this::mapperTaskCommitFromRs, taskCommitId);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

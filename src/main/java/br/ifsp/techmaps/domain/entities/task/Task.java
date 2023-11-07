@@ -2,86 +2,77 @@ package br.ifsp.techmaps.domain.entities.task;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Entity
-@Table(name = "task")
 public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID taskId;
-    @ManyToOne
-    @JsonIgnore
     private Stage stage;
     private TaskBody taskBody;
     private int number;
     private String repositoryLink;
-    private Timestamp date_created;
-    private Timestamp date_finished;
-    @OneToOne
-    @JsonIgnore
+    private Timestamp dateCreated;
+    private Timestamp dateFinished;
     private Dashboard dashboard;
-    @OneToOne
     private TaskCommit taskCommits;
 
     public Task(UUID taskId, Stage stage, TaskBody taskBody, int number,
-                String repositoryLink, Timestamp date_created, Timestamp date_finished,
+                String repositoryLink, Timestamp dateCreated, Timestamp dateFinished,
                 Dashboard dashboard, TaskCommit taskCommits) {
         this.taskId = taskId;
         this.stage = stage;
         this.taskBody = taskBody;
         this.number = number;
         this.repositoryLink = repositoryLink;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboard = dashboard;
         this.taskCommits = taskCommits;
     }
 
     public Task(UUID taskId, Stage stage, TaskBody taskBody, int number,
-                String repositoryLink, Timestamp date_created, Timestamp date_finished,
+                String repositoryLink, Timestamp dateCreated, Timestamp dateFinished,
                 Dashboard dashboard) {
         this.taskId = taskId;
         this.stage = stage;
         this.taskBody = taskBody;
         this.number = number;
         this.repositoryLink = repositoryLink;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboard = dashboard;
     }
 
-    public Task(UUID taskId, Stage stage, String repositoryLink, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+    public Task(UUID taskId, Stage stage, String repositoryLink, Timestamp dateCreated,
+                Timestamp dateFinished, Dashboard dashboard) {
         this.taskId = taskId;
         this.stage = stage;
         this.repositoryLink = repositoryLink;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboard = dashboard;
     }
 
-    public Task(Stage stage, TaskBody taskBody, String repositoryLink, Timestamp date_created, Timestamp date_finished, Dashboard dashboard) {
+    public Task(Stage stage, TaskBody taskBody, String repositoryLink, Timestamp dateCreated,
+                Timestamp dateFinished, Dashboard dashboard) {
         this.stage = stage;
         this.taskBody = taskBody;
         this.repositoryLink = repositoryLink;
-        this.date_created = date_created;
-        this.date_finished = date_finished;
+        this.dateCreated = dateCreated;
+        this.dateFinished = dateFinished;
         this.dashboard = dashboard;
     }
 
-    public Task(UUID taskId, String repositoryLink, Timestamp date_created) {
+    public Task(UUID taskId, String repositoryLink, Timestamp dateCreated) {
         this.taskId = taskId;
         this.repositoryLink = repositoryLink;
-        this.date_created = date_created;
+        this.dateCreated = dateCreated;
     }
 
-    public Task(String repositoryLink, Timestamp date_finished) {
+    public Task(String repositoryLink, Timestamp dateFinished) {
         this.repositoryLink = repositoryLink;
-        this.date_finished = date_finished;
+        this.dateFinished = dateFinished;
     }
 
     public Task(UUID taskId, Dashboard dashboard) {
@@ -93,8 +84,8 @@ public class Task {
         this.repositoryLink = repositoryLink;
     }
 
-    public Task(Timestamp date_finished) {
-        this.date_finished = date_finished;
+    public Task(Timestamp dateFinished) {
+        this.dateFinished = dateFinished;
     }
 
     public Task(int number) {
@@ -163,20 +154,20 @@ public class Task {
         this.repositoryLink = repositoryLink;
     }
 
-    public Timestamp getDate_created() {
-        return date_created;
+    public Timestamp getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDate_created(Timestamp date_created) {
-        this.date_created = date_created;
+    public void setDateCreated(Timestamp dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public Timestamp getDate_finished() {
-        return date_finished;
+    public Timestamp getDateFinished() {
+        return dateFinished;
     }
 
-    public void setDate_finished(Timestamp date_finished) {
-        this.date_finished = date_finished;
+    public void setDateFinished(Timestamp dateFinished) {
+        this.dateFinished = dateFinished;
     }
 
     public TaskCommit getTaskCommits() {

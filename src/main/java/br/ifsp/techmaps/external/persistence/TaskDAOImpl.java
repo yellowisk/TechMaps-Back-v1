@@ -59,7 +59,7 @@ public class TaskDAOImpl implements TaskDAO {
     public Task saveNewTask(Task task) {
         jdbcTemplate.update(insertTaskQuery, task.getTaskId(), task.getStage().getStageId(),
                 task.getStage().getTheme().name(), task.getTaskBody().name(), task.getNumber(),
-                task.getRepositoryLink(), task.getDate_created(), task.getDate_finished(), task.getDashboard().getDashboardId());
+                task.getRepositoryLink(), task.getDateCreated(), task.getDateFinished(), task.getDashboard().getDashboardId());
         return Task.createWithOnlyId(task.getTaskId());
     }
 
@@ -98,7 +98,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Task updateDateFinished(Task task) {
         jdbcTemplate.update(updateTaskDateFinishedQuery,
-                task.getDate_finished(), task.getTaskId());
+                task.getDateFinished(), task.getTaskId());
 
         return Task.createWithOnlyId(task.getTaskId());
     }

@@ -1,7 +1,5 @@
 package br.ifsp.techmaps.web.controller;
 
-
-
 import br.ifsp.techmaps.configs.auth.jwt.JwtProperties;
 import br.ifsp.techmaps.configs.auth.jwt.JwtTokenHelper;
 import br.ifsp.techmaps.domain.entities.user.User;

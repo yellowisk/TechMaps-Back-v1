@@ -47,16 +47,15 @@ public class taskCRUDImpl implements TaskCRUD {
 
         List<Task> tasks = new ArrayList<>();
 
-        for (TaskBody taskBody : TaskBody.values()) {
-            if (taskBody.getTopic().equals(topic.getTopic())) {
-                Task task = createTaskRequest.convertToTask();
-                task.setTaskBody(taskBody);
-                task.setNumber(tasks.size() + 1);
-                task.setDashboard(dashboard);
-                task.setStage(stage);
-                tasks.add(task);
-            }
-        }
+        Arrays.stream(TaskBody.values()).filter(taskBody -> taskBody.getTopic().equals(topic.getTopic()))
+                .forEach(taskBody -> {
+            Task task = createTaskRequest.convertToTask();
+            task.setTaskBody(taskBody);
+            task.setNumber(tasks.size() + 1);
+            task.setDashboard(dashboard);
+            task.setStage(stage);
+            tasks.add(task);
+        });
 
         tasks.forEach(task -> taskDAO.saveNewTask(task));
         tasks.forEach(task -> task.setTaskCommits(commitDAO.createTaskCommit(task)));
@@ -125,10 +124,10 @@ public class taskCRUDImpl implements TaskCRUD {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 
-        if (request.getDate_finished() == false) {
-            taskToFinish.setDate_finished(null);
+        if (!request.isFinished()) {
+            taskToFinish.setDateFinished(null);
         } else {
-            taskToFinish.setDate_finished(Timestamp.valueOf(LocalDateTime.now()));
+            taskToFinish.setDateFinished(Timestamp.valueOf(LocalDateTime.now()));
         }
 
         taskDAO.updateDateFinished(taskToFinish);
@@ -139,7 +138,7 @@ public class taskCRUDImpl implements TaskCRUD {
         List<Task> tasksFinished = new ArrayList<>();
 
         for (Task task : allTasksFromStage) {
-            if (task.getDate_finished() != null) {
+            if (task.getDateFinished() != null) {
                 tasksFinished.add(task);
             }
         }

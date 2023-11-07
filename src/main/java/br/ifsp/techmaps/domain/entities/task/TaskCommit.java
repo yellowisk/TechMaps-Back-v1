@@ -1,16 +1,9 @@
 package br.ifsp.techmaps.domain.entities.task;
 
-import javax.persistence.*;
-
 import java.util.*;
 
-@Entity
-@Table(name = "task_commit")
 public class TaskCommit {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID commitId;
-    @OneToOne
     private Task task;
     private String commitTag;
     private CommitState state;

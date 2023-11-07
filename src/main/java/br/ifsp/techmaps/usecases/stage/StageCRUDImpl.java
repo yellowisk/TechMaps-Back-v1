@@ -140,9 +140,10 @@ public class StageCRUDImpl implements StageCRUD {
 
         Stage response = stageDAO.updateStage(stage);
 
-        if(commits.size() == counter)
+        if(commits.size() == counter) {
             stage.setIsDone(true);
             stageDAO.updateStageStatus(stage);
+        }
 
         return response;
     }

@@ -112,9 +112,9 @@ public class StageDAOImpl implements StageDAO {
         List<String> commitStatesString = jdbcTemplate.query(selectCommitStateByStageIdQuery,
                 (rs, rowNum) -> rs.getString("state"), stageId);
 
-        for (String commitStateString : commitStatesString) {
+        commitStatesString.forEach(commitStateString -> {
             commitStates.add(CommitState.valueOf(commitStateString));
-        }
+        });
 
         return commitStates;
     }

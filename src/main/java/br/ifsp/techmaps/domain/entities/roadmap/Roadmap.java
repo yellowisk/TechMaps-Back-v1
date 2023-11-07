@@ -2,16 +2,10 @@ package br.ifsp.techmaps.domain.entities.roadmap;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.*;
 
-@Entity
-@Table(name = "roadmap")
 public class Roadmap {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID roadmapId;
     private String title;
     private RoadmapType type;
@@ -21,7 +15,6 @@ public class Roadmap {
     private Timestamp startTime;
     private Timestamp finishTime;
     private Long totalTime;
-    @OneToMany
     private List<Stage> stages;
     private Integer roadmapCommits;
     private UUID dashboardId;

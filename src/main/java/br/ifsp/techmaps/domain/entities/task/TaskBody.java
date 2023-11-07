@@ -121,7 +121,7 @@ public enum TaskBody {
     VC2("Learn Visual Studio Code", "Programming and Debugging", "Use VS Code to write code, run programs, and debug applications."),
     VC3("Learn Visual Studio Code", "Advanced Features and Productivity", "Explore VS Code's advanced features, such automations and external tools and services"),
 
-    II1("Learn IntelliJ IDEA", "etting Started with IntelliJ IDEA", "Install IntelliJ IDEA and set up the development environment."),
+    II1("Learn IntelliJ IDEA", "Getting Started with IntelliJ IDEA", "Install IntelliJ IDEA and set up the development environment."),
     II2("Learn IntelliJ IDEA", "Java Development in IntelliJ IDEA", "Learn how to use IntelliJ IDEA to develop Java applications."),
     II3("Learn IntelliJ IDEA", " Advanced IntelliJ IDEA Features", "Explore IntelliJ IDEA's advanced features, such as database management and code analysis."),
 

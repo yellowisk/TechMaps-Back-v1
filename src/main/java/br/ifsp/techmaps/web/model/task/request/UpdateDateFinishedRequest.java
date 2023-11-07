@@ -17,11 +17,11 @@ public class UpdateDateFinishedRequest {
         return new UpdateDateFinishedRequest(isFinished);
     }
 
-    public Boolean getDate_finished() {
+    public Boolean isFinished() {
         return isFinished;
     }
 
-    public void setDate_finished(Boolean isFinished) {
+    public void setFinished(Boolean isFinished) {
         this.isFinished = isFinished;
     }
 }

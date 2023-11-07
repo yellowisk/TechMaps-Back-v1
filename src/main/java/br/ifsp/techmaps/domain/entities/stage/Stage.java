@@ -2,21 +2,14 @@ package br.ifsp.techmaps.domain.entities.stage;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.task.Task;
-import javax.persistence.*;
 
 import java.util.*;
 
-@Entity
-@Table(name = "stage")
 public class Stage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID stageId;
-    @ManyToOne
     private Roadmap roadmap;
     private StageEnum theme;
     private boolean isDone;
-    @OneToMany
     private List<Task> tasks;
     private int number;
     private Integer stageCommits;

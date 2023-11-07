@@ -1,24 +1,13 @@
 package br.ifsp.techmaps.domain.entities.dashboard;
 
-import javax.persistence.*;
-
 import java.util.*;
 
-@Entity
-@Table(name = "dashboard")
 public class Dashboard {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID dashboardId;
-
     private int totalRoadmaps;
-
     private int totalCommits;
-
     private int totalTasks;
-
     private Long totalTime;
-
     private UUID userId;
 
     public Dashboard(UUID dashboardId, int totalRoadmaps, int totalCommits,
