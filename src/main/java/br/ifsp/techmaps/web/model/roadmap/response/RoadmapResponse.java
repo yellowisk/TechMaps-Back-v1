@@ -12,7 +12,7 @@ public class RoadmapResponse {
     private RoadmapType type;
     private boolean isCompleted;
     private RoadmapLanguage language;
-    private RoadmapColor color;
+    private int color;
     private Timestamp startTime;
     private Timestamp finishTime;
     private Long totalTime; //divide by 60 to get minutes
@@ -25,7 +25,7 @@ public class RoadmapResponse {
 
     public RoadmapResponse(UUID id, String title, RoadmapType type,
                            boolean isCompleted, RoadmapLanguage language,
-                           RoadmapColor color, Timestamp startTime, Timestamp finishTime,
+                           int color, Timestamp startTime, Timestamp finishTime,
                            Long totalTime, Integer commits, UUID dashboardId) {
         this.id = id;
         this.title = title;
@@ -49,7 +49,7 @@ public class RoadmapResponse {
     public static RoadmapResponse create(Roadmap roadmap) {
 
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
-                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor(),
+                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor().getColorCode(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
@@ -94,9 +94,9 @@ public class RoadmapResponse {
         this.language = language;
     }
 
-    public RoadmapColor getColor() {return color;}
+    public int getColor() {return color;}
 
-    public void setColor(RoadmapColor color) {this.color = color;}
+    public void setColor(int color) {this.color = color;}
 
     public Timestamp getStartTime() {
         return startTime;
