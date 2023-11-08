@@ -74,8 +74,6 @@ public class CommitDAOImpl implements CommitDAO {
             return Optional.empty();
         }
 
-        System.out.println("tag: " + taskCommit.getCommitTag());
-
         if(Objects.isNull(taskCommit))
             throw new IllegalStateException("Couldn't find TaskCommit with task id: " + taskId);
 

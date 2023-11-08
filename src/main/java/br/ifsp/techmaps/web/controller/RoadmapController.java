@@ -80,7 +80,7 @@ public class RoadmapController {
             @PathVariable UUID roadmapId) {
         Roadmap roadmap = roadmapCRUD.deleteRoadmapById(roadmapId);
 
-        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
+        return ResponseEntity.ok(RoadmapResponse.createForDeletion(roadmap));
     }
 
     @GetMapping("roadmaps/{roadmapId}/certificate")
