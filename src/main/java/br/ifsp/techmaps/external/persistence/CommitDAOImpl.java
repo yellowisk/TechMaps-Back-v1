@@ -104,7 +104,7 @@ public class CommitDAOImpl implements CommitDAO {
         UUID id = (UUID) rs.getObject("id");
         UUID taskId = (UUID) rs.getObject("task_id");
         String commitTag = rs.getString("tag");
-        Boolean isStaged = Boolean.valueOf(rs.getString("is_staged"));
+        Boolean isStaged = rs.getBoolean("is_staged");
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
