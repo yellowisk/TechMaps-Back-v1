@@ -1,6 +1,6 @@
 package br.ifsp.techmaps.domain.entities.stage;
 
-public enum StageEnum {
+public enum StageTheme {
     //Langs
         LEARN_PYTHON("Learn Python", "Backend"),
         LEARN_JAVA("Learn Java", "Backend"),
@@ -53,7 +53,7 @@ public enum StageEnum {
     private String topic;
     private String condition;
 
-    StageEnum(String topic, String condition) {
+    StageTheme(String topic, String condition) {
         this.topic = topic;
         this.condition = condition;
     }

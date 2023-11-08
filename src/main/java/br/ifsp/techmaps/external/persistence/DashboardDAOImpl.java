@@ -35,7 +35,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String selectCountCompleteRoadmapsByDashboardIdQuery;
     @Value("${queries.sql.dashboard-dao.select.count-tasks-with-date-finished-by-dashboard-id}")
     private String selectCountFinishedTasksByDashboardIdQuery;
-    @Value("${queries.sql.dashboard-dao.select.count-commits-with-staged-state-by-dashboard-id}")
+    @Value("${queries.sql.dashboard-dao.select.count-commits-with-staged-status-by-dashboard-id}")
     private String selectCountStagedCommitsByDashboardIdQuery;
     @Value("${queries.sql.dashboard-dao.select.count-total-time-from-roadmaps-by-dashboard-id}")
     private String selectCountTotalTimeFromRoadmapsByDashboardIdQuery;

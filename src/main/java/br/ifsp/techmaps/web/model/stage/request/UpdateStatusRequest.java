@@ -14,7 +14,7 @@ public class UpdateStatusRequest {
         return isDone;
     }
 
-    public void setIsDone(boolean isDone) {
-        this.isDone = isDone;
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }

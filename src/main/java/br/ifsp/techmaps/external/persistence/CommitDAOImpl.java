@@ -15,8 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.*;
 
-import static br.ifsp.techmaps.domain.entities.task.CommitState.UNSTAGED;
-
 @Repository
 public class CommitDAOImpl implements CommitDAO {
 
@@ -39,7 +37,7 @@ public class CommitDAOImpl implements CommitDAO {
     private String selectTaskCommitsByDashboardIdQuery;
     @Value("${queries.sql.task-commit-dao.select.task-commit-by-task-id}")
     private String selectTaskCommitByTaskIdQuery;
-    @Value("${queries.sql.task-commit-dao.update.task-commit-state}")
+    @Value("${queries.sql.task-commit-dao.update.task-commit-status}")
     private String updateTaskCommitStatusQuery;
 
     @Override
@@ -47,7 +45,7 @@ public class CommitDAOImpl implements CommitDAO {
         UUID taskCommitId = UUID.randomUUID();
         jdbcTemplate.update(insertTaskCommitQuery, taskCommitId,
                 task.getTaskId(), TaskCommit.createCommitTag(task),
-                UNSTAGED.name(), task.getDashboard().getDashboardId());
+                false, task.getDashboard().getDashboardId());
         return TaskCommit.createWithOnlyId(taskCommitId);
     }
 
@@ -76,8 +74,10 @@ public class CommitDAOImpl implements CommitDAO {
             return Optional.empty();
         }
 
+        System.out.println("tag: " + taskCommit.getCommitTag());
+
         if(Objects.isNull(taskCommit))
-            throw new IllegalStateException();
+            throw new IllegalStateException("Couldn't find TaskCommit with task id: " + taskId);
 
         return Optional.of(taskCommit);
     }
@@ -96,7 +96,7 @@ public class CommitDAOImpl implements CommitDAO {
 
     @Override
     public TaskCommit updateTaskCommmit(TaskCommit taskCommit) {
-        jdbcTemplate.update(updateTaskCommitStatusQuery, taskCommit.getState().name(),
+        jdbcTemplate.update(updateTaskCommitStatusQuery, taskCommit.isStaged(),
                 taskCommit.getCommitId());
         dashboardDAO.refreshDashboard(taskCommit.getTask().getDashboard().getDashboardId());
         return TaskCommit.createWithOnlyId(taskCommit.getCommitId());
@@ -106,13 +106,13 @@ public class CommitDAOImpl implements CommitDAO {
         UUID id = (UUID) rs.getObject("id");
         UUID taskId = (UUID) rs.getObject("task_id");
         String commitTag = rs.getString("tag");
-        CommitState commitState = CommitState.valueOf(rs.getString("state"));
+        Boolean isStaged = Boolean.valueOf(rs.getString("is_staged"));
         UUID dashboardId = (UUID) rs.getObject("dashboard_id");
 
         Dashboard dashboard = dashboardDAO.findDashboardById(dashboardId).orElseThrow(() -> new SQLDataException("Dashboard not found"));
         Task task = Task.createWithIdAndDashboard(taskId, dashboard);
 
-        return new TaskCommit(id, task, commitTag, commitState);
+        return new TaskCommit(id, task, commitTag, isStaged);
     }
 
 }

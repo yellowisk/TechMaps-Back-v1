@@ -1,6 +1,5 @@
 package br.ifsp.techmaps.web.model.commit.response;
 
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 
 import java.util.UUID;
@@ -12,18 +11,18 @@ public class CommitResponse {
 
     private String tag;
 
-    private CommitState state;
+    private boolean isStaged;
 
-    public CommitResponse(UUID id, UUID taskId, String tag, CommitState state) {
+    public CommitResponse(UUID id, UUID taskId, String tag, boolean isStaged) {
         this.id = id;
         this.taskId = taskId;
         this.tag = tag;
-        this.state = state;
+        this.isStaged = isStaged;
     }
 
     public static CommitResponse convertFromTaskCommit(TaskCommit taskCommit) {
         return new CommitResponse(taskCommit.getCommitId(), taskCommit.getTask().getTaskId(),
-                taskCommit.getCommitTag(), taskCommit.getState());
+                taskCommit.getCommitTag(), taskCommit.isStaged());
     }
 
     public UUID getId() {
@@ -50,11 +49,11 @@ public class CommitResponse {
         this.tag = tag;
     }
 
-    public CommitState getState() {
-        return state;
+    public boolean isStaged() {
+        return isStaged;
     }
 
-    public void setState(CommitState state) {
-        this.state = state;
+    public void setStaged(boolean staged) {
+        isStaged = staged;
     }
 }

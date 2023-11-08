@@ -2,7 +2,7 @@ package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.stage.StageTheme;
 import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
@@ -26,7 +26,7 @@ public class StageDAOImpl implements StageDAO {
     private String selectStageByIdQuery;
     @Value("${queries.sql.stage-dao.select.stage-by-roadmap-id}")
     private String selectStageByRoadmapIdQuery;
-    @Value("${queries.sql.stage-dao.select.commit-state-by-stage-id}")
+    @Value("${queries.sql.stage-dao.select.commit-status-by-stage-id}")
     private String selectCommitStateByStageIdQuery;
     @Value("${queries.sql.stage-dao.select.date-finished-of-tasks-by-stage-id}")
     private String selectDateFinishedOfTasksByStageIdQuery;
@@ -106,15 +106,10 @@ public class StageDAOImpl implements StageDAO {
     }
 
     @Override
-    public List<CommitState> findCommitsByStageId(UUID stageId) {
-        List<CommitState> commitStates = new ArrayList<>();
+    public List<Boolean> findCommitsByStageId(UUID stageId) {
 
-        List<String> commitStatesString = jdbcTemplate.query(selectCommitStateByStageIdQuery,
-                (rs, rowNum) -> rs.getString("state"), stageId);
-
-        commitStatesString.forEach(commitStateString -> {
-            commitStates.add(CommitState.valueOf(commitStateString));
-        });
+        List<Boolean> commitStates= jdbcTemplate.query(selectCommitStateByStageIdQuery,
+                (rs, rowNum) -> rs.getBoolean("is_staged"), stageId);
 
         return commitStates;
     }
@@ -182,7 +177,7 @@ public class StageDAOImpl implements StageDAO {
     private Stage mapperStageFromRs(ResultSet rs, int rowNum) throws SQLException {
         UUID id = (UUID) rs.getObject("id");
         UUID roadmapId = (UUID) rs.getObject("roadmap_id");
-        StageEnum theme = StageEnum.valueOf(rs.getString("theme"));
+        StageTheme theme = StageTheme.valueOf(rs.getString("theme"));
         Boolean isDone = rs.getBoolean("is_done");
         int number = rs.getInt("stage_number");
         Integer stageCommit = Integer.valueOf(rs.getString("commit_counter"));

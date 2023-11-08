@@ -1,9 +1,8 @@
 package br.ifsp.techmaps.usecases.commit;
 
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;
-import br.ifsp.techmaps.web.model.commit.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.commit.request.UpdateCommitStatusRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -30,12 +29,12 @@ public class CommitCRUDImpl implements CommitCRUD {
     }
 
     @Override
-    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatus request) {
+    public TaskCommit updateTaskCommit(UUID taskId, UUID taskCommitId, UpdateCommitStatusRequest request) {
         TaskCommit taskCommit = commitDAO.findTaskCommitById(taskCommitId)
                 .orElseThrow(() -> new NullPointerException("Couldn't find TaskCommit with id: "
                         + taskCommitId));
 
-        taskCommit.setState(CommitState.valueOf(request.getStatus()));
+        taskCommit.setStaged(request.isStaged());
 
         commitDAO.updateTaskCommmit(taskCommit);
 

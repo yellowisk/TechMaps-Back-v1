@@ -1,15 +1,14 @@
 package br.ifsp.techmaps.web.controller;
 
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.CommitCRUD;
 import br.ifsp.techmaps.usecases.stage.StageCRUD;
 import br.ifsp.techmaps.usecases.task.TaskCRUD;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
-import br.ifsp.techmaps.web.model.commit.request.UpdateCommitStatus;
+import br.ifsp.techmaps.web.model.commit.request.UpdateCommitStatusRequest;
 import br.ifsp.techmaps.web.model.commit.response.CommitResponse;
-import br.ifsp.techmaps.web.model.commit.response.UpdateCommitResponse;
+import br.ifsp.techmaps.web.model.commit.response.UpdateCommitStatusResponse;
 import br.ifsp.techmaps.web.model.task.request.UpdateDateFinishedRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,21 +49,20 @@ public class CommitController {
     }
 
     @PutMapping("{taskId}/commits/{commitId}")
-    public ResponseEntity<UpdateCommitResponse> updateCommit(
+    public ResponseEntity<UpdateCommitStatusResponse> updateCommit(
             @PathVariable UUID taskId,
             @PathVariable UUID commitId,
-            @RequestBody UpdateCommitStatus request) {
+            @RequestBody UpdateCommitStatusRequest request) {
         TaskCommit taskCommit = commitCRUD.updateTaskCommit(taskId, commitId, request);
 
-        if(taskCommit.getState().equals(CommitState.STAGED))
-            taskCRUD.updateTaskDateFinished(taskId,
-                    UpdateDateFinishedRequest.create(true));
+        if(taskCommit.isStaged())
+            taskCRUD.updateTaskDateFinished(taskId, UpdateDateFinishedRequest.create(true));
 
         Task task = taskDAO.findTaskById(taskCommit.getTask().getTaskId()).get();
 
         stageCRUD.updateStageCommit(task.getStage().getStageId());
 
-        return ResponseEntity.ok(UpdateCommitResponse.convertForUpdate(taskCommit));
+        return ResponseEntity.ok(UpdateCommitStatusResponse.convertForUpdate(taskCommit));
     }
 
 }

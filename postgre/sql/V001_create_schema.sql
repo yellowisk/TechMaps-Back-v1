@@ -235,22 +235,13 @@ ALTER TABLE techmaps_platform.task
     ADD CONSTRAINT task_dashboard_id_fkey FOREIGN KEY (dashboard_id)
         REFERENCES techmaps_platform.dashboard(id) ON DELETE CASCADE;
 
-DROP TYPE IF EXISTS techmaps_platform.task_commit_status CASCADE;
-
-CREATE TYPE techmaps_platform.task_commit_status AS ENUM (
-    'STAGED',
-    'UNSTAGED'
-);
-
-ALTER TYPE techmaps_platform.task_commit_status OWNER TO "techmaps";
-
 DROP TABLE IF EXISTS techmaps_platform.task_commit;
 
 CREATE TABLE techmaps_platform.task_commit(
     id uuid NOT NULL,
     task_id uuid NOT NULL,
     tag varchar NOT NULL,
-    state techmaps_platform.task_commit_status,
+    is_staged boolean NOT NULL,
     dashboard_id uuid NOT NULL
 );
 

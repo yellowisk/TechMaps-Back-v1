@@ -8,13 +8,13 @@ import java.util.*;
 public class Stage {
     private UUID stageId;
     private Roadmap roadmap;
-    private StageEnum theme;
+    private StageTheme theme;
     private boolean isDone;
     private List<Task> tasks;
     private int number;
     private Integer stageCommits;
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, int number, Integer stageCommits) {
+    public Stage(UUID stageId, Roadmap roadmap, StageTheme theme, boolean isDone, int number, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
@@ -23,7 +23,7 @@ public class Stage {
         this.stageCommits = stageCommits;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, List<Task> tasks) {
+    public Stage(UUID stageId, Roadmap roadmap, StageTheme theme, boolean isDone, List<Task> tasks) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
@@ -31,7 +31,7 @@ public class Stage {
         this.tasks = tasks;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone, Integer stageCommits) {
+    public Stage(UUID stageId, Roadmap roadmap, StageTheme theme, boolean isDone, Integer stageCommits) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
@@ -39,14 +39,14 @@ public class Stage {
         this.stageCommits = stageCommits;
     }
 
-    public Stage(UUID stageId, Roadmap roadmap, StageEnum theme, boolean isDone) {
+    public Stage(UUID stageId, Roadmap roadmap, StageTheme theme, boolean isDone) {
         this.stageId = stageId;
         this.roadmap = roadmap;
         this.theme = theme;
         this.isDone = isDone;
     }
 
-    public Stage(Roadmap roadmap, StageEnum theme, boolean isDone) {
+    public Stage(Roadmap roadmap, StageTheme theme, boolean isDone) {
         this.roadmap = roadmap;
         this.theme = theme;
         this.isDone = isDone;
@@ -75,11 +75,11 @@ public class Stage {
         this.isDone = isDone;
     }
 
-    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageEnum theme, boolean isDone, int number, Integer stageCommit) {
+    public static Stage createStageWithoutTasks(UUID id, Roadmap roadmap, StageTheme theme, boolean isDone, int number, Integer stageCommit) {
         return new Stage(id, roadmap, theme, isDone, number, stageCommit);
     }
 
-    public static Stage createStageWithoutTasksAndNumber(UUID id, Roadmap roadmap, StageEnum theme, boolean isDone, Integer stageCommit) {
+    public static Stage createStageWithoutTasksAndNumber(UUID id, Roadmap roadmap, StageTheme theme, boolean isDone, Integer stageCommit) {
         return new Stage(id, roadmap, theme, isDone, stageCommit);
     }
 
@@ -100,11 +100,11 @@ public class Stage {
         this.roadmap = roadmap;
     }
 
-    public StageEnum getTheme() {
+    public StageTheme getTheme() {
         return theme;
     }
 
-    public void setTheme(StageEnum theme) {
+    public void setTheme(StageTheme theme) {
         this.theme = theme;
     }
 

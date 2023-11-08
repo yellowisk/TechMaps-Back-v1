@@ -58,8 +58,8 @@ queries:
           SELECT COUNT(*) FROM techmaps_platform.roadmap WHERE dashboard_id = ? AND is_completed = true
         count-tasks-with-date-finished-by-dashboard-id: >
           SELECT COUNT(*) FROM techmaps_platform.task WHERE dashboard_id = ? AND date_finished IS NOT NULL
-        count-commits-with-staged-state-by-dashboard-id: >
-          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE dashboard_id = ? AND state = 'STAGED'
+        count-commits-with-staged-status-by-dashboard-id: >
+          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE dashboard_id = ? AND is_staged = true
         count-total-time-from-roadmaps-by-dashboard-id: >
           SELECT SUM(extract(epoch from total_time)) FROM techmaps_platform.roadmap WHERE dashboard_id = ?
       update:
@@ -84,7 +84,7 @@ queries:
         all-roadmaps-by-dashboard-id: >
           SELECT id, title, type, is_completed, lang, color, start_time, finish_time, extract(epoch from total_time) as total_time, commit_counter, dashboard_id FROM techmaps_platform.roadmap WHERE dashboard_id = ?
         count-commits-by-task-with-stage-from-roadmap-by-id: >
-          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id IN (SELECT id FROM techmaps_platform.stage WHERE roadmap_id = ?)) AND state = 'STAGED'
+          SELECT COUNT(*) FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id IN (SELECT id FROM techmaps_platform.stage WHERE roadmap_id = ?)) AND is_staged = true
       update:
         completed-roadmap: >
           UPDATE techmaps_platform.roadmap SET is_completed = ?, commit_counter = ?, finish_time=?, total_time =  make_interval(secs => ?) WHERE id = ?
@@ -113,8 +113,8 @@ queries:
           SELECT * FROM techmaps_platform.stage WHERE id = ? ORDER BY stage_number ASC
         stage-by-roadmap-id: >
             SELECT * FROM techmaps_platform.stage WHERE roadmap_id = ? ORDER BY stage_number ASC
-        commit-state-by-stage-id: >
-            SELECT state FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
+        commit-status-by-stage-id: >
+            SELECT is_staged FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
         date-finished-of-tasks-by-stage-id: >
             SELECT date_finished FROM techmaps_platform.task WHERE stage_id = ?
         task-commits-by-stage-id: >
@@ -162,8 +162,8 @@ queries:
     task-commit-dao:
       insert:
         task-commit: >
-          INSERT INTO techmaps_platform.task_commit (id, task_id, tag, state, dashboard_id) 
-          VALUES (?, ?, ?, ?::techmaps_platform.task_commit_status, ?)
+          INSERT INTO techmaps_platform.task_commit (id, task_id, tag, is_staged, dashboard_id) 
+          VALUES (?, ?, ?, ?, ?)
       select:
         task-commit-by-id: >
           SELECT * FROM techmaps_platform.task_commit WHERE id = ?
@@ -174,8 +174,8 @@ queries:
         task-commit-by-task-with-stage-id: >
           SELECT * FROM techmaps_platform.task_commit WHERE task_id IN (SELECT id FROM techmaps_platform.task WHERE stage_id = ?)
       update:
-        task-commit-state: >
-          UPDATE techmaps_platform.task_commit SET state = ?::techmaps_platform.task_commit_status WHERE id = ?
+        task-commit-status: >
+          UPDATE techmaps_platform.task_commit SET is_staged = ? WHERE id = ?
     step-dao:
       insert:
         step: >

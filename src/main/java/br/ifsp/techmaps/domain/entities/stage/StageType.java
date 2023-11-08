@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StageType {
-    private List<StageEnum> frontList = new ArrayList<>();
-    private List<StageEnum> backList = new ArrayList<>();
-    private List<StageEnum> generalList = new ArrayList<>();
-    private List<StageEnum> androidList = new ArrayList<>();
+    private List<StageTheme> frontList = new ArrayList<>();
+    private List<StageTheme> backList = new ArrayList<>();
+    private List<StageTheme> generalList = new ArrayList<>();
+    private List<StageTheme> androidList = new ArrayList<>();
 
     public StageType() {
-        for (StageEnum topic : StageEnum.values()) {
+        for (StageTheme topic : StageTheme.values()) {
             String condition = topic.getCondition();
             if ("Frontend".equals(condition)) {
                 frontList.add(topic);
@@ -24,35 +24,35 @@ public class StageType {
         }
     }
 
-    public List<StageEnum> getFrontList() {
+    public List<StageTheme> getFrontList() {
         return frontList;
     }
 
-    public void setFrontList(List<StageEnum> frontList) {
+    public void setFrontList(List<StageTheme> frontList) {
         this.frontList = frontList;
     }
 
-    public List<StageEnum> getBackList() {
+    public List<StageTheme> getBackList() {
         return backList;
     }
 
-    public void setBackList(List<StageEnum> backList) {
+    public void setBackList(List<StageTheme> backList) {
         this.backList = backList;
     }
 
-    public List<StageEnum> getAndroidList() {
+    public List<StageTheme> getAndroidList() {
         return androidList;
     }
 
-    public void setAndroidList(List<StageEnum> androidList) {
+    public void setAndroidList(List<StageTheme> androidList) {
         this.androidList = androidList;
     }
 
-    public List<StageEnum> getGeneralList() {
+    public List<StageTheme> getGeneralList() {
         return generalList;
     }
 
-    public void setGeneralList(List<StageEnum> generalList) {
+    public void setGeneralList(List<StageTheme> generalList) {
         this.generalList = generalList;
     }
 }

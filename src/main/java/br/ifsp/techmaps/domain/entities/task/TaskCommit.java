@@ -6,30 +6,30 @@ public class TaskCommit {
     private UUID commitId;
     private Task task;
     private String commitTag;
-    private CommitState state;
+    private boolean isStaged;
 
     public TaskCommit() {
     }
 
-    public TaskCommit(UUID commitId, Task task, String commitTag, CommitState state) {
+    public TaskCommit(UUID commitId, Task task, String commitTag, boolean isStaged) {
         this.commitId = commitId;
         this.task = task;
         this.commitTag = commitTag;
-        this.state = state;
+        this.isStaged = isStaged;
     }
 
-    public TaskCommit(UUID commitId, String commitTag, CommitState state) {
+    public TaskCommit(UUID commitId, String commitTag, boolean isStaged) {
         this.commitId = commitId;
         this.commitTag = commitTag;
-        this.state = state;
+        this.isStaged = isStaged;
     }
 
     public TaskCommit(UUID commitId) {
         this.commitId = commitId;
     }
 
-    public TaskCommit(CommitState state) {
-        this.state = state;
+    public TaskCommit(boolean isStaged) {
+        this.isStaged = isStaged;
     }
 
     public static TaskCommit createWithOnlyId(UUID commitId) {
@@ -60,12 +60,12 @@ public class TaskCommit {
         this.commitTag = commitTag;
     }
 
-    public CommitState getState() {
-        return state;
+    public boolean isStaged() {
+        return isStaged;
     }
 
-    public void setState(CommitState state) {
-        this.state = state;
+    public void setStaged(boolean staged) {
+        this.isStaged = staged;
     }
 
     public static String createCommitTag(Task task) {

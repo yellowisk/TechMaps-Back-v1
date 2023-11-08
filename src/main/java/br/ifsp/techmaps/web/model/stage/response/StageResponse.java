@@ -1,7 +1,7 @@
 package br.ifsp.techmaps.web.model.stage.response;
 
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.stage.StageEnum;
+import br.ifsp.techmaps.domain.entities.stage.StageTheme;
 import br.ifsp.techmaps.web.model.task.response.TaskResponse;
 
 import java.util.*;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class StageResponse {
     private UUID id;
     private UUID roadmapId;
-    private StageEnum theme;
+    private StageTheme theme;
     private boolean isDone;
     private List<TaskResponse> tasks;
     private int number;
@@ -21,7 +21,7 @@ public class StageResponse {
     }
 
     public StageResponse(UUID id, UUID roadmapId,
-                         StageEnum theme, boolean isDone,
+                         StageTheme theme, boolean isDone,
                          List<TaskResponse> tasks, int number, Integer commits) {
         this.id = id;
         this.roadmapId = roadmapId;
@@ -32,7 +32,7 @@ public class StageResponse {
         this.commits = commits;
     }
 
-    public StageResponse(UUID id, UUID roadmapId, StageEnum theme,
+    public StageResponse(UUID id, UUID roadmapId, StageTheme theme,
                          boolean isDone, int number, Integer commits) {
         this.id = id;
         this.roadmapId = roadmapId;
@@ -91,11 +91,11 @@ public class StageResponse {
         this.roadmapId = roadmapId;
     }
 
-    public StageEnum getTheme() {
+    public StageTheme getTheme() {
         return theme;
     }
 
-    public void setTheme(StageEnum theme) {
+    public void setTheme(StageTheme theme) {
         this.theme = theme;
     }
 
