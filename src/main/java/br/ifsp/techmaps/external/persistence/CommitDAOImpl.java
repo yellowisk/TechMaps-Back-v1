@@ -1,7 +1,6 @@
 package br.ifsp.techmaps.external.persistence;
 
 import br.ifsp.techmaps.domain.entities.dashboard.Dashboard;
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.domain.entities.task.Task;
 import br.ifsp.techmaps.domain.entities.task.TaskCommit;
 import br.ifsp.techmaps.usecases.commit.gateway.CommitDAO;

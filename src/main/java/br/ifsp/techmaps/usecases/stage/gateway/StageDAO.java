@@ -1,7 +1,5 @@
 package br.ifsp.techmaps.usecases.stage.gateway;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
-import br.ifsp.techmaps.domain.entities.task.CommitState;
-import br.ifsp.techmaps.domain.entities.task.Task;
 
 import java.sql.Timestamp;
 import java.util.*;

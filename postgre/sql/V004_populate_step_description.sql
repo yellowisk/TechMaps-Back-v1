@@ -3,7 +3,6 @@
 -- (10 left)
 
 --! PYTHON !--
-
 insert into techmaps_platform.task_step_description (id, info, description, desc_number)
 values (gen_random_uuid(), 'PY1', 'Basic Syntax', 0);
 insert into techmaps_platform.task_step_description (id, info, description, desc_number)

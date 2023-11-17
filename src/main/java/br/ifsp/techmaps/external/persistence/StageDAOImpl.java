@@ -3,7 +3,6 @@ package br.ifsp.techmaps.external.persistence;
 import br.ifsp.techmaps.domain.entities.roadmap.Roadmap;
 import br.ifsp.techmaps.domain.entities.stage.Stage;
 import br.ifsp.techmaps.domain.entities.stage.StageTheme;
-import br.ifsp.techmaps.domain.entities.task.CommitState;
 import br.ifsp.techmaps.usecases.roadmap.gateway.RoadmapDAO;
 import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import org.springframework.beans.factory.annotation.Value;
