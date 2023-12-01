@@ -20,9 +20,11 @@ import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 public class Certificate {
     private String username;
@@ -59,7 +61,16 @@ public class Certificate {
                       RoadmapLanguage language, Timestamp startTime, Timestamp finishTime,
                       Long totalTime, Integer commits, Integer stages, Integer tasks) throws IOException {
 
-        PdfWriter writer = new PdfWriter("./src/main/resources/certificates/"+type+"-Roadmap-"+username+"'s-certificate_"+title+".pdf");
+        String baseFileName = "./src/main/resources/certificates/"+type+"-Roadmap-"+username+"'s-certificate_"+title+".pdf";
+        String fileName = baseFileName;
+
+        int suffix = 1;
+        while (fileExists(fileName)) {
+            fileName = baseFileName.replace(".pdf", "(" + suffix + ").pdf");
+            suffix++;
+        }
+
+        PdfWriter writer = new PdfWriter(fileName);
         PdfFont font = PdfFontFactory.createFont("./src/main/resources/static/fonts/Righteous-Regular.ttf", PdfEncodings.IDENTITY_H);
         String techMapsPath = "./src/main/resources/static/images/logo-white-no-background.png";
         String commitImage = "./src/main/resources/static/images/branch_tree.png";
@@ -113,7 +124,7 @@ public class Certificate {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         Paragraph description = new Paragraph("Has dedicated, from " + sdf.format(startTime) +
-                " to " + sdf.format(finishTime) + ", " + totalTime/60 + " minutes of study on a " +
+                " to " + sdf.format(finishTime) + ", " + formatTotalTime(totalTime) + " of study on a " +
                 type.toString() + " learning Roadmap, acquiring " +
                 "valuable skills on the programming language " + language + " and another related " +
                 "fields of knowledge.").setMarginLeft(100).setMarginRight(100).setTextAlignment(TextAlignment.CENTER);
@@ -147,6 +158,31 @@ public class Certificate {
         document.close();
 
         return new Certificate(username, title, type, language, startTime, finishTime, totalTime, commits, stages, tasks);
+    }
+
+    public static boolean fileExists(String fileName) {
+        File file = new File(fileName);
+        return file.exists();
+    }
+
+    private static String formatTotalTime(long totalTime) {
+        long days = TimeUnit.MINUTES.toDays(totalTime);
+        long hours = TimeUnit.MINUTES.toHours(totalTime % TimeUnit.DAYS.toMinutes(1));
+        long minutes = totalTime % TimeUnit.HOURS.toMinutes(1);
+
+        if (days > 365) {
+            long years = days / 365;
+            return years + (years == 1 ? " year" : " years");
+        } else if (days > 30) {
+            long months = days / 30;
+            return months + (months == 1 ? " month" : " months");
+        } else if (days > 0) {
+            return days + (days == 1 ? " day" : " days");
+        } else if (hours > 0) {
+            return hours + (hours == 1 ? " hour" : " hours");
+        } else {
+            return minutes + (minutes == 1 ? " minute" : " minutes");
+        }
     }
 
     public String getUsername() {

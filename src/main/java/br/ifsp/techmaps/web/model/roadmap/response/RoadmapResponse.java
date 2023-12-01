@@ -48,7 +48,7 @@ public class RoadmapResponse {
 
     public static RoadmapResponse create(Roadmap roadmap) {
         return new RoadmapResponse(roadmap.getRoadmapId(), roadmap.getTitle(), roadmap.getType(),
-                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor().getColorCode(),
+                roadmap.isCompleted(), roadmap.getLanguage(), roadmap.getColor().getColorCode(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }

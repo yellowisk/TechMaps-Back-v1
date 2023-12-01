@@ -98,7 +98,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     }
 
     @Override
-    public Roadmap createCertificate(UUID dashboardId, UUID roadmapId) throws IOException {
+    public void createCertificate(UUID dashboardId, UUID roadmapId) throws IOException {
         if (!dashboardDAO.dashboardExists(dashboardId)) {
             throw new RuntimeException("Couldn't find dashboard with id: " + dashboardId);
         };
@@ -113,7 +113,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
             throw new RuntimeException("Dashboard not found");
         }
 
-        if (!roadmap.get().getIsCompleted()) {
+        if (!roadmap.get().isCompleted()) {
             throw new RuntimeException("Roadmap is not completed");
         }
 
@@ -129,17 +129,14 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
                 roadmap.get().getType(), roadmap.get().getLanguage(), roadmap.get().getStartTime(),
                 roadmap.get().getFinishTime(), roadmap.get().getTotalTime(), roadmap.get().getRoadmapCommits(),
                 stages.size(), tasks.size());
-
-        return roadmap.get();
     }
 
     @Override
     public Roadmap updateRoadmap(UUID roadmapId, UpdateTitleAndColorRequest request) {
-
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
         roadmapDAO.refreshRoadmap(roadmap);
 
-        if (roadmap.getIsCompleted()) {
+        if (roadmap.isCompleted()) {
             throw new RuntimeException("Couldn't update because the roadmap '"
                     + roadmap.getTitle() + "' is complete");
         }
@@ -157,11 +154,24 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     }
 
     @Override
+    public Roadmap completeRoadmap(UUID roadmapId) {
+        Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
+
+        if(roadmap.isCompleted()) {
+            throw new RuntimeException("Roadmap already completed");
+        } else {
+            roadmap.setIsCompleted(true);
+        }
+
+        return roadmapDAO.updateRoadmapIsCompleted(roadmap);
+    }
+
+    @Override
     public Roadmap deleteRoadmapById(UUID roadmapId) {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
 
-        if (roadmap.getIsCompleted()) {
+        if (roadmap.isCompleted()) {
             throw new RuntimeException("Couldn't delete because the roadmap '"
                     + roadmap.getTitle() + "' is complete");
         }

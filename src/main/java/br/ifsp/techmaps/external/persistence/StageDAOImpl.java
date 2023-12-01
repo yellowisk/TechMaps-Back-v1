@@ -56,7 +56,7 @@ public class StageDAOImpl implements StageDAO {
     public Stage saveStage(Stage stage) {
         UUID stageId = stage.getStageId();
 
-        if (stage.getRoadmap().getIsCompleted()) {
+        if (stage.getRoadmap().isCompleted()) {
             throw new IllegalStateException("Roadmap is already done!");
         }
 
@@ -127,7 +127,7 @@ public class StageDAOImpl implements StageDAO {
 
         UUID roadmapId = stage.getRoadmap().getRoadmapId();
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
-        if (roadmap.getIsCompleted()) {
+        if (roadmap.isCompleted()) {
             throw new IllegalStateException("Roadmap is already complete!");
         }
 
@@ -153,7 +153,7 @@ public class StageDAOImpl implements StageDAO {
         if (stageDoneCounter == stages.size()) {
             roadmap.setIsCompleted(true);
             roadmap.setRoadmapCommits(commitStagedCounter);
-            roadmapDAO.updateRoadmapTime(roadmap);
+            roadmapDAO.updateRoadmapIsCompleted(roadmap);
         }
 
         return stage;

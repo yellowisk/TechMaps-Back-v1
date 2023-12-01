@@ -38,7 +38,7 @@ public class StageCRUDImpl implements StageCRUD {
         if(!roadmapDAO.RoadmapExists(roadmapId))
             throw new ResourceNotFoundException("Couldn't find roadmap with id:" + roadmapId);
 
-        if(roadmapDAO.findRoadmapById(roadmapId).get().getIsCompleted())
+        if(roadmapDAO.findRoadmapById(roadmapId).get().isCompleted())
             throw new IllegalArgumentException("This Roadmap is already done!");
 
         Optional<Roadmap> roadmap = roadmapDAO.findRoadmapById(roadmapId);
@@ -61,7 +61,7 @@ public class StageCRUDImpl implements StageCRUD {
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).orElseThrow(() ->
                 new ResourceNotFoundException("Couldn't find roadmap with id: " + roadmapId));
 
-        if (roadmap.getIsCompleted()) {
+        if (roadmap.isCompleted()) {
             throw new IllegalArgumentException("This Roadmap is already done!");
         }
 
@@ -191,7 +191,7 @@ public class StageCRUDImpl implements StageCRUD {
 
         Optional<Stage> opt = stageDAO.findStageById(stageId);
 
-        if (roadmap.getIsCompleted()) {
+        if (roadmap.isCompleted()) {
             throw new RuntimeException("Couldn't delete '" + opt.get().getTheme().name() + "' because its Roadmap is complete");
         }
 

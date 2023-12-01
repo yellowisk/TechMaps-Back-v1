@@ -66,11 +66,19 @@ public class RoadmapController {
         );
     }
 
-    @PatchMapping("roadmaps/{roadmapId}")
+    @PatchMapping("roadmaps/{roadmapId}/title-color")
     public ResponseEntity<RoadmapResponse> updateRoadmap(
             @PathVariable UUID roadmapId,
             @RequestBody UpdateTitleAndColorRequest request) {
         Roadmap roadmap = roadmapCRUD.updateRoadmap(roadmapId, request);
+
+        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
+    }
+
+    @PatchMapping("roadmaps/{roadmapId}/complete")
+    public ResponseEntity<RoadmapResponse> completeRoadmap(
+            @PathVariable UUID roadmapId) {
+        Roadmap roadmap = roadmapCRUD.completeRoadmap(roadmapId);
 
         return ResponseEntity.ok(RoadmapResponse.create(roadmap));
     }
@@ -84,12 +92,10 @@ public class RoadmapController {
     }
 
     @GetMapping("roadmaps/{roadmapId}/certificate")
-    public ResponseEntity<RoadmapResponse> createCertificate(
+    public void createCertificate(
             @PathVariable UUID dashboardId,
             @PathVariable UUID roadmapId) throws IOException {
-        Roadmap roadmap = roadmapCRUD.createCertificate(dashboardId, roadmapId);
-
-        return ResponseEntity.ok(RoadmapResponse.create(roadmap));
+        roadmapCRUD.createCertificate(dashboardId, roadmapId);
     }
 
 }

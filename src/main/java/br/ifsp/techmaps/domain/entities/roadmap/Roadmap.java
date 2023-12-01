@@ -101,7 +101,7 @@ public class Roadmap {
         this.type = type;
     }
 
-    public boolean getIsCompleted() {
+    public boolean isCompleted() {
         return isCompleted;
     }
 

@@ -10,9 +10,10 @@ import java.util.*;
 public interface RoadmapCRUD {
     Roadmap addNewRoadmap(UUID projectId, CreateRoadmapRequest request);
     Roadmap findRoadmapById(UUID roadmapId);
-    Roadmap createCertificate(UUID userId, UUID roadmapId) throws IOException;
+    void createCertificate(UUID userId, UUID roadmapId) throws IOException;
     List<Roadmap> findRoadmapsByDashboardId(UUID dashboardId);
     List<Roadmap> findCompletedRoadmapsByDashboardId(UUID dashboardId);
     Roadmap updateRoadmap(UUID roadmapId, UpdateTitleAndColorRequest request);
+    Roadmap completeRoadmap(UUID roadmapId);
     Roadmap deleteRoadmapById(UUID roadmapId);
 }

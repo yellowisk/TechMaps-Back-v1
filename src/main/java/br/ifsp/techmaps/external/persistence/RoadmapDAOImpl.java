@@ -55,12 +55,12 @@ public class RoadmapDAOImpl implements RoadmapDAO {
         UUID roadmapId = UUID.randomUUID();
 
         jdbcTemplate.update(insertRoadmapQuery, roadmapId, roadmap.getTitle(), roadmap.getType().name(),
-                roadmap.getIsCompleted(), roadmap.getLanguage().name(),
+                roadmap.isCompleted(), roadmap.getLanguage().name(),
                 roadmap.getColor().name(), roadmap.getStartTime(), roadmap.getFinishTime(),
                 roadmap.getTotalTime(), roadmap.getRoadmapCommits(), roadmap.getDashboardId());
 
         return Roadmap.createWithoutStages(roadmapId, roadmap.getTitle(), roadmap.getType(),
-                roadmap.getIsCompleted(), roadmap.getLanguage(), roadmap.getColor(),
+                roadmap.isCompleted(), roadmap.getLanguage(), roadmap.getColor(),
                 roadmap.getStartTime(), roadmap.getFinishTime(), roadmap.getTotalTime(),
                 roadmap.getRoadmapCommits(), roadmap.getDashboardId());
     }
@@ -68,7 +68,7 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     @Override
     public Roadmap refreshRoadmap(Roadmap roadmap) {
 
-        if(!roadmap.getIsCompleted()) {
+        if(!roadmap.isCompleted()) {
             Long totalTime = Long.valueOf(Timestamp.valueOf(LocalDateTime.now()).getTime() - roadmap.getStartTime().getTime());
             roadmap.setTotalTime(totalTime/1000); //divide totalTime/1000 by 60 to get minutes
             jdbcTemplate.update(updateRoadmapTotalTimeQuery, roadmap.getTotalTime(), roadmap.getRoadmapId());
@@ -106,15 +106,16 @@ public class RoadmapDAOImpl implements RoadmapDAO {
     }
 
     @Override
-    public Roadmap updateRoadmapTime(Roadmap roadmap) {
+    public Roadmap updateRoadmapIsCompleted(Roadmap roadmap) {
 
         Timestamp startTime = roadmap.getStartTime();
         Timestamp finishTime = Timestamp.valueOf(LocalDateTime.now());
         Long totalTime = (finishTime.getTime() - startTime.getTime())/1000;
 
-        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.getIsCompleted(),
+        jdbcTemplate.update(updateRoadmapStatusAndCommitCounterQuery, roadmap.isCompleted(),
                 roadmap.getRoadmapCommits(), finishTime, totalTime, roadmap.getRoadmapId());
-        return roadmap;
+
+        return findRoadmapById(roadmap.getRoadmapId()).get();
     }
 
     @Override

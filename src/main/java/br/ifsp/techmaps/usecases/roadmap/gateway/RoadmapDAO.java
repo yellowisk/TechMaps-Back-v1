@@ -11,7 +11,7 @@ public interface RoadmapDAO {
     List<Roadmap> findAllCompletedByDashboardId(UUID dashboardId);
     List<Roadmap> findAllByDashboardId(UUID dashboardId);
     Optional<Roadmap> findRoadmapById(UUID roadmapId);
-    Roadmap updateRoadmapTime(Roadmap roadmap);
+    Roadmap updateRoadmapIsCompleted(Roadmap roadmap);
     Roadmap updateRoadmapTitleAndColor(Roadmap roadmap);
     Roadmap deleteRoadmapById(UUID roadmapId);
     Boolean RoadmapExists(UUID roadmapId);
