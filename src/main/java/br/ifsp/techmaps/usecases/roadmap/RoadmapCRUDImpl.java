@@ -12,12 +12,10 @@ import br.ifsp.techmaps.usecases.stage.gateway.StageDAO;
 import br.ifsp.techmaps.usecases.task.gateway.TaskDAO;
 import br.ifsp.techmaps.usecases.user.gateway.UserDAO;
 import br.ifsp.techmaps.web.model.roadmap.request.CreateRoadmapRequest;
-import br.ifsp.techmaps.web.model.roadmap.request.UpdateColorRequest;
+import br.ifsp.techmaps.web.model.roadmap.request.UpdateTitleAndColorRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.*;
 import java.time.*;
 import java.util.*;
@@ -136,7 +134,7 @@ public class RoadmapCRUDImpl implements RoadmapCRUD {
     }
 
     @Override
-    public Roadmap updateRoadmap(UUID roadmapId, UpdateColorRequest request) {
+    public Roadmap updateRoadmap(UUID roadmapId, UpdateTitleAndColorRequest request) {
 
         Roadmap roadmap = roadmapDAO.findRoadmapById(roadmapId).get();
         roadmapDAO.refreshRoadmap(roadmap);
