@@ -220,4 +220,20 @@ public class Certificate {
     public void setCommits(Integer commits) {
         this.commits = commits;
     }
+
+    public Integer getStages() {
+        return stages;
+    }
+
+    public void setStages(Integer stages) {
+        this.stages = stages;
+    }
+
+    public Integer getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Integer tasks) {
+        this.tasks = tasks;
+    }
 }

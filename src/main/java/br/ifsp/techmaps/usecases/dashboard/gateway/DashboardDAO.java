@@ -9,7 +9,7 @@ import java.util.*;
 
 public interface DashboardDAO {
 
-    Dashboard saveNewDashboard(UUID dashboardId, UUID userId);
+    Dashboard saveNewDashboard(UUID userId);
 
     Optional<Dashboard> findDashboardById(UUID dashboardId);
 

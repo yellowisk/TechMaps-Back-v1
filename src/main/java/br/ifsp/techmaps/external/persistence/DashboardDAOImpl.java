@@ -49,7 +49,8 @@ public class DashboardDAOImpl implements DashboardDAO {
     private String existsDashboardByIdQuery;
 
     @Override
-    public Dashboard saveNewDashboard(UUID dashboardId, UUID userId) {
+    public Dashboard saveNewDashboard(UUID userId) {
+        UUID dashboardId = UUID.randomUUID();
         jdbcTemplate.update(insertDashboardQuery, dashboardId, 0, 0, 0, null, userId);
         return Dashboard.createWithAllFields(dashboardId, 0, 0, 0, null, userId);
     }

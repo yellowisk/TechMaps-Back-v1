@@ -1,6 +1,7 @@
 package br.ifsp.techmaps.usecases.user;
 
 import br.ifsp.techmaps.domain.entities.user.User;
+import br.ifsp.techmaps.usecases.dashboard.gateway.DashboardDAO;
 import br.ifsp.techmaps.usecases.user.gateway.UserDAO;
 import br.ifsp.techmaps.web.model.user.request.UserRequest;
 import org.springframework.stereotype.Service;
@@ -10,12 +11,16 @@ import java.util.UUID;
 @Service
 public class UserCRUDImpl implements UserCRUD {
     private final UserDAO userDAO;
-    public UserCRUDImpl(UserDAO userDAO) {
+    private final DashboardDAO dashboardDAO;
+    public UserCRUDImpl(UserDAO userDAO, DashboardDAO dashboardDAO) {
         this.userDAO = userDAO;
+        this.dashboardDAO = dashboardDAO;
     }
     @Override
     public User registerNewUser(UserRequest request) {
-        return userDAO.addNewUser(request.toUser());
+        User user = userDAO.addNewUser(request.toUser());
+        dashboardDAO.saveNewDashboard(user.getId());
+        return user;
     }
 
     @Override
