@@ -61,7 +61,7 @@ public class Certificate {
                       RoadmapLanguage language, Timestamp startTime, Timestamp finishTime,
                       Long totalTime, Integer commits, Integer stages, Integer tasks) throws IOException {
 
-        String baseFileName = "./src/main/resources/certificates/"+type+"-Roadmap-"+username+"'s-certificate_"+title+".pdf";
+        String baseFileName = "C:/Users/migue/OneDrive/Desktop/reactNative/TechMaps-FRONT.v2/data/certificates/"+type+"-Roadmap-"+username+"'s-certificate_"+title+".pdf";
         String fileName = baseFileName;
 
         int suffix = 1;
