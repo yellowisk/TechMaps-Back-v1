@@ -186,7 +186,7 @@ CREATE TYPE techmaps_platform.task_body AS ENUM (
     'SP1', 'SP2', 'SP3',
     'AG1', 'AG2', 'AG3',
     'DV1', 'DV2', 'DV3',
-    'OP1', 'OP2', 'OP3',
+    'OP1', 'OP2', 'OP3', 'OP4', 'OP5',
     'SD1', 'SD2', 'SD3',
     'CC1', 'CC2', 'CC3',
     'TD1', 'TD2', 'TD3',

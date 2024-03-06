@@ -51,6 +51,41 @@ values (gen_random_uuid(), 'PY6', 'Pip', 1);
 insert into techmaps_platform.task_step_description (id, info, description, desc_number)
 values (gen_random_uuid(), 'PY6', 'Conda', 2);
 
+--! LEARN OOP !--
+
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP1', 'Java Classes and Objects', 'https://www.geeksforgeeks.org/classes-objects-java/', 0);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP1', 'Constructors, attributes and methods in Java', 'https://www.geeksforgeeks.org/constructors-in-java/', 1);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP1', 'Python Classes and Objects', 'https://www.geeksforgeeks.org/python-classes-and-objects/', 2);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP1', 'Constructors, attributes and methods in Python', 'https://www.geeksforgeeks.org/constructors-in-python/', 3);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP2', 'Inheritance in Java', 'https://www.geeksforgeeks.org/inheritance-in-java/', 0);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP2', 'Method Overriding in Java', 'https://www.geeksforgeeks.org/overriding-in-java/', 1);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP2', 'Java Interfaces', 'https://www.geeksforgeeks.org/interfaces-in-java/', 2);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP2', 'Inheritance in Python', 'https://www.geeksforgeeks.org/inheritance-in-python/', 3);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP3', 'Abstract Classes in Java', 'https://www.geeksforgeeks.org/abstraction-in-java-2/', 0);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP3', 'Interfaces in Java', 'https://www.geeksforgeeks.org/interfaces-in-java/', 1);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP3', 'Abstract Classes in Python', 'https://www.geeksforgeeks.org/abstract-classes-in-python/', 2);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP3', 'Interfaces in Python', 'https://medium.com/@shashikantrbl123/interfaces-and-abstract-classes-in-python-understanding-the-differences-3e5889a0746a', 3);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP4', 'Encapsulation in Java', 'https://www.geeksforgeeks.org/encapsulation-in-java/', 0);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP4', 'Encapsulation in Python', 'https://www.geeksforgeeks.org/encapsulation-in-python/', 1);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP5', 'Polymorphism in Java', 'https://www.geeksforgeeks.org/polymorphism-in-java/', 0);
+insert into techmaps_platform.task_step_description (id, info, description, link, desc_number)
+values (gen_random_uuid(), 'OP5', 'Polymporphism in Python', 'https://www.geeksforgeeks.org/polymorphism-in-python/', 1);
+
 --! LEARN INTELLIJ !--
 
 insert into techmaps_platform.task_step_description (id, info, description, desc_number)

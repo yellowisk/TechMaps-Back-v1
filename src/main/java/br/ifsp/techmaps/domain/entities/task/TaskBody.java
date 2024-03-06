@@ -97,9 +97,11 @@ public enum TaskBody {
     DV2("Learn DevOps", "Set up a CI/CD pipeline", "Configure a CI/CD pipeline using tools like Jenkins or GitLab CI to automate the build, test, and deployment processes."),
     DV3("Learn DevOps", "Deploy an application with infrastructure as code", "Use tools like Ansible or Terraform to provision and deploy an application infrastructure on a cloud platform."),
 
-    OP1("Learn OOP", "Understand object-oriented programming (OOP) concepts", "Learn about classes, objects, inheritance, encapsulation, and polymorphism."),
-    OP2("Learn OOP", "Model a real-world scenario", "Apply OOP principles to design and implement classes that represent entities and their relationships."),
-    OP3("Learn OOP", "Build an OOP application", "Develop a program that demonstrates OOP concepts, such as inheritance, encapsulation, and polymorphism, to solve a specific problem."),
+    OP1("Learn Java OOP", "Understand Classes and Objects", "Learn all about Classes and Objects."),
+    OP2("Learn Java OOP", "Inheritance", "Learn about inheritance and how to use it in your code."),
+    OP3("Learn Java OOP", "Abstraction", "Learn about interfaces and how to use them in your code."),
+    OP4("Learn Java OOP", "Encapsulation", "Learn about polymorphism and how to use it in your code."),
+    OP5("Learn Java OOP", "Polymorphism", "Learn about polymorphism and how to use it in your code."),
 
     SD1("Learn SOLID", "Study SOLID principles", "Understand the SOLID acronym and its principles (Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)."),
     SD2("Learn SOLID", "Apply SOLID to code", "Refactor existing code or write new code that adheres to SOLID principles, promoting maintainability and extensibility."),
