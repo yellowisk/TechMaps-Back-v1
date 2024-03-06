@@ -7,9 +7,10 @@ import java.util.UUID;
 public class CreateStepRequest {
     private int number;
     private String text;
+    private String link;
 
     public Step convertToStep(UUID taskId) {
-        return Step.createForRequest(taskId, number, text);
+        return Step.createForRequest(taskId, number, text, link);
     }
 
     public int getNumber() {
@@ -26,5 +27,13 @@ public class CreateStepRequest {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

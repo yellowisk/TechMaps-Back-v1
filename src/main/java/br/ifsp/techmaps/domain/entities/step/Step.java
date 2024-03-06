@@ -7,23 +7,26 @@ public class Step {
     private UUID taskId;
     private int number;
     private String text;
+    private String link;
     private boolean isFinished;
     private boolean isPriority;
 
-    public Step(UUID id, UUID taskId, int number, String text, boolean isFinished, boolean isPriority) {
+    public Step(UUID id, UUID taskId, int number, String text, String link, boolean isFinished, boolean isPriority) {
         this.id = id;
         this.taskId = taskId;
         this.number = number;
         this.text = text;
+        this.link = link;
         this.isFinished = isFinished;
         this.isPriority = isPriority;
     }
 
-    public Step(UUID id, UUID taskId, int number, String text) {
+    public Step(UUID id, UUID taskId, int number, String text, String link) {
         this.id = id;
         this.taskId = taskId;
         this.number = number;
         this.text = text;
+        this.link = link;
     }
 
     public Step(UUID id) {
@@ -33,13 +36,14 @@ public class Step {
     public Step() {
     }
 
-    public static Step createFull(UUID id, UUID taskId, int number,
-                                  String text, boolean isFinished, boolean isPriority) {
-        return new Step(id, taskId, number, text, isFinished, isPriority);
+    public static Step createFull(UUID id, UUID taskId, int number, String text,
+                                  String link, boolean isFinished, boolean isPriority) {
+        return new Step(id, taskId, number, text, link, isFinished, isPriority);
     }
 
-    public static Step createForRequest(UUID taskId, int number, String text) {
-        return new Step(UUID.randomUUID(), taskId, number, text);
+    public static Step createForRequest(UUID taskId, int number,
+                                        String text, String link) {
+        return new Step(UUID.randomUUID(), taskId, number, text, link);
     }
 
     public static Step createWithOnlyId(UUID id) {
@@ -76,6 +80,15 @@ public class Step {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public boolean isFinished() {
         return isFinished;
     }

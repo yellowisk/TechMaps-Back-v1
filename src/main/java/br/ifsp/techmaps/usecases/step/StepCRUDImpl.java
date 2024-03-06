@@ -36,7 +36,7 @@ public class StepCRUDImpl implements StepCRUD {
         List<Step> steps = new ArrayList<>();
 
         stepDescriptions.forEach(stepDesc -> {
-            Step step = Step.createForRequest(taskId, stepDesc.getNumber(), stepDesc.getDescription());
+            Step step = Step.createForRequest(taskId, stepDesc.getNumber(), stepDesc.getDescription(), stepDesc.getLink());
             steps.add(step);
             stepDAO.saveStep(step);
         });

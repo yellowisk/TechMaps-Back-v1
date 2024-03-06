@@ -41,7 +41,7 @@ public class StepDAOImpl implements StepDAO {
                 step.getText(), false, false);
 
         return Step.createFull(step.getId(), step.getTaskId(), step.getNumber(),
-                step.getText(), false, false);
+                step.getText(), step.getLink(), false, false);
     }
 
     @Override
@@ -95,9 +95,10 @@ public class StepDAOImpl implements StepDAO {
         UUID taskId = (UUID) rs.getObject("task_id");
         int number = rs.getInt("position");
         String text = rs.getString("text");
+        String link = rs.getString("link");
         Boolean isFinished = rs.getBoolean("is_finished");
         Boolean isPriority = rs.getBoolean("is_priority");
-        return Step.createFull(stepId, taskId, number, text, isFinished, isPriority);
+        return Step.createFull(stepId, taskId, number, text, link, isFinished, isPriority);
     }
 
 }

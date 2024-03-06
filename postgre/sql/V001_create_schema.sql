@@ -265,6 +265,7 @@ CREATE TABLE techmaps_platform.task_step (
     task_id uuid NOT NULL,
     position integer NOT NULL,
     text varchar(255) NOT NULL,
+    link varchar,
     is_finished boolean NOT NULL,
     is_priority boolean NOT NULL
 );
@@ -284,6 +285,7 @@ CREATE TABLE techmaps_platform.task_step_description (
     id uuid NOT NULL,
     info techmaps_platform.task_body,
     description varchar(255),
+    link varchar,
     desc_number integer NOT NULL
 );
 

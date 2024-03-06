@@ -34,8 +34,9 @@ public class StepDescriptionDAOImpl implements StepDescriptionDAO {
         UUID id = (UUID) rs.getObject("id");
         TaskBody info = TaskBody.valueOf(rs.getString("info"));
         String description = rs.getString("description");
+        String link = rs.getString("link");
         Integer number = rs.getInt("desc_number");
-        return StepDescription.createFull(id, info, description, number);
+        return StepDescription.createFull(id, info, description, link, number);
     }
 
 }

@@ -8,17 +8,19 @@ public class StepDescription {
     private UUID id;
     private TaskBody info;
     private String description;
+    private String link;
     private Integer number;
 
-    public StepDescription(UUID id, TaskBody info, String description, Integer number) {
+    public StepDescription(UUID id, TaskBody info, String description, String link, Integer number) {
         this.id = id;
         this.info = info;
         this.description = description;
+        this.link = link;
         this.number = number;
     }
 
-    public static StepDescription createFull (UUID id, TaskBody info, String description, Integer number) {
-        return new StepDescription(id, info, description, number);
+    public static StepDescription createFull (UUID id, TaskBody info, String description, String link, Integer number) {
+        return new StepDescription(id, info, description, link, number);
     }
 
     public StepDescription() {
@@ -46,6 +48,14 @@ public class StepDescription {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public Integer getNumber() {

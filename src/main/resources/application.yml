@@ -179,8 +179,8 @@ queries:
     step-dao:
       insert:
         step: >
-          INSERT INTO techmaps_platform.task_step(id, task_id, position, text, is_finished, is_priority) 
-          VALUES (?, ?, ?, ?, ?, ?)
+          INSERT INTO techmaps_platform.task_step(id, task_id, position, text, link, is_finished, is_priority) 
+          VALUES (?, ?, ?, ?, ?, ?, ?)
       select:
         step-by-id: >
           SELECT * FROM techmaps_platform.task_step WHERE id = ? ORDER BY position ASC
@@ -202,4 +202,4 @@ queries:
     step-description-dao:
       select:
         step-description-by-task-info: >
-          SELECT id, info, description, desc_number FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body
+          SELECT id, info, description, link, desc_number FROM techmaps_platform.task_step_description WHERE info = ?::techmaps_platform.task_body
