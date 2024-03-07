@@ -1,5 +1,8 @@
-# TechMaps - Spring Boot API
-TechMaps is a mobile application which strives towards providing students roadmaps that cover topics of the software development world.
+<p align="center">
+  <img src="src/main/resources/static/images/techmaps-brand-shortened-logo.png" height="128">
+  <p align="center">TechMaps strives towards providing students roadmaps that cover topics of the software development world.</p>
+</p>
+
 
 ## Creating the Database
 
