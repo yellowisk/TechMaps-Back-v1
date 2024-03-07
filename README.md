@@ -20,3 +20,8 @@ Now connect to the "techmaps" database in the same way you connected to the post
 After making sure your database is set up and populated, you can run the java file ``src/main/java/br/ifsp/techmaps/TechMapsApplication.java``
 
 Log in with one of the users created and send the generated JWT in all your other requests when using the application. Every 30 minutes, refresh the JWT to keep using the application normally.
+
+## Thank you, contributors!
+<a href="https://github.com/yellowisk/TechMaps-API/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=yellowisk/TechMaps-API">
+</a>
